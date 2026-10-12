@@ -573,6 +573,38 @@ void main() {
       });
     }
 
+    test(
+      'the platform is sent so the admin can tell PC from Android',
+      () async {
+        final seen = <Map>[];
+        AccessLock.clientFactory = () =>
+            fakeServer((_) => {'ok': true}, seen: seen);
+        for (final platform in ['android', 'windows']) {
+          seen.clear();
+          AccessLock.platformName = () => platform;
+          await AccessLock.activate('A320-k7Rm9Qx2');
+          await AccessLock.restore();
+          await AccessLock.licenseInfo();
+          await AccessLock.stillLicensed();
+          await AccessLock.deactivate();
+          final byFn = {for (final b in seen) b['_fn']: b};
+          for (final fn in [
+            'a320_redeem_license',
+            'a320_restore_license',
+            'a320_my_license',
+          ]) {
+            expect(byFn[fn]!['p_platform'], platform, reason: fn);
+          }
+          // Deactivate has no platform parameter on the server.
+          expect(
+            byFn['a320_release_license']!.containsKey('p_platform'),
+            isFalse,
+          );
+        }
+        AccessLock.platformName = () => 'android';
+      },
+    );
+
     test('valid code activates and is remembered; device id is sent', () async {
       final seen = <Map>[];
       AccessLock.clientFactory = () => fakeServer(
@@ -679,73 +711,80 @@ void main() {
       expect(await AccessLock.isDemo(), isTrue);
     });
 
-    test('deactivate & transfer: only online, then this device is locked', () async {
-      // Fake server with the transfer rules.
-      String? owner;
-      Map<String, dynamic> server(Map b) {
-        final device = b['p_device'] as String;
-        switch (b['_fn']) {
-          case 'a320_redeem_license':
-            if (b['p_code'] != 'A320-k7Rm9Qx2') {
-              return {'ok': false, 'reason': 'INVALID'};
-            }
-            if (owner != null && owner != device) {
-              return {'ok': false, 'reason': 'ALREADY_USED'};
-            }
-            owner = device;
-            return {'ok': true};
-          case 'a320_my_license':
-            return owner == device
-                ? {'ok': true, 'code': 'A320-k7Rm9Qx2', 'used_at': '2026-10-08T06:00:00Z'}
-                : {'ok': false, 'reason': 'NO_LICENSE'};
-          case 'a320_release_license':
-            if (owner != device) return {'ok': false, 'reason': 'NO_LICENSE'};
-            owner = null;
-            return {'ok': true, 'code': 'A320-k7Rm9Qx2'};
+    test(
+      'deactivate & transfer: only online, then this device is locked',
+      () async {
+        // Fake server with the transfer rules.
+        String? owner;
+        Map<String, dynamic> server(Map b) {
+          final device = b['p_device'] as String;
+          switch (b['_fn']) {
+            case 'a320_redeem_license':
+              if (b['p_code'] != 'A320-k7Rm9Qx2') {
+                return {'ok': false, 'reason': 'INVALID'};
+              }
+              if (owner != null && owner != device) {
+                return {'ok': false, 'reason': 'ALREADY_USED'};
+              }
+              owner = device;
+              return {'ok': true};
+            case 'a320_my_license':
+              return owner == device
+                  ? {
+                      'ok': true,
+                      'code': 'A320-k7Rm9Qx2',
+                      'used_at': '2026-10-08T06:00:00Z',
+                    }
+                  : {'ok': false, 'reason': 'NO_LICENSE'};
+            case 'a320_release_license':
+              if (owner != device) return {'ok': false, 'reason': 'NO_LICENSE'};
+              owner = null;
+              return {'ok': true, 'code': 'A320-k7Rm9Qx2'};
+          }
+          return {'ok': false};
         }
-        return {'ok': false};
-      }
 
-      AccessLock.clientFactory = () => fakeServer(server);
-      AccessLock.androidIdReader = () async => 'aaaa000011112222';
-      expect(await AccessLock.activate('A320-k7Rm9Qx2'), LicenseResult.ok);
-      expect(await AccessLock.savedCode(), 'A320-k7Rm9Qx2');
-      final info = await AccessLock.licenseInfo();
-      expect(info.result, LicenseResult.ok);
-      expect(info.code, 'A320-k7Rm9Qx2');
-      expect(info.usedAt, isNotNull);
-      expect(await AccessLock.stillLicensed(), isTrue);
+        AccessLock.clientFactory = () => fakeServer(server);
+        AccessLock.androidIdReader = () async => 'aaaa000011112222';
+        expect(await AccessLock.activate('A320-k7Rm9Qx2'), LicenseResult.ok);
+        expect(await AccessLock.savedCode(), 'A320-k7Rm9Qx2');
+        final info = await AccessLock.licenseInfo();
+        expect(info.result, LicenseResult.ok);
+        expect(info.code, 'A320-k7Rm9Qx2');
+        expect(info.usedAt, isNotNull);
+        expect(await AccessLock.stillLicensed(), isTrue);
 
-      // The new tablet cannot use the code yet.
-      AccessLock.androidIdReader = () async => 'bbbb000011112222';
-      expect(
-        await AccessLock.activate('A320-k7Rm9Qx2'),
-        LicenseResult.alreadyUsed,
-      );
+        // The new tablet cannot use the code yet.
+        AccessLock.androidIdReader = () async => 'bbbb000011112222';
+        expect(
+          await AccessLock.activate('A320-k7Rm9Qx2'),
+          LicenseResult.alreadyUsed,
+        );
 
-      // Offline deactivation does nothing.
-      AccessLock.androidIdReader = () async => 'aaaa000011112222';
-      AccessLock.clientFactory = () =>
-          MockClient((_) async => throw http.ClientException('no network'));
-      expect(await AccessLock.deactivate(), LicenseResult.offline);
-      expect(await AccessLock.isUnlocked(), isTrue);
-      // A server error never locks the app in the background check.
-      AccessLock.clientFactory = () =>
-          MockClient((_) async => http.Response('oops', 500));
-      expect(await AccessLock.stillLicensed(), isTrue);
-      expect(await AccessLock.isUnlocked(), isTrue);
+        // Offline deactivation does nothing.
+        AccessLock.androidIdReader = () async => 'aaaa000011112222';
+        AccessLock.clientFactory = () =>
+            MockClient((_) async => throw http.ClientException('no network'));
+        expect(await AccessLock.deactivate(), LicenseResult.offline);
+        expect(await AccessLock.isUnlocked(), isTrue);
+        // A server error never locks the app in the background check.
+        AccessLock.clientFactory = () =>
+            MockClient((_) async => http.Response('oops', 500));
+        expect(await AccessLock.stillLicensed(), isTrue);
+        expect(await AccessLock.isUnlocked(), isTrue);
 
-      // Online: deactivate locks this device and frees the code.
-      AccessLock.clientFactory = () => fakeServer(server);
-      expect(await AccessLock.deactivate(), LicenseResult.ok);
-      expect(await AccessLock.isUnlocked(), isFalse);
-      expect(await AccessLock.savedCode(), isNull);
-      expect(await AccessLock.restore(), LicenseResult.invalid);
+        // Online: deactivate locks this device and frees the code.
+        AccessLock.clientFactory = () => fakeServer(server);
+        expect(await AccessLock.deactivate(), LicenseResult.ok);
+        expect(await AccessLock.isUnlocked(), isFalse);
+        expect(await AccessLock.savedCode(), isNull);
+        expect(await AccessLock.restore(), LicenseResult.invalid);
 
-      // The new tablet activates the same code.
-      AccessLock.androidIdReader = () async => 'bbbb000011112222';
-      expect(await AccessLock.activate('A320-k7Rm9Qx2'), LicenseResult.ok);
-    });
+        // The new tablet activates the same code.
+        AccessLock.androidIdReader = () async => 'bbbb000011112222';
+        expect(await AccessLock.activate('A320-k7Rm9Qx2'), LicenseResult.ok);
+      },
+    );
 
     test('a device whose code was released elsewhere locks itself', () async {
       AccessLock.androidIdReader = () async => 'aaaa000011112222';

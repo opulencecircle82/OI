@@ -13,7 +13,22 @@ type Code = {
   /** Set when the code was released for transfer to another device. */
   released_at?: string | null;
   transfer_count?: number;
+  /** 'android' | 'windows', reported by the app (v3.9+); null = not reported yet. */
+  platform?: string | null;
 };
+
+const PLATFORMS = [
+  { key: "android", label: "Android", sub: "tablet / phone", icon: "📱" },
+  { key: "windows", label: "PC", sub: "Windows", icon: "💻" },
+] as const;
+
+function platformBadge(p: string | null | undefined) {
+  if (p === "android")
+    return <span className="rounded bg-fap-green/15 px-2 py-0.5 font-mono text-xs font-bold text-fap-green">📱 ANDROID</span>;
+  if (p === "windows")
+    return <span className="rounded bg-cyan/15 px-2 py-0.5 font-mono text-xs font-bold text-cyan">💻 PC</span>;
+  return <span className="rounded bg-white/10 px-2 py-0.5 font-mono text-xs font-bold text-silver">NOT REPORTED</span>;
+}
 
 const TOKEN_KEY = "a320_admin_token";
 
@@ -259,6 +274,8 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
     () => used.filter((c) => c.code.includes(query.trim())),
     [used, query],
   );
+  // Active codes per platform (first device and transferred).
+  const activeOn = (key: string) => (codes ?? []).filter((c) => c.is_used && c.platform === key).length;
 
   const copyBtn = (code: string) => (
     <button
@@ -305,10 +322,11 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
 
   return (
     <div className="mt-4 space-y-6">
-      <div className="grid gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
         {[
           ["UNUSED", unused.length, "text-fap-green"],
-          ["USED", used.length, "text-fap-amber"],
+          ["📱 ON ANDROID", activeOn("android"), "text-fap-green"],
+          ["💻 ON PC", activeOn("windows"), "text-cyan"],
           ["TRANSFERRED", transferred.length, "text-cyan"],
           ["TOTAL", (codes ?? []).length, "text-white"],
         ].map(([label, value, color]) => (
@@ -407,41 +425,63 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
           />
         </div>
         <p className="mt-1 text-sm text-silver">
-          Activated on their first device. Release frees a code for its owner&apos;s new device (use it when
-          the old device is broken or lost); the old device locks itself the next time it is
-          online.
+          Activated on their first device, separated by platform. Release frees a code for its
+          owner&apos;s new device (use it when the old device is broken or lost); the old device
+          locks itself the next time it is online.
         </p>
-        <div className="mt-4 overflow-x-auto">
-          <table className="w-full min-w-[560px] text-left text-sm">
-            <thead className="text-xs tracking-wider text-silver">
-              <tr>
-                <th className="py-2">CODE</th>
-                <th>USED AT</th>
-                <th>DEVICE</th>
-                <th className="text-right">ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {codes === null && emptyRow("Loading…")}
-              {codes !== null &&
-                usedShown.length === 0 &&
-                emptyRow(used.length === 0 ? "No code has been used yet." : "No match.")}
-              {usedShown.map((c) => (
-                <tr key={c.id} className="border-t border-line">
-                  <td className="py-3 font-mono text-base font-bold tracking-wide text-silver">{c.code}</td>
-                  <td className="text-silver">{fmt(c.used_at)}</td>
-                  <td className="font-mono text-xs text-silver" title={c.device_id ?? ""}>
-                    {c.device_id ? `${c.device_id.slice(0, 8)}…` : "—"}
-                  </td>
-                  <td className="space-x-2 text-right whitespace-nowrap">
-                    {copyBtn(c.code)}
-                    {releaseBtn(c)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {[
+          ...PLATFORMS.map((pl) => ({
+            key: pl.key as string,
+            title: `${pl.icon} ${pl.label}`,
+            sub: pl.sub as string,
+            list: usedShown.filter((c) => c.platform === pl.key),
+          })),
+          {
+            key: "unknown",
+            title: "Platform not reported yet",
+            sub: "activated with an app older than v3.9; fills in when the device opens v3.9+ online",
+            list: usedShown.filter((c) => c.platform !== "android" && c.platform !== "windows"),
+          },
+        ]
+          .filter((g) => g.key !== "unknown" || g.list.length > 0)
+          .map((g) => (
+            <div key={g.key} className="mt-6">
+              <h3 className="font-extrabold">
+                {g.title}{" "}
+                <span className="text-fap-amber">({codes ? g.list.length : "…"})</span>{" "}
+                <span className="text-xs font-normal text-silver">{g.sub}</span>
+              </h3>
+              <div className="mt-2 overflow-x-auto">
+                <table className="w-full min-w-[560px] text-left text-sm">
+                  <thead className="text-xs tracking-wider text-silver">
+                    <tr>
+                      <th className="py-2">CODE</th>
+                      <th>USED AT</th>
+                      <th>DEVICE</th>
+                      <th className="text-right">ACTIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {codes === null && emptyRow("Loading…")}
+                    {codes !== null && g.list.length === 0 && emptyRow(query.trim() ? "No match." : "None yet.")}
+                    {g.list.map((c) => (
+                      <tr key={c.id} className="border-t border-line">
+                        <td className="py-3 font-mono text-base font-bold tracking-wide text-silver">{c.code}</td>
+                        <td className="text-silver">{fmt(c.used_at)}</td>
+                        <td className="font-mono text-xs text-silver" title={c.device_id ?? ""}>
+                          {c.device_id ? `${c.device_id.slice(0, 8)}…` : "—"}
+                        </td>
+                        <td className="space-x-2 text-right whitespace-nowrap">
+                          {copyBtn(c.code)}
+                          {releaseBtn(c)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
       </section>
 
       <section className="rounded-2xl border border-cyan/40 bg-panel/80 p-5">
@@ -454,11 +494,12 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
           one of the 10 unused codes, so do not give it to another student.
         </p>
         <div className="mt-4 overflow-x-auto">
-          <table className="w-full min-w-[720px] text-left text-sm">
+          <table className="w-full min-w-[800px] text-left text-sm">
             <thead className="text-xs tracking-wider text-silver">
               <tr>
                 <th className="py-2">CODE</th>
                 <th>STATUS</th>
+                <th>PLATFORM</th>
                 <th>SINCE</th>
                 <th>DEVICE</th>
                 <th>TRANSFERS</th>
@@ -466,8 +507,8 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
               </tr>
             </thead>
             <tbody>
-              {codes === null && emptyRow("Loading…", 6)}
-              {codes !== null && transferred.length === 0 && emptyRow("No code has been transferred yet.", 6)}
+              {codes === null && emptyRow("Loading…", 7)}
+              {codes !== null && transferred.length === 0 && emptyRow("No code has been transferred yet.", 7)}
               {transferred.map((c) => (
                 <tr key={c.id} className="border-t border-line">
                   <td className="py-3 font-mono text-base font-bold tracking-wide">{c.code}</td>
@@ -480,6 +521,7 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
                       {c.is_used ? "ACTIVE ON NEW DEVICE" : "WAITING FOR NEW DEVICE"}
                     </span>
                   </td>
+                  <td>{c.is_used ? platformBadge(c.platform) : <span className="text-silver">—</span>}</td>
                   <td className="text-silver">{fmt(c.is_used ? c.used_at : (c.released_at ?? null))}</td>
                   <td className="font-mono text-xs text-silver" title={c.device_id ?? ""}>
                     {c.device_id ? `${c.device_id.slice(0, 8)}…` : "—"}

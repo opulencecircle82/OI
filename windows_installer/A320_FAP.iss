@@ -4,7 +4,7 @@
 ; Output:               Windows_Setup\A320_FAP_Setup_v<version>.exe
 
 #define AppName "A320 FAP Simulator"
-#define AppVersion "3.8"
+#define AppVersion "3.9"
 #define AppExe "A320_FAP.exe"
 #define SrcDir "..\a320_fap\build\windows\x64\runner\Release"
 

@@ -275,9 +275,8 @@ void main() {
     expect(find.text('CHECK AGAIN'), findsOneWidget);
     await shot(tester, 'unlock_screen_offline');
     // Back online: CHECK AGAIN restores the license.
-    AccessLock.clientFactory = () => MockClient(
-      (_) async => http.Response(jsonEncode({'ok': true}), 200),
-    );
+    AccessLock.clientFactory = () =>
+        MockClient((_) async => http.Response(jsonEncode({'ok': true}), 200));
     await tester.tap(find.text('CHECK AGAIN'));
     await tester.runAsync(
       () => Future<void>.delayed(const Duration(milliseconds: 200)),
@@ -443,9 +442,14 @@ void main() {
       if (!online) throw http.ClientException('no network');
       final fn = req.url.pathSegments.last;
       final Map<String, dynamic> body = switch (fn) {
-        'a320_my_license' => released
-            ? {'ok': false, 'reason': 'NO_LICENSE'}
-            : {'ok': true, 'code': 'A320-k7Rm9Qx2', 'used_at': '2026-10-08T06:00:00Z'},
+        'a320_my_license' =>
+          released
+              ? {'ok': false, 'reason': 'NO_LICENSE'}
+              : {
+                  'ok': true,
+                  'code': 'A320-k7Rm9Qx2',
+                  'used_at': '2026-10-08T06:00:00Z',
+                },
         'a320_release_license' => {'ok': true, 'code': 'A320-k7Rm9Qx2'},
         'a320_restore_license' => {'ok': !released},
         _ => {'ok': false},
@@ -488,7 +492,10 @@ void main() {
     );
     await tester.tap(find.text('DEACTIVATE'));
     await settle();
-    expect(find.textContaining('Deactivation must be done online'), findsOneWidget);
+    expect(
+      find.textContaining('Deactivation must be done online'),
+      findsOneWidget,
+    );
     expect(await AccessLock.isUnlocked(), isTrue);
     await tester.tap(find.byTooltip('Close'));
     await settle();
@@ -526,10 +533,8 @@ void main() {
     final device = await AccessLock.deviceId();
     SharedPreferences.setMockInitialValues({'fap_license_v2': device});
     AccessLock.clientFactory = () => MockClient(
-      (_) async => http.Response(
-        jsonEncode({'ok': false, 'reason': 'NO_LICENSE'}),
-        200,
-      ),
+      (_) async =>
+          http.Response(jsonEncode({'ok': false, 'reason': 'NO_LICENSE'}), 200),
     );
     tester.view.physicalSize = const Size(1600, 1000);
     tester.view.devicePixelRatio = 1;
