@@ -24,6 +24,8 @@ const features = [
 const manualIcon =
   "M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5zm0 16a2 2 0 0 1 2-2h12v2H6M8 7h6M8 11h6";
 
+const reportIcon = "M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9";
+
 const pages = [
   ["STATUS", "Cabin overview of every system at a glance."],
   ["AUDIO", "4 boarding music channels, PRAM with MEMO / PLAY ALL, chimes."],
@@ -206,7 +208,7 @@ export default async function Home() {
             <div>
               <h3 className="text-lg font-extrabold">User Manual (PDF)</h3>
               <p className="mt-1 text-sm leading-relaxed text-silver">
-                39 pages: every page, key and hard key explained with
+                41 pages: every page, key and hard key explained with
                 screenshots, plus step-by-step training drills and
                 troubleshooting.
               </p>
@@ -214,6 +216,26 @@ export default async function Home() {
             <a
               href={site.manualPath}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan px-6 py-4 text-sm font-extrabold tracking-wider text-black hover:brightness-110"
+            >
+              <Icon d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" />
+              DOWNLOAD PDF
+            </a>
+          </div>
+
+          <div className="mt-4 grid items-center gap-5 rounded-2xl border border-line bg-panel/70 p-6 sm:grid-cols-[auto_1fr_auto]">
+            <Icon d={reportIcon} className="size-10 text-fap-green" />
+            <div>
+              <h3 className="text-lg font-extrabold">
+                Feature Sources &amp; A320 Conformance (PDF)
+              </h3>
+              <p className="mt-1 text-sm leading-relaxed text-silver">
+                Where every feature comes from and how it compares with the
+                real A320 CIDS Flight Attendant Panel, with the sources used.
+              </p>
+            </div>
+            <a
+              href={site.reportPath}
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-cyan px-6 py-4 text-sm font-extrabold tracking-wider text-cyan hover:bg-cyan/10"
             >
               <Icon d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" />
               DOWNLOAD PDF
