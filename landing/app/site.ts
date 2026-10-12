@@ -52,6 +52,11 @@ export const mcdu = {
   get apkUrl() {
     return releaseFile(this.releaseTag, this.apkName);
   },
+  /** YouTube tutorial. */
+  tutorialId: "k0fZdP8D_AU",
+  get tutorialUrl() {
+    return `https://www.youtube.com/watch?v=${this.tutorialId}`;
+  },
 };
 
 /** Prefix a public asset with the GitHub Pages base path. */

@@ -87,6 +87,7 @@ export default async function McduPage() {
         active="mcdu"
         sections={[
           ["#features", "Features"],
+          ["#tutorial", "Tutorial"],
           ["#pages", "MCDU pages"],
           ["#download", "Download"],
           ["#notice", "Notice"],
@@ -111,10 +112,11 @@ export default async function McduPage() {
             <div className="mt-8 flex flex-col flex-wrap justify-center gap-3 sm:flex-row lg:justify-start">
               <DownloadButton href={mcdu.apkUrl} />
               <a
-                href="#pages"
+                href="#tutorial"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-silver/60 px-6 py-4 text-sm font-extrabold tracking-wider hover:border-white hover:bg-white/5"
               >
-                SEE THE PAGES
+                <Icon d="M8 5v14l11-7z" />
+                WATCH TUTORIAL
               </a>
             </div>
             <p className="mt-4 text-xs text-silver/70">
@@ -153,6 +155,32 @@ export default async function McduPage() {
               exist only in the trainer.
             </p>
           </div>
+        </section>
+
+        {/* Tutorial */}
+        <section id="tutorial" className="mx-auto max-w-6xl scroll-mt-8 px-4 pb-20 sm:px-8">
+          <SectionTitle
+            kicker="TUTORIAL"
+            title="Set up a flight, fly it, read the radar"
+            body="A six-minute walk-through: INIT A and B, the flight plan, constraints and discontinuities, the temporary flight plan, take-off speeds, ND modes, the weather radar and DIR TO."
+          />
+          <div className="mt-8 overflow-hidden rounded-2xl border border-line bg-black shadow-[0_20px_60px_rgb(0_0_0/0.6)]">
+            <iframe
+              className="aspect-video w-full"
+              src={`https://www.youtube-nocookie.com/embed/${mcdu.tutorialId}?rel=0`}
+              title="A320 MCDU Trainer tutorial"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+          <a
+            href={mcdu.tutorialUrl}
+            className="mt-3 inline-block text-sm font-bold text-cyan hover:underline"
+          >
+            Watch on YouTube →
+          </a>
         </section>
 
         {/* Pages */}
