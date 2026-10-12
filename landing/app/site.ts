@@ -18,6 +18,8 @@ export const site = {
   },
   /** User manual PDF (built from /manual, copied to landing/public). */
   manualPath: `${BASE_PATH}/A320_FAP_User_Manual.pdf`,
+  /** Feature sources & A320 conformance report (built from /manual/sources.html). */
+  reportPath: `${BASE_PATH}/A320_FAP_Sources_and_Conformance.pdf`,
   /** YouTube tutorial (school-free version). */
   tutorialId: "KAeq-nrS088",
   get tutorialUrl() {
