@@ -212,7 +212,7 @@ class _SettingsCardState extends State<_SettingsCard> {
                   const Divider(color: FapColors.panelBorder),
                   const SizedBox(height: 8),
                   const Text(
-                    'New tablet? Deactivate the license here (internet '
+                    'New tablet or PC? Deactivate the license here (internet '
                     'needed), then enter the same code on the new device.',
                     style: FapText.label,
                   ),

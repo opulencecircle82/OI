@@ -70,6 +70,13 @@ const steps = [
     : "Open the app and hold the tablet in landscape.",
 ];
 
+const windowsSteps = [
+  "Download the Setup and open it.",
+  'If Windows shows "Windows protected your PC", click More info, then Run anyway.',
+  "Follow the Setup (Next, accept the notice, Install). A desktop shortcut is created.",
+  "Open A320 FAP Simulator and enter your license code (internet needed once).",
+];
+
 const notice = [
   [
     "NOT AN OFFICIALLY CERTIFIED FTD",
@@ -131,8 +138,9 @@ export default async function Home() {
               Panel: cabin lighting, doors and slides, PRAM announcements,
               water/waste, lavatory smoke and evacuation signalling.
             </p>
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+            <div className="mt-8 flex flex-col flex-wrap justify-center gap-3 sm:flex-row lg:justify-start">
               <DownloadButton />
+              <WindowsButton />
               <a
                 href="#tutorial"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-silver/60 px-6 py-4 text-sm font-extrabold tracking-wider hover:border-white hover:bg-white/5"
@@ -149,7 +157,7 @@ export default async function Home() {
               User Manual (PDF) — every function explained
             </a>
             <p className="mt-4 text-xs text-silver/70">
-              Android 7.0+ · Free · Landscape tablet recommended
+              Android 7.0+ tablet · Windows 10 / 11 PC (64-bit)
             </p>
           </div>
 
@@ -208,7 +216,7 @@ export default async function Home() {
             <div>
               <h3 className="text-lg font-extrabold">User Manual (PDF)</h3>
               <p className="mt-1 text-sm leading-relaxed text-silver">
-                41 pages: every page, key and hard key explained with
+                42 pages: every page, key and hard key explained with
                 screenshots, plus step-by-step training drills and
                 troubleshooting.
               </p>
@@ -375,6 +383,28 @@ export default async function Home() {
               </div>
             </div>
           </div>
+
+          <div className="mt-6 grid items-center gap-6 rounded-3xl border border-line bg-panel/70 p-6 sm:p-10 md:grid-cols-[1fr_auto]">
+            <div>
+              <SectionTitle kicker="WINDOWS" title="Install on a Windows PC" />
+              <ol className="mt-6 space-y-3">
+                {windowsSteps.map((s, i) => (
+                  <li key={s} className="flex gap-3 text-silver">
+                    <span className="grid size-6 shrink-0 place-items-center rounded-full bg-cyan text-xs font-extrabold text-black">
+                      {i + 1}
+                    </span>
+                    {s}
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <WindowsButton />
+              <span className="font-mono text-xs text-silver">
+                Setup · v{site.version} · Windows 10 / 11, 64-bit
+              </span>
+            </div>
+          </div>
         </section>
         {/* Notice */}
         <section id="notice" className="mx-auto max-w-6xl scroll-mt-8 px-4 pb-20 sm:px-8">
@@ -431,6 +461,18 @@ function DownloadButton() {
     >
       <Icon d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" />
       DOWNLOAD APK
+    </a>
+  );
+}
+
+function WindowsButton() {
+  return (
+    <a
+      href={site.windowsUrl}
+      className="inline-flex items-center justify-center gap-2 rounded-xl border border-cyan px-6 py-4 text-sm font-extrabold tracking-wider text-cyan hover:bg-cyan/10"
+    >
+      <Icon d="M3 5.5 10 4.5v7H3zM11 4.4 21 3v8.5H11zM3 12.5h7v7l-7-1zM11 12.5h10V21l-10-1.4z" />
+      DOWNLOAD FOR WINDOWS
     </a>
   );
 }

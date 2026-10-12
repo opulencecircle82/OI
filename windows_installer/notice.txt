@@ -1,0 +1,13 @@
+A320 FAP SIMULATOR - IMPORTANT NOTICE & DISCLAIMER
+
+This software (A320 FAP Simulator) is developed by Overdrive Interactive for academic, familiarization, and educational training purposes only.
+
+1. NOT AN OFFICIALLY CERTIFIED FTD: This application is a classroom supplement and is NOT certified by Airbus, FAA, EASA, CAAP, or any civil aviation authority for official type-rating or flight training credits.
+
+2. NO AFFILIATION: "A320" and related aircraft trademarks belong to Airbus. Overdrive Interactive is an independent entity with no official endorsement or affiliation with Airbus.
+
+3. ACCURACY & LIABILITY: While modeled for realistic interaction, operational variances may exist. This software must NOT be used for real-world aircraft operation, checklist validation, or actual emergency procedures. Overdrive Interactive assumes no liability for misuse.
+
+LICENSE: The simulator needs a license code (activation needs an internet connection once; each code works on one device at a time). A free demo code, A320-DEMO, is shown on the start screen.
+
+Always follow your airline's cabin crew operations manual and your instructor.

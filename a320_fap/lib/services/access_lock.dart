@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' show Platform, Process;
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
@@ -16,9 +17,9 @@ enum LicenseResult { ok, invalid, alreadyUsed, tooManyAttempts, offline, error }
 /// against Supabase and can be used on one device only. Once activated the
 /// device is remembered and the app works offline.
 ///
-/// On Android the device id comes from ANDROID_ID, which survives an
-/// uninstall, so after a reinstall [restore] unlocks the app again without
-/// a new code (online once).
+/// The device id comes from ANDROID_ID (Android) or the MachineGuid
+/// (Windows), which survive an uninstall, so after a reinstall [restore]
+/// unlocks the app again without a new code (online once).
 class AccessLock {
   AccessLock._();
 
@@ -66,12 +67,30 @@ class AccessLock {
   /// Replaced in tests.
   static http.Client Function() clientFactory = http.Client.new;
 
-  /// Reads ANDROID_ID (null when not on Android). Replaced in tests.
-  static Future<String?> Function() androidIdReader = _readAndroidId;
+  /// Reads the hardware id that survives a reinstall: ANDROID_ID on Android,
+  /// the MachineGuid on Windows (null elsewhere). Replaced in tests.
+  static Future<String?> Function() androidIdReader = _readHardwareId;
 
-  static Future<String?> _readAndroidId() async {
-    if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) return null;
-    return const MethodChannel('fap/device').invokeMethod<String>('androidId');
+  static Future<String?> _readHardwareId() async {
+    if (kIsWeb) return null;
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return const MethodChannel(
+        'fap/device',
+      ).invokeMethod<String>('androidId');
+    }
+    if (Platform.isWindows) {
+      final r = await Process.run('reg', [
+        'query',
+        r'HKLM\SOFTWARE\Microsoft\Cryptography',
+        '/v',
+        'MachineGuid',
+      ]);
+      final m = RegExp(
+        r'MachineGuid\s+REG_SZ\s+([0-9A-Fa-f-]{36})',
+      ).firstMatch('${r.stdout}');
+      return m == null ? null : 'win:${m.group(1)!.toLowerCase()}';
+    }
+    return null;
   }
 
   static Future<bool> isUnlocked() async {
@@ -84,9 +103,9 @@ class AccessLock {
     }
   }
 
-  /// The id sent to the server. On Android it is a hash of ANDROID_ID, so
-  /// it stays the same after a reinstall; otherwise (web, or if ANDROID_ID
-  /// is unavailable) a random id stored with the app.
+  /// The id sent to the server: a hash of the hardware id, so it stays the
+  /// same after a reinstall; otherwise (web, or if the hardware id is
+  /// unavailable) a random id stored with the app.
   static Future<String> deviceId() async {
     try {
       final androidId = await androidIdReader().timeout(
