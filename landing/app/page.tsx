@@ -18,7 +18,7 @@ const apps = [
     kicker: "PILOTS · MCDU · ND · WXR",
     name: "A320 MCDU Trainer",
     body: "Program the A320 MCDU, follow the flight on the Navigation Display and learn to read the weather radar, then fly the route.",
-    platforms: `v${mcdu.version} · Android tablet or phone`,
+    platforms: `v${mcdu.version} · Android tablet or phone · Windows PC`,
     shot: "mcdu-dual.png",
     alt: "MCDU and Navigation Display with weather radar",
     width: 1280,

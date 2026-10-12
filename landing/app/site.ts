@@ -46,11 +46,16 @@ export const fap = {
 
 /** A320 MCDU Trainer (pilots: MCDU, ND and weather radar). */
 export const mcdu = {
-  version: "1.0",
-  releaseTag: "mcdu-v1.0",
-  apkName: "A320_MCDU_Trainer_v1.0.apk",
+  version: "1.1",
+  releaseTag: "mcdu-v1.1",
+  apkName: "A320_MCDU_Trainer_v1.1.apk",
   get apkUrl() {
     return releaseFile(this.releaseTag, this.apkName);
+  },
+  /** Windows installer (Inno Setup), attached to the same release. */
+  windowsName: "A320_MCDU_Trainer_Setup_v1.1.exe",
+  get windowsUrl() {
+    return releaseFile(this.releaseTag, this.windowsName);
   },
   /** YouTube tutorial. */
   tutorialId: "k0fZdP8D_AU",

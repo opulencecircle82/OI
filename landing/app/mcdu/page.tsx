@@ -8,6 +8,7 @@ import {
   SiteFooter,
   SiteHeader,
   Steps,
+  WindowsButton,
   commonNotice,
   qrSvg,
 } from "../components";
@@ -16,11 +17,11 @@ import { asset, mcdu } from "../site";
 export const metadata: Metadata = {
   title: "A320 MCDU Trainer · Overdrive Interactive",
   description:
-    "A320 MCDU Trainer by Overdrive Interactive: practise the A320 MCDU, Navigation Display and weather radar on an Android tablet or phone.",
+    "A320 MCDU Trainer by Overdrive Interactive: practise the A320 MCDU, Navigation Display and weather radar on an Android tablet or phone, or a Windows PC.",
   openGraph: {
     title: "A320 MCDU Trainer · Overdrive Interactive",
     description:
-      "Program the A320 MCDU, watch the flight on the ND and read the weather radar. Download the Android app.",
+      "Program the A320 MCDU, watch the flight on the ND and read the weather radar. Android and Windows.",
     images: [asset("/screens/mcdu-dual.png")],
   },
 };
@@ -67,6 +68,13 @@ const steps = [
   "Open the app, enter your license code (internet needed once), and hold the device in landscape.",
 ];
 
+const windowsSteps = [
+  "Download the Setup and open it.",
+  'If Windows shows "Windows protected your PC", click More info, then Run anyway.',
+  "Follow the Setup (Next, accept the notice, Install). A desktop shortcut is created.",
+  "Open A320 MCDU Trainer and enter your license code (internet needed once). On a PC you can type on the MCDU with the computer keyboard.",
+];
+
 const notice: [string, string][] = [
   ...commonNotice,
   [
@@ -111,6 +119,7 @@ export default async function McduPage() {
             </p>
             <div className="mt-8 flex flex-col flex-wrap justify-center gap-3 sm:flex-row lg:justify-start">
               <DownloadButton href={mcdu.apkUrl} />
+              <WindowsButton href={mcdu.windowsUrl} />
               <a
                 href="#tutorial"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-silver/60 px-6 py-4 text-sm font-extrabold tracking-wider hover:border-white hover:bg-white/5"
@@ -120,7 +129,7 @@ export default async function McduPage() {
               </a>
             </div>
             <p className="mt-4 text-xs text-silver/70">
-              v{mcdu.version} · Android 7.0+ tablet or phone (landscape)
+              v{mcdu.version} · Android 7.0+ tablet or phone · Windows 10 / 11 PC (64-bit)
             </p>
           </div>
           <ScreenFrame
@@ -275,6 +284,19 @@ export default async function McduPage() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <DownloadButton href={mcdu.apkUrl} />
               </div>
+            </div>
+          </div>
+
+          <div className="mt-6 grid items-center gap-6 rounded-3xl border border-line bg-panel/70 p-6 sm:p-10 md:grid-cols-[1fr_auto]">
+            <div>
+              <SectionTitle kicker="WINDOWS" title="Install on a Windows PC" />
+              <Steps steps={windowsSteps} />
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <WindowsButton href={mcdu.windowsUrl} />
+              <span className="font-mono text-xs text-silver">
+                Setup · v{mcdu.version} · Windows 10 / 11, 64-bit
+              </span>
             </div>
           </div>
         </section>
