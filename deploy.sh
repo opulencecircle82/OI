@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Builds the Next.js landing page and publishes it to the gh-pages branch
-# (https://opulencecircle82.github.io/FAP/). The app is Android-only; the
-# web simulator is no longer published.
+# (https://opulencecircle82.github.io/OI/): Overdrive Interactive home,
+# /fap/ (A320 FAP Simulator) and /mcdu/ (A320 MCDU Trainer). The old
+# https://opulencecircle82.github.io/FAP/ link redirects here (repo "FAP").
 set -euo pipefail
 cd "$(dirname "$0")"
 export MSYS_NO_PATHCONV=1
@@ -21,4 +22,4 @@ git -C "$tmp" add -A
 git -C "$tmp" commit -q -m "Deploy landing page"
 git -C "$tmp" push -q origin gh-pages
 rm -rf "$tmp"
-echo "Deployed to https://opulencecircle82.github.io/FAP/"
+echo "Deployed to https://opulencecircle82.github.io/OI/"

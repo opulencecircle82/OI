@@ -3,9 +3,13 @@
 A training replica of the A320 CIDS Flight Attendant Panel, built for
 AISAT Aviation College cabin crew trainees.
 
-- **Landing page:** https://opulencecircle82.github.io/FAP/
-- **Web simulator:** https://opulencecircle82.github.io/FAP/simulator/#/fap
-- **Android APK:** [latest release](https://github.com/opulencecircle82/FAP/releases/latest)
+- **Website (Overdrive Interactive):** https://opulencecircle82.github.io/OI/
+  - A320 FAP page: https://opulencecircle82.github.io/OI/fap/
+  - A320 MCDU Trainer page: https://opulencecircle82.github.io/OI/mcdu/
+  - The old link https://opulencecircle82.github.io/FAP/ redirects to the FAP page.
+- **Downloads:** [releases](https://github.com/opulencecircle82/OI/releases), one
+  release per app (tags `vX.Y.Z` = FAP, `mcdu-vX.Y` = MCDU Trainer). The site
+  links to the exact tag, so update `landing/app/site.ts` on every release.
 
 | Folder | What it is |
 | --- | --- |
