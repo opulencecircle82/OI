@@ -15,7 +15,7 @@ import 'widgets/blink.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (!kIsWeb) {
+  if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
     // The FAP is a landscape panel; run full-screen like the real unit.
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,

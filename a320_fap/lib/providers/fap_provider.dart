@@ -11,6 +11,7 @@ import '../models/fap_state.dart';
 import '../models/pram_item.dart';
 import '../services/fap_audio.dart';
 import '../theme/fap_theme.dart';
+import '../widgets/top_status_bar.dart' show fapClockNow;
 
 /// One line in the FAP caution / info row.
 class CautionMessage {
@@ -981,7 +982,7 @@ class FapProvider extends ChangeNotifier {
     _draftStarts = null;
     _draftNonSmoker = null;
     _layoutCount[_layoutId] = _layoutCount[_layoutId]! + 1;
-    _layoutChanged[_layoutId] = DateTime.now();
+    _layoutChanged[_layoutId] = fapClockNow();
     _saved = (
       layout: _layoutId,
       count: _layoutCount[_layoutId]!,

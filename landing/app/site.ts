@@ -9,12 +9,17 @@ export const supabase = {
 export const site = {
   /** Show the license-code text once the activation database is live. */
   licensing: true,
-  version: "3.7",
-  apkName: "A320_FAP_v3.7.apk",
+  version: "3.8",
+  apkName: "A320_FAP_v3.8.apk",
   repoUrl: "https://github.com/opulencecircle82/FAP",
   pageUrl: "https://opulencecircle82.github.io/FAP/",
   get apkUrl() {
     return `${this.repoUrl}/releases/latest/download/${this.apkName}`;
+  },
+  /** Windows installer (Inno Setup), attached to the same release. */
+  windowsName: "A320_FAP_Setup_v3.8.exe",
+  get windowsUrl() {
+    return `${this.repoUrl}/releases/latest/download/${this.windowsName}`;
   },
   /** User manual PDF (built from /manual, copied to landing/public). */
   manualPath: `${BASE_PATH}/A320_FAP_User_Manual.pdf`,
