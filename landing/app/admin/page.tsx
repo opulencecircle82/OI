@@ -32,6 +32,13 @@ function platformBadge(p: string | null | undefined) {
 
 const TOKEN_KEY = "a320_admin_token";
 
+/** Apps sharing the license table (column `app`). */
+const APPS = [
+  { key: "fap", label: "A320 FAP", prefix: "A320-" },
+  { key: "mcdu", label: "A320 MCDU Trainer", prefix: "MCDU-" },
+] as const;
+type AppKey = (typeof APPS)[number]["key"];
+
 class RpcError extends Error {}
 
 /** Calls a Supabase RPC function with the publishable key. */
@@ -173,7 +180,7 @@ function Login({ onLogin }: { onLogin: (t: string) => void }) {
       className="mx-auto mt-16 max-w-sm rounded-2xl border border-line bg-panel/80 p-7"
     >
       <h1 className="text-2xl font-extrabold">Admin login</h1>
-      <p className="mt-1 text-sm text-silver">A320 FAP Simulator · license codes</p>
+      <p className="mt-1 text-sm text-silver">A320 FAP &amp; A320 MCDU Trainer · license codes</p>
       <label className="mt-6 block text-xs font-bold tracking-wider text-silver">
         USERNAME
         <input
@@ -207,6 +214,7 @@ function Login({ onLogin }: { onLogin: (t: string) => void }) {
 }
 
 function Dashboard({ token, onExpired }: { token: string; onExpired: () => void }) {
+  const [app, setApp] = useState<AppKey>("fap");
   const [codes, setCodes] = useState<Code[] | null>(null);
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
@@ -229,7 +237,7 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
 
   useEffect(() => {
     let alive = true;
-    rpc<Code[]>("a320_admin_list_codes", { p_token: token })
+    rpc<Code[]>("a320_admin_list_codes", { p_token: token, p_app: app })
       .then((rows) => {
         if (alive) setCodes(rows);
       })
@@ -239,7 +247,7 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
     return () => {
       alive = false;
     };
-  }, [token, fail, version]);
+  }, [token, fail, version, app]);
 
   const act = async (fn: () => Promise<unknown>, done: string) => {
     setBusy(true);
@@ -322,6 +330,28 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
 
   return (
     <div className="mt-4 space-y-6">
+      <div className="flex flex-wrap gap-2">
+        {APPS.map((a) => (
+          <button
+            key={a.key}
+            onClick={() => {
+              if (a.key === app) return;
+              setCodes(null);
+              setQuery("");
+              setMessage(null);
+              setApp(a.key);
+            }}
+            className={`rounded-xl px-5 py-2.5 text-sm font-extrabold tracking-wider ${
+              a.key === app
+                ? "bg-cyan text-black"
+                : "border border-line text-silver hover:text-white"
+            }`}
+          >
+            {a.label}
+            <span className="ml-2 font-mono text-xs opacity-70">{a.prefix}</span>
+          </button>
+        ))}
+      </div>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
         {[
           ["UNUSED", unused.length, "text-fap-green"],

@@ -11,14 +11,14 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.pageUrl),
-  title: "Overdrive Interactive Hub · A320 FAP Simulator",
+  title: "Overdrive Interactive · A320 training apps",
   description:
-    "A320 FAP Simulator by Overdrive Interactive: an Airbus A320 CIDS Flight Attendant Panel trainer for cabin crew students. Android tablet app.",
+    "Overdrive Interactive: A320 training apps for aviation students. A320 FAP Simulator for cabin crew and A320 MCDU Trainer for pilots.",
   openGraph: {
-    title: "A320 FAP Simulator · Overdrive Interactive",
+    title: "Overdrive Interactive · A320 training apps",
     description:
-      "Train on a full replica of the A320 Flight Attendant Panel. Download the Android app.",
-    images: [asset("/screens/lights.png")],
+      "A320 FAP Simulator and A320 MCDU Trainer: realistic A320 panels on a tablet.",
+    images: [asset("/screens/mcdu-dual.png")],
   },
 };
 
