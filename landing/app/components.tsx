@@ -160,6 +160,18 @@ export function DownloadButton({ href, label = "DOWNLOAD APK" }: { href: string;
   );
 }
 
+export function WindowsButton({ href }: { href: string }) {
+  return (
+    <a
+      href={href}
+      className="inline-flex items-center justify-center gap-2 rounded-xl border border-cyan px-6 py-4 text-sm font-extrabold tracking-wider text-cyan hover:bg-cyan/10"
+    >
+      <Icon d="M3 5.5 10 4.5v7H3zM11 4.4 21 3v8.5H11zM3 12.5h7v7l-7-1zM11 12.5h10V21l-10-1.4z" />
+      DOWNLOAD FOR WINDOWS
+    </a>
+  );
+}
+
 /** Numbered install steps. */
 export function Steps({ steps }: { steps: string[] }) {
   return (

@@ -8,6 +8,7 @@ import {
   SiteFooter,
   SiteHeader,
   Steps,
+  WindowsButton,
   commonNotice,
   downloadIcon,
   qrSvg,
@@ -142,7 +143,7 @@ export default async function FapPage() {
             </p>
             <div className="mt-8 flex flex-col flex-wrap justify-center gap-3 sm:flex-row lg:justify-start">
               <DownloadButton href={fap.apkUrl} />
-              <WindowsButton />
+              <WindowsButton href={fap.windowsUrl} />
               <a
                 href="#tutorial"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-silver/60 px-6 py-4 text-sm font-extrabold tracking-wider hover:border-white hover:bg-white/5"
@@ -383,7 +384,7 @@ export default async function FapPage() {
               <Steps steps={windowsSteps} />
             </div>
             <div className="flex flex-col items-center gap-2">
-              <WindowsButton />
+              <WindowsButton href={fap.windowsUrl} />
               <span className="font-mono text-xs text-silver">
                 Setup · v{fap.version} · Windows 10 / 11, 64-bit
               </span>
@@ -398,17 +399,5 @@ export default async function FapPage() {
         follow your airline cabin crew manual.
       </SiteFooter>
     </div>
-  );
-}
-
-function WindowsButton() {
-  return (
-    <a
-      href={fap.windowsUrl}
-      className="inline-flex items-center justify-center gap-2 rounded-xl border border-cyan px-6 py-4 text-sm font-extrabold tracking-wider text-cyan hover:bg-cyan/10"
-    >
-      <Icon d="M3 5.5 10 4.5v7H3zM11 4.4 21 3v8.5H11zM3 12.5h7v7l-7-1zM11 12.5h10V21l-10-1.4z" />
-      DOWNLOAD FOR WINDOWS
-    </a>
   );
 }
