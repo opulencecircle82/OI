@@ -74,9 +74,8 @@ class AccessLock {
   static Future<String?> _readHardwareId() async {
     if (kIsWeb) return null;
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return const MethodChannel(
-        'fap/device',
-      ).invokeMethod<String>('androidId');
+      return const MethodChannel('fap/device')
+          .invokeMethod<String>('androidId');
     }
     if (Platform.isWindows) {
       final r = await Process.run('reg', [
@@ -85,9 +84,8 @@ class AccessLock {
         '/v',
         'MachineGuid',
       ]);
-      final m = RegExp(
-        r'MachineGuid\s+REG_SZ\s+([0-9A-Fa-f-]{36})',
-      ).firstMatch('${r.stdout}');
+      final m = RegExp(r'MachineGuid\s+REG_SZ\s+([0-9A-Fa-f-]{36})')
+          .firstMatch('${r.stdout}');
       return m == null ? null : 'win:${m.group(1)!.toLowerCase()}';
     }
     return null;
@@ -238,6 +236,23 @@ class AccessLock {
     return (result: r.result, body: r.body);
   }
 
+  /// Server functions that record the platform of the device.
+  static const _withPlatform = {
+    'a320_redeem_license',
+    'a320_restore_license',
+    'a320_my_license',
+  };
+
+  /// 'android' or 'windows' (null elsewhere). Replaced in tests.
+  static String? Function() platformName = _platformName;
+
+  static String? _platformName() {
+    if (kIsWeb) return null;
+    if (defaultTargetPlatform == TargetPlatform.android) return 'android';
+    if (defaultTargetPlatform == TargetPlatform.windows) return 'windows';
+    return null;
+  }
+
   static Future<({LicenseResult result, Map? body, String? device})> _rpc(
     String fn,
     Map<String, String> Function(String device) args,
@@ -252,7 +267,12 @@ class AccessLock {
               'apikey': _publishableKey,
               'Content-Type': 'application/json',
             },
-            body: jsonEncode(args(device)),
+            body: jsonEncode({
+              ...args(device),
+              // Lets the admin panel tell PC codes from Android codes.
+              if (_withPlatform.contains(fn) && platformName() != null)
+                'p_platform': platformName()!,
+            }),
           )
           .timeout(_timeout);
       if (res.statusCode != 200) {
