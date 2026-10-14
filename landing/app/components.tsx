@@ -148,6 +148,49 @@ export function Icon({ d, className = "size-5" }: { d: string; className?: strin
   );
 }
 
+export const manualIcon =
+  "M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5zm0 16a2 2 0 0 1 2-2h12v2H6M8 7h6M8 11h6";
+export const reportIcon = "M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9";
+export const instructorIcon = "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7 9a7 7 0 0 1 14 0";
+
+/** A PDF download row: icon, title, description and a DOWNLOAD PDF button. */
+export function PdfCard({
+  icon,
+  iconClass,
+  title,
+  body,
+  href,
+  primary = false,
+}: {
+  icon: string;
+  iconClass: string;
+  title: ReactNode;
+  body: ReactNode;
+  href: string;
+  primary?: boolean;
+}) {
+  return (
+    <div className="mt-4 grid items-center gap-5 rounded-2xl border border-line bg-panel/70 p-6 sm:grid-cols-[auto_1fr_auto]">
+      <Icon d={icon} className={`size-10 ${iconClass}`} />
+      <div>
+        <h3 className="text-lg font-extrabold">{title}</h3>
+        <p className="mt-1 text-sm leading-relaxed text-silver">{body}</p>
+      </div>
+      <a
+        href={href}
+        className={
+          primary
+            ? "inline-flex items-center justify-center gap-2 rounded-xl bg-cyan px-6 py-4 text-sm font-extrabold tracking-wider text-black hover:brightness-110"
+            : "inline-flex items-center justify-center gap-2 rounded-xl border border-cyan px-6 py-4 text-sm font-extrabold tracking-wider text-cyan hover:bg-cyan/10"
+        }
+      >
+        <Icon d={downloadIcon} />
+        DOWNLOAD PDF
+      </a>
+    </div>
+  );
+}
+
 export function DownloadButton({ href, label = "DOWNLOAD APK" }: { href: string; label?: string }) {
   return (
     <a

@@ -3,6 +3,7 @@ import {
   DownloadButton,
   Icon,
   Notice,
+  PdfCard,
   ScreenFrame,
   SectionTitle,
   SiteFooter,
@@ -10,7 +11,9 @@ import {
   Steps,
   WindowsButton,
   commonNotice,
+  instructorIcon,
   qrSvg,
+  reportIcon,
 } from "../components";
 import { asset, mcdu } from "../site";
 
@@ -178,7 +181,7 @@ export default async function McduPage() {
           <SectionTitle
             kicker="TUTORIAL"
             title="Set up a flight, fly it, read the radar"
-            body="A six-minute walk-through: INIT A and B, the flight plan, constraints and discontinuities, the temporary flight plan, take-off speeds, ND modes, the weather radar and DIR TO."
+            body="A seven-minute walk-through: INIT A and B, the flight plan, constraints and discontinuities, the temporary flight plan, take-off speeds, ND modes, the weather radar, DIR TO and the trainer faults."
           />
           <div className="mt-8 overflow-hidden rounded-2xl border border-line bg-black shadow-[0_20px_60px_rgb(0_0_0/0.6)]">
             <iframe
@@ -197,6 +200,24 @@ export default async function McduPage() {
           >
             Watch on YouTube →
           </a>
+
+          <div className="mt-8">
+            <PdfCard
+              primary
+              icon={instructorIcon}
+              iconClass="text-fap-amber"
+              title="Instructor Guide (PDF)"
+              body="34 pages for the instructor: classroom set-up, license codes, quick reference, eight lesson plans with answer keys (including system faults), and an assessment checklist."
+              href={mcdu.guidePath}
+            />
+          </div>
+          <PdfCard
+            icon={reportIcon}
+            iconClass="text-fap-green"
+            title="Feature Sources & A320 Conformance (PDF)"
+            body="Where every feature comes from and how it compares with the real A320 MCDU, ND and weather radar, with the sources used."
+            href={mcdu.reportPath}
+          />
         </section>
 
         {/* Pages */}
