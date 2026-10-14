@@ -3,6 +3,7 @@ import {
   DownloadButton,
   Icon,
   Notice,
+  PdfCard,
   ScreenFrame,
   SectionTitle,
   SiteFooter,
@@ -10,8 +11,10 @@ import {
   Steps,
   WindowsButton,
   commonNotice,
-  downloadIcon,
+  instructorIcon,
+  manualIcon,
   qrSvg,
+  reportIcon,
 } from "../components";
 import { asset, fap } from "../site";
 
@@ -44,11 +47,6 @@ const features = [
     icon: "M12 4 2 9l10 5 10-5-10-5zm-6 7.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5",
   },
 ];
-
-const manualIcon =
-  "M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5zm0 16a2 2 0 0 1 2-2h12v2H6M8 7h6M8 11h6";
-
-const reportIcon = "M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9";
 
 const pages = [
   ["STATUS", "Cabin overview of every system at a glance."],
@@ -214,44 +212,30 @@ export default async function FapPage() {
             Watch on YouTube →
           </a>
 
-          <div className="mt-8 grid items-center gap-5 rounded-2xl border border-line bg-panel/70 p-6 sm:grid-cols-[auto_1fr_auto]">
-            <Icon d={manualIcon} className="size-10 text-cyan" />
-            <div>
-              <h3 className="text-lg font-extrabold">User Manual (PDF)</h3>
-              <p className="mt-1 text-sm leading-relaxed text-silver">
-                42 pages: every page, key and hard key explained with
-                screenshots, plus step-by-step training drills and
-                troubleshooting.
-              </p>
-            </div>
-            <a
+          <div className="mt-8">
+            <PdfCard
+              primary
+              icon={manualIcon}
+              iconClass="text-cyan"
+              title="User Manual (PDF)"
+              body="42 pages: every page, key and hard key explained with screenshots, plus step-by-step training drills and troubleshooting."
               href={fap.manualPath}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-cyan px-6 py-4 text-sm font-extrabold tracking-wider text-black hover:brightness-110"
-            >
-              <Icon d={downloadIcon} />
-              DOWNLOAD PDF
-            </a>
+            />
           </div>
-
-          <div className="mt-4 grid items-center gap-5 rounded-2xl border border-line bg-panel/70 p-6 sm:grid-cols-[auto_1fr_auto]">
-            <Icon d={reportIcon} className="size-10 text-fap-green" />
-            <div>
-              <h3 className="text-lg font-extrabold">
-                Feature Sources &amp; A320 Conformance (PDF)
-              </h3>
-              <p className="mt-1 text-sm leading-relaxed text-silver">
-                Where every feature comes from and how it compares with the
-                real A320 CIDS Flight Attendant Panel, with the sources used.
-              </p>
-            </div>
-            <a
-              href={fap.reportPath}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-cyan px-6 py-4 text-sm font-extrabold tracking-wider text-cyan hover:bg-cyan/10"
-            >
-              <Icon d={downloadIcon} />
-              DOWNLOAD PDF
-            </a>
-          </div>
+          <PdfCard
+            icon={instructorIcon}
+            iconClass="text-fap-amber"
+            title="Instructor Guide (PDF)"
+            body="27 pages for the instructor: classroom set-up, license codes, eight lesson plans with expected results, and an assessment checklist."
+            href={fap.guidePath}
+          />
+          <PdfCard
+            icon={reportIcon}
+            iconClass="text-fap-green"
+            title="Feature Sources & A320 Conformance (PDF)"
+            body="Where every feature comes from and how it compares with the real A320 CIDS Flight Attendant Panel, with the sources used."
+            href={fap.reportPath}
+          />
         </section>
 
         {/* The panel */}

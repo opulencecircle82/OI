@@ -37,6 +37,8 @@ export const fap = {
   manualPath: `${BASE_PATH}/A320_FAP_User_Manual.pdf`,
   /** Feature sources & A320 conformance report (built from /manual/sources.html). */
   reportPath: `${BASE_PATH}/A320_FAP_Sources_and_Conformance.pdf`,
+  /** Instructor guide (built from PRIVATE_instructor_guide, copied to landing/public). */
+  guidePath: `${BASE_PATH}/A320_FAP_Instructor_Guide.pdf`,
   /** YouTube tutorial (school-free version). */
   tutorialId: "KAeq-nrS088",
   get tutorialUrl() {
@@ -57,8 +59,12 @@ export const mcdu = {
   get windowsUrl() {
     return releaseFile(this.releaseTag, this.windowsName);
   },
-  /** YouTube tutorial. */
-  tutorialId: "k0fZdP8D_AU",
+  /** Instructor guide and sources report (built in the MCDU project's
+   * guide folder, copied to landing/public). */
+  guidePath: `${BASE_PATH}/A320_MCDU_Trainer_Instructor_Guide.pdf`,
+  reportPath: `${BASE_PATH}/A320_MCDU_Trainer_Sources_and_Conformance.pdf`,
+  /** YouTube tutorial (v1.2, with the trainer faults chapter). */
+  tutorialId: "OUSMtT1S4fo",
   get tutorialUrl() {
     return `https://www.youtube.com/watch?v=${this.tutorialId}`;
   },
