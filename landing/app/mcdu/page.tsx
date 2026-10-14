@@ -60,6 +60,7 @@ const shots = [
   ["mcdu-wxr-tilt.png", "Manual tilt too low: ground returns over the islands"],
   ["mcdu-dirto.png", "DIR TO from the present position"],
   ["mcdu-plan.png", "PLAN mode with the WPT option"],
+  ["mcdu-faults.png", "Trainer faults: FM1 failed, GPS lost, weather radar system 1 failed"],
 ];
 
 const steps = [
@@ -162,6 +163,12 @@ export default async function McduPage() {
               page, a discontinuity stops managed navigation, and RESET brings
               the aircraft back to the gate. Dashed boxes mark controls that
               exist only in the trainer.
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-silver">
+              <b className="text-white">FAULTS</b> lets the instructor fail a
+              system: FM1 or FM2 (single FMGC, PLEASE WAIT after the reset),
+              IND, MCDU FAIL, GPS (GPS PRIMARY LOST, NAV ACCUR DOWNGRAD on the
+              approach), weather radar system 1 or 2, VOR 1 and ILS.
             </p>
           </div>
         </section>
