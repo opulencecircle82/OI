@@ -37,12 +37,12 @@ const features = [
   },
   {
     title: "Navigation Display",
-    body: "ROSE ILS / VOR / NAV, ARC and PLAN modes, 10 to 320 NM, CSTR / WPT / VOR.D / NDB / ARPT, and the temporary flight plan in yellow.",
+    body: "Mode and range selectors as on the EFIS panel: ROSE ILS / VOR / NAV, ARC and PLAN, 10 to 320 NM, CSTR / WPT / VOR.D / NDB / ARPT, and the temporary flight plan in yellow.",
     icon: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 4v5l3 3",
   },
   {
     title: "Weather radar",
-    body: "MultiScan panel: WX, WX+T, TURB and MAP, GAIN and TILT. A high tilt overshoots the storm; a low tilt paints the ground.",
+    body: "MultiScan panel laid out as in the cockpit: GAIN and TILT knobs, the MODE selector (WX, WX+T, TURB, MAP) and the SYS, MULTISCAN, GCS and PWS switches. A high tilt overshoots the storm; a low tilt paints the ground.",
     icon: "M4 15a8 8 0 0 1 16 0M7 15a5 5 0 0 1 10 0m-5 0 4-6",
   },
 ];
@@ -207,7 +207,7 @@ export default async function McduPage() {
               icon={instructorIcon}
               iconClass="text-fap-amber"
               title="Instructor Guide (PDF)"
-              body="34 pages for the instructor: classroom set-up, license codes, quick reference, eight lesson plans with answer keys (including system faults), and an assessment checklist."
+              body="34 pages for the instructor: classroom set-up, knobs and switches, license codes, quick reference, eight lesson plans with answer keys (including system faults), and an assessment checklist."
               href={mcdu.guidePath}
             />
           </div>
