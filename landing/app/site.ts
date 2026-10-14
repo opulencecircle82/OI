@@ -63,8 +63,8 @@ export const mcdu = {
    * guide folder, copied to landing/public). */
   guidePath: `${BASE_PATH}/A320_MCDU_Trainer_Instructor_Guide.pdf`,
   reportPath: `${BASE_PATH}/A320_MCDU_Trainer_Sources_and_Conformance.pdf`,
-  /** YouTube tutorial (v1.2, with the trainer faults chapter). */
-  tutorialId: "OUSMtT1S4fo",
+  /** YouTube tutorial (v1.3: cockpit-style knobs, trainer faults). */
+  tutorialId: "L5dC84HcGtA",
   get tutorialUrl() {
     return `https://www.youtube.com/watch?v=${this.tutorialId}`;
   },
