@@ -31,6 +31,16 @@ export const metadata: Metadata = {
 
 const features = [
   {
+    title: "Cold & dark to shutdown",
+    body: "Overhead panel with BAT 1 / 2, EXT PWR, APU MASTER SW, START and BLEED, the three ADIRS selectors with ON BATT and ALIGN lights, and the engine MODE and MASTER switches. Align the IRS on IRS INIT, start the engines, fly, then shut down.",
+    icon: "M13 2 4 14h7l-1 8 9-12h-7z",
+  },
+  {
+    title: "Departure & arrival",
+    body: "DEPARTURE and ARRIVAL pages with real runways and fictional training SIDs, STARs, ILS and RNAV approaches; airways, holds, offsets, FIX INFO, step climbs, wind pages and the SEC F-PLN.",
+    icon: "M3 17h18M6 17l4-10 4 10M8 13h4M17 7l3 3-3 3",
+  },
+  {
     title: "MCDU like the aircraft",
     body: "14-line display with the Airbus colour code, line select keys, scratchpad and CLR logic, and real messages such as NOT ALLOWED and FORMAT ERROR.",
     icon: "M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm2 4h10M7 11h10M7 15h6",
@@ -56,7 +66,10 @@ const pages = [
   ["PROG", "Cruise level, optimum and maximum level, bearing and distance to any point."],
   ["RAD NAV", "VOR, ILS and ADF by identifier or frequency, with course."],
   ["FUEL PRED / DATA", "Fuel at destination and alternate, extra fuel, position monitor, aircraft status."],
-  ["MCDU MENU / CFDS", "Maintenance menu: SYSTEM REPORT / TEST, COM, CIDS 1 and 2 reports, ILLUMINATION and POWER-UP tests."],
+  ["DEPARTURE / ARRIVAL", "Runway, SID and transition; approach, STAR and VIA; yellow TMPY, INSERT, missed approach after the destination."],
+  ["IRS INIT / WIND / SEC", "ALIGN ON REF and CONFIRM ALIGN, CLIMB / CRUISE / DESCENT WIND with WIND REQUEST, INIT REQUEST, SEC F-PLN."],
+  ["HOLD / OFFSET / AIRWAYS", "Holding pattern with IMM EXIT, lateral offset, airway VIA / TO, FIX INFO, LL XING, PLACE/BRG/DIST waypoints."],
+  ["MCDU MENU / CFDS", "Maintenance menu: leg reports and AVIONICS STATUS from the trainer faults, SYSTEM REPORT / TEST, CIDS 1 and 2 reports, LRU IDENT, GROUND SCANNING, SYSTEM CONFIG, OP TESTS and system tests."],
 ];
 
 const shots = [
@@ -64,8 +77,11 @@ const shots = [
   ["mcdu-wxr-tilt.png", "Manual tilt too low: ground returns over the islands"],
   ["mcdu-dirto.png", "DIR TO from the present position"],
   ["mcdu-plan.png", "PLAN mode with the WPT option"],
+  ["mcdu-power.png", "Power-up: batteries, EXT PWR, APU starting, ADIRS aligning (HDG / MAP NOT AVAIL on the ND)"],
+  ["mcdu-procedures.png", "ARRIVAL TO RPVM: ILS22 and the training STARs"],
   ["mcdu-faults.png", "Trainer faults: FM1 failed, GPS lost, weather radar system 1 failed"],
   ["mcdu-cfds.png", "CFDS: CIDS 1 SYSTEM TESTS from SYSTEM REPORT / TEST, COM"],
+  ["mcdu-cfds-report.png", "CFDS LAST LEG REPORT: the faults of the flight with UTC and ATA"],
 ];
 
 const steps = [
@@ -182,8 +198,8 @@ export default async function McduPage() {
         <section id="tutorial" className="mx-auto max-w-6xl scroll-mt-8 px-4 pb-20 sm:px-8">
           <SectionTitle
             kicker="TUTORIAL"
-            title="Set up a flight, fly it, read the radar"
-            body="A nine-minute walk-through: INIT A and B, the flight plan, constraints and discontinuities, the temporary flight plan, take-off speeds, ND modes, the weather radar, DIR TO, the trainer faults and the CFDS / CIDS system tests."
+            title="A complete flight, cold and dark to shutdown"
+            body="A nine-minute complete flight, Manila to Cebu: cold and dark, batteries, ground power, ADIRS and APU, INIT A and IRS INIT, departure and arrival, INIT B and PERF, engine start, take-off, weather radar, approach and landing, the CFDS report and the shutdown."
           />
           <div className="mt-8 overflow-hidden rounded-2xl border border-line bg-black shadow-[0_20px_60px_rgb(0_0_0/0.6)]">
             <iframe
@@ -209,7 +225,7 @@ export default async function McduPage() {
               icon={instructorIcon}
               iconClass="text-fap-amber"
               title="Instructor Guide (PDF)"
-              body="36 pages for the instructor: classroom set-up, knobs and switches, license codes, quick reference, nine lesson plans with answer keys (including system faults and CFDS / CIDS tests), and an assessment checklist."
+              body="40 pages for the instructor: classroom set-up, knobs and switches, license codes, quick reference, eleven lesson plans with answer keys (including cold and dark to shutdown, departure and arrival procedures, system faults and CFDS / CIDS tests), and an assessment checklist."
               href={mcdu.guidePath}
             />
           </div>
