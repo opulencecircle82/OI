@@ -48,14 +48,14 @@ export const fap = {
 
 /** A320 MCDU Trainer (pilots: MCDU, ND and weather radar). */
 export const mcdu = {
-  version: "1.3",
-  releaseTag: "mcdu-v1.3",
-  apkName: "A320_MCDU_Trainer_v1.3.apk",
+  version: "1.4",
+  releaseTag: "mcdu-v1.4",
+  apkName: "A320_MCDU_Trainer_v1.4.apk",
   get apkUrl() {
     return releaseFile(this.releaseTag, this.apkName);
   },
   /** Windows installer (Inno Setup), attached to the same release. */
-  windowsName: "A320_MCDU_Trainer_Setup_v1.3.exe",
+  windowsName: "A320_MCDU_Trainer_Setup_v1.4.exe",
   get windowsUrl() {
     return releaseFile(this.releaseTag, this.windowsName);
   },
@@ -63,7 +63,7 @@ export const mcdu = {
    * guide folder, copied to landing/public). */
   guidePath: `${BASE_PATH}/A320_MCDU_Trainer_Instructor_Guide.pdf`,
   reportPath: `${BASE_PATH}/A320_MCDU_Trainer_Sources_and_Conformance.pdf`,
-  /** YouTube tutorial (v1.3: cockpit-style knobs, trainer faults). */
+  /** YouTube tutorial (v1.4: CFDS / CIDS tests). */
   tutorialId: "L5dC84HcGtA",
   get tutorialUrl() {
     return `https://www.youtube.com/watch?v=${this.tutorialId}`;

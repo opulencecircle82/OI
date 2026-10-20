@@ -56,6 +56,7 @@ const pages = [
   ["PROG", "Cruise level, optimum and maximum level, bearing and distance to any point."],
   ["RAD NAV", "VOR, ILS and ADF by identifier or frequency, with course."],
   ["FUEL PRED / DATA", "Fuel at destination and alternate, extra fuel, position monitor, aircraft status."],
+  ["MCDU MENU / CFDS", "Maintenance menu: SYSTEM REPORT / TEST, COM, CIDS 1 and 2 reports, ILLUMINATION and POWER-UP tests."],
 ];
 
 const shots = [
@@ -64,6 +65,7 @@ const shots = [
   ["mcdu-dirto.png", "DIR TO from the present position"],
   ["mcdu-plan.png", "PLAN mode with the WPT option"],
   ["mcdu-faults.png", "Trainer faults: FM1 failed, GPS lost, weather radar system 1 failed"],
+  ["mcdu-cfds.png", "CFDS: CIDS 1 SYSTEM TESTS from SYSTEM REPORT / TEST, COM"],
 ];
 
 const steps = [
@@ -181,7 +183,7 @@ export default async function McduPage() {
           <SectionTitle
             kicker="TUTORIAL"
             title="Set up a flight, fly it, read the radar"
-            body="A seven-minute walk-through: INIT A and B, the flight plan, constraints and discontinuities, the temporary flight plan, take-off speeds, ND modes, the weather radar, DIR TO and the trainer faults."
+            body="A nine-minute walk-through: INIT A and B, the flight plan, constraints and discontinuities, the temporary flight plan, take-off speeds, ND modes, the weather radar, DIR TO, the trainer faults and the CFDS / CIDS system tests."
           />
           <div className="mt-8 overflow-hidden rounded-2xl border border-line bg-black shadow-[0_20px_60px_rgb(0_0_0/0.6)]">
             <iframe
@@ -207,7 +209,7 @@ export default async function McduPage() {
               icon={instructorIcon}
               iconClass="text-fap-amber"
               title="Instructor Guide (PDF)"
-              body="34 pages for the instructor: classroom set-up, knobs and switches, license codes, quick reference, eight lesson plans with answer keys (including system faults), and an assessment checklist."
+              body="36 pages for the instructor: classroom set-up, knobs and switches, license codes, quick reference, nine lesson plans with answer keys (including system faults and CFDS / CIDS tests), and an assessment checklist."
               href={mcdu.guidePath}
             />
           </div>

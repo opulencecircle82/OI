@@ -5,3 +5,10 @@ landing/public/simulator/
 PRIVATE_*
 Releases_backup/
 Windows_Setup/
+
+# Never upload notes, plans or databases
+*.md
+*.sql
+*.db
+*.sqlite
+
