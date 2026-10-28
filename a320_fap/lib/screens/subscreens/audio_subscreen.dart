@@ -88,6 +88,7 @@ class _BgmPanel extends StatelessWidget {
                   width: 84,
                   height: 92,
                   active: fap.musicPlaying,
+                  enabled: fap.pramAvailable,
                   onTap: fap.bgmToggle,
                 ),
               ),
@@ -104,9 +105,13 @@ class _BgmPanel extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          const Text(
-            'During a PA announcement the music is lowered automatically.',
-            style: FapText.label,
+          Text(
+            fap.pramAvailable
+                ? 'During a PA announcement the music is lowered automatically.'
+                : 'No PRAM card: no boarding music.',
+            style: fap.pramAvailable
+                ? FapText.label
+                : FapText.label.copyWith(color: FapColors.amber),
           ),
         ],
       ),
@@ -161,6 +166,43 @@ class _PramPanel extends StatelessWidget {
     final blink = context.watch<Blink>().value;
     final on = fap.onAnnounce;
     PramItem byId(String id) => pramLibrary.firstWhere((p) => p.id == id);
+
+    if (!fap.pramAvailable) {
+      return FapPanel(
+        title: 'PRERECORDED ANNOUNCEMENT',
+        titleColor: FapColors.cyan,
+        child: SizedBox(
+          height: 440,
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'NO PRAM CARD',
+                  style: FapText.title.copyWith(color: FapColors.amber),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'PRERECORDED ANNOUNCEMENTS NOT AVAILABLE',
+                  style: FapText.monoStyle(
+                    size: 14,
+                    color: FapColors.amber,
+                    weight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  'PRAM is an airline option. Without it, the cabin crew\n'
+                  'make every announcement with the handset.',
+                  textAlign: TextAlign.center,
+                  style: FapText.label,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
 
     return FapPanel(
       title: 'PRERECORDED ANNOUNCEMENT',
@@ -470,7 +512,7 @@ class _CabinSettings extends StatelessWidget {
                   width: double.infinity,
                   height: 50,
                   fontSize: 12,
-                  tone: fap.paxCalls.isNotEmpty
+                  tone: fap.allCalls.isNotEmpty
                       ? FapButtonTone.amber
                       : FapButtonTone.normal,
                   onTap: fap.callReset,
@@ -491,10 +533,10 @@ class _CabinSettings extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            fap.paxCalls.isEmpty
+            fap.allCalls.isEmpty
                 ? 'No passenger call'
-                : 'PAX CALL: ${fap.paxCalls.join(', ')}',
-            style: fap.paxCalls.isEmpty
+                : 'PAX CALL: ${fap.allCalls.join(', ')}',
+            style: fap.allCalls.isEmpty
                 ? FapText.label
                 : FapText.monoStyle(
                     size: 12,

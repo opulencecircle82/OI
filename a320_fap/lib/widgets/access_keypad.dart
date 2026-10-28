@@ -92,7 +92,7 @@ class _AccessKeypadState extends State<AccessKeypad> {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    'ACTIVE LAYOUT: ${fap.activeLayout.id} '
+                    'ACTIVE LAYOUT: ${fap.activeLayout.number} '
                     '${fap.layoutCount(fap.activeLayout.id) > 0 ? 'MODIFIED' : 'STANDARD'}',
                     style: FapText.label,
                   ),

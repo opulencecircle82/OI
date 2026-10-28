@@ -7,6 +7,7 @@ import 'package:flutter/material.dart' show Color;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/cabin_setup.dart';
+import '../models/cartridge.dart';
 import '../models/fap_state.dart';
 import '../models/pram_item.dart';
 import '../services/fap_audio.dart';
@@ -53,8 +54,15 @@ class FapProvider extends ChangeNotifier {
   Timer? _restartTimer;
   Timer? _swTimer;
   Timer? _playAllTimer;
+  Timer? _cidsLightTimer;
   final Random _random;
   bool _disposed = false;
+
+  @override
+  void notifyListeners() {
+    _syncEvents();
+    super.notifyListeners();
+  }
 
   // ------------------------------------------------------------ navigation
 
@@ -109,6 +117,69 @@ class FapProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// SCREEN OFF key: while new events wait to be read it steps through
+  /// their pages one at a time; otherwise it blanks the display.
+  void screenOffKey() {
+    final next = infoPage;
+    if (next != null) {
+      goTo(next);
+    } else {
+      setScreenOff(true);
+    }
+  }
+
+  // ------------------------------------------------------------ CAUT / events
+
+  // Each event that has a page: smoke, deployed slides, water / waste,
+  // CIDS faults and calls. An event is "new" until its page is selected.
+  final Set<String> _knownEvents = {};
+  final Set<String> _unseenEvents = {};
+
+  Map<String, FapPage> get _activeEvents => {
+    for (final l in smokeLavs) 'smoke:${l.name}': FapPage.smoke,
+    for (final d in deployedDoors) 'slide:${d.name}': FapPage.doors,
+    if (lavsInop) 'wasteFull': FapPage.water,
+    if (waterLow) 'waterLow': FapPage.water,
+    if (cidsDown)
+      'cids': FapPage.systemInfo
+    else if (_dir1Fault || _dir2Fault)
+      'dir${_dir1Fault ? 1 : 2}': FapPage.systemInfo,
+    for (final s in _paxCalls) 'call:$s': FapPage.audio,
+    for (final l in _lavCalls) 'lav:${l.name}': FapPage.audio,
+  };
+
+  void _syncEvents() {
+    final active = _activeEvents;
+    _knownEvents.removeWhere((k) => !active.containsKey(k));
+    _unseenEvents.removeWhere((k) => !active.containsKey(k));
+    for (final k in active.keys) {
+      if (_knownEvents.add(k)) _unseenEvents.add(k);
+    }
+    _unseenEvents.removeWhere((k) => active[k] == _page);
+  }
+
+  CautState get cautState {
+    if (_knownEvents.isEmpty) return CautState.off;
+    return _unseenEvents.isEmpty ? CautState.steady : CautState.flashing;
+  }
+
+  /// Page of the oldest new event (shown in the info row), if any.
+  FapPage? get infoPage {
+    final active = _activeEvents;
+    for (final e in active.entries) {
+      if (_unseenEvents.contains(e.key)) return e.value;
+    }
+    return null;
+  }
+
+  /// CAUT key: opens the page of the next new event (or of the first
+  /// active one when all have been seen).
+  void cautPressed() {
+    final active = _activeEvents;
+    final next = infoPage ?? (active.isEmpty ? null : active.values.first);
+    if (next != null) goTo(next);
+  }
+
   bool _configOpen = false;
   bool get configOpen => _configOpen;
 
@@ -121,13 +192,23 @@ class FapProvider extends ChangeNotifier {
   bool _cabinReady = false;
   bool get cabinReady => _cabinReady;
 
-  /// CABIN READY: tells the flight crew the cabin is secured.
+  /// CABIN READY: tells the flight crew the cabin is secured. The ECAM
+  /// shows it on the take-off checklist once the engines run and on the
+  /// landing checklist with the gear down.
   void toggleCabinReady() {
     _cabinReady = !_cabinReady;
-    _showNotice(
-      _cabinReady ? 'CABIN READY SENT TO COCKPIT' : 'CABIN READY CANCELLED',
-      color: _cabinReady ? FapColors.okGreen : FapColors.amber,
-    );
+    final String text;
+    if (!_cabinReady) {
+      text = 'CABIN READY CANCELLED';
+    } else if (_phase == FlightPhase.enginesRunning ||
+        _phase == FlightPhase.approach) {
+      text = 'CABIN READY SENT TO COCKPIT';
+    } else if (_phase == FlightPhase.ground) {
+      text = 'CABIN READY SET - SHOWN TO COCKPIT AFTER ENGINE START';
+    } else {
+      text = 'CABIN READY SET - SHOWN TO COCKPIT ON APPROACH';
+    }
+    _showNotice(text, color: _cabinReady ? FapColors.okGreen : FapColors.amber);
     _changed();
   }
 
@@ -163,7 +244,28 @@ class FapProvider extends ChangeNotifier {
   bool get readingAll => _readingAll;
   bool get attWorkLights => _attWorkLights;
   bool get lavMaint => _lavMaint;
-  bool get emerLights => _emerLights;
+
+  /// EMER hard key of the FAP.
+  bool get emerKeyOn => _emerLights;
+
+  /// Cabin emergency lighting: from the FAP EMER key, the cockpit EMER
+  /// EXIT LT switch at ON, or automatically in ARM when the normal
+  /// electrical supply is lost.
+  bool get emerLights =>
+      _emerLights ||
+      _emerExitLt == EmerLtSwitch.on ||
+      (_emerExitLt == EmerLtSwitch.arm && _normalPowerLost);
+
+  /// The FAP controls the cabin lights through the CIDS directors.
+  bool _lightsBlocked() {
+    if (!cidsDown) return false;
+    _showNotice(
+      'CIDS 1+2 FAULT - NO CABIN LIGHT CONTROL',
+      color: FapColors.red,
+    );
+    notifyListeners();
+    return true;
+  }
 
   static LightZone zoneOfClass(CabinClass c) => switch (c) {
     CabinClass.first => LightZone.first,
@@ -191,6 +293,7 @@ class FapProvider extends ChangeNotifier {
 
   /// Pressing the selected level again switches that zone off (FAP toggle).
   void setZoneLight(LightZone z, LightLevel level) {
+    if (_lightsBlocked()) return;
     _lights[z] = _lights[z] == level ? LightLevel.off : level;
     _changed();
   }
@@ -202,27 +305,32 @@ class FapProvider extends ChangeNotifier {
   }
 
   void setGeneralLight(LightLevel level) {
+    if (_lightsBlocked()) return;
     _setAllZones(generalLevel == level ? LightLevel.off : level);
     _changed();
   }
 
   /// LIGHTS MAIN ON/OFF (hard key and touch key).
   void toggleMainLights() {
+    if (_lightsBlocked()) return;
     _setAllZones(mainLightsOn ? LightLevel.off : LightLevel.bright);
     _changed();
   }
 
   void toggleWindowLights() {
+    if (_lightsBlocked()) return;
     _windowLights = !_windowLights;
     _changed();
   }
 
   void toggleAisleLights() {
+    if (_lightsBlocked()) return;
     _aisleLights = !_aisleLights;
     _changed();
   }
 
   void toggleReadingAll() {
+    if (_lightsBlocked()) return;
     _readingAll = !_readingAll;
     _changed();
   }
@@ -230,17 +338,20 @@ class FapProvider extends ChangeNotifier {
   /// R/L SET: switches on every passenger reading light (except inhibited
   /// seats); R/L RESET switches them all off.
   void readingLightsSet(bool on) {
+    if (_lightsBlocked()) return;
     _readingAll = on;
     _changed();
   }
 
   void toggleAttWorkLights() {
+    if (_lightsBlocked()) return;
     _attWorkLights = !_attWorkLights;
     _changed();
   }
 
   /// LAV MAINT hard key: lavatory lights full bright for maintenance.
   void toggleLavMaint() {
+    if (_lightsBlocked()) return;
     _lavMaint = !_lavMaint;
     _changed();
   }
@@ -409,15 +520,23 @@ class FapProvider extends ChangeNotifier {
   }
 
   Future<void> _announce(String id) async {
+    String? blocked;
     if (cidsDown) {
-      _showNotice('CIDS 1+2 FAULT - PA NOT AVAILABLE', color: FapColors.red);
+      blocked = 'CIDS 1+2 FAULT - PA NOT AVAILABLE';
+    } else if (!pramAvailable) {
+      blocked = 'NO PRAM CARD - USE THE HANDSET FOR ANNOUNCEMENTS';
+    } else if (_cockpitPa) {
+      blocked = 'COCKPIT PA HAS PRIORITY - PLAY AFTER THE COCKPIT PA';
+    }
+    if (blocked != null) {
+      _showNotice(blocked, color: FapColors.red);
       _playAll = false;
       notifyListeners();
       return;
     }
     _playingAnnouncement = id;
     notifyListeners();
-    final ok = await audio.announce(id);
+    final ok = await audio.announce(id, voice: pramCard!.voiceFolder);
     if (!ok) {
       _playingAnnouncement = null;
       _playAll = false;
@@ -503,7 +622,7 @@ class FapProvider extends ChangeNotifier {
 
   void bgmSelect(BgmChannel c) {
     _bgmChannel = c;
-    if (_bgmOn && !cidsDown) audio.startMusic(c);
+    if (_bgmOn && !cidsDown && pramAvailable) audio.startMusic(c);
     _changed();
   }
 
@@ -515,6 +634,14 @@ class FapProvider extends ChangeNotifier {
   void bgmToggle() {
     if (!_bgmOn && cidsDown) {
       _showNotice('CIDS 1+2 FAULT - BGM NOT AVAILABLE', color: FapColors.red);
+      notifyListeners();
+      return;
+    }
+    if (!_bgmOn && !pramAvailable) {
+      _showNotice(
+        'NO PRAM CARD - BOARDING MUSIC NOT AVAILABLE',
+        color: FapColors.red,
+      );
       notifyListeners();
       return;
     }
@@ -846,16 +973,142 @@ class FapProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Trainer: low cabin pressure. CIDS switches the cabin lights to BRT.
-  void lowCabinPressure() {
-    for (final z in LightZone.values) {
-      _lights[z] = LightLevel.bright;
-    }
-    _showNotice(
-      'LOW CABIN PRESSURE - CABIN LIGHTS BRT (AUTO)',
-      color: FapColors.red,
-    );
+  // ------------------------------------------------------------ cockpit / aircraft
+
+  FlightPhase _phase = FlightPhase.ground;
+  FlightPhase get flightPhase => _phase;
+  bool get onGround => _phase.onGround;
+
+  /// Trainer: what the CIDS receives from the aircraft (ground / engines
+  /// running / flight / approach with the gear down).
+  void setFlightPhase(FlightPhase p) {
+    if (p == _phase) return;
+    final before = _signs;
+    _phase = p;
+    _afterSigns(before);
     _changed();
+  }
+
+  bool _seatBeltSw = false;
+  SignSwitch _noSmokingSw = SignSwitch.auto;
+  bool get seatBeltSwitch => _seatBeltSw;
+  SignSwitch get noSmokingSwitch => _noSmokingSw;
+
+  /// FASTEN SEAT BELT signs. They also come on by themselves at low cabin
+  /// pressure, and are lost with CIDS 1+2 FAULT.
+  bool get seatBeltSignOn => !cidsDown && (_seatBeltSw || _lowPressure);
+
+  /// NO SMOKING signs: switch ON, or AUTO with the landing gear down.
+  bool get noSmokingSignOn =>
+      !cidsDown &&
+      (_noSmokingSw == SignSwitch.on ||
+          (_noSmokingSw == SignSwitch.auto && _phase.gearDown) ||
+          _lowPressure);
+
+  /// RETURN TO SEAT signs in the lavatories follow the seat belt signs.
+  bool get returnToSeatOn => seatBeltSignOn;
+
+  /// EXIT signs: with the emergency lights, at low cabin pressure, or in
+  /// ARM when NO SMOKING is ON or AUTO with the gear down.
+  bool get exitSignsOn =>
+      emerLights ||
+      _lowPressure ||
+      (_emerExitLt == EmerLtSwitch.arm &&
+          (_noSmokingSw == SignSwitch.on ||
+              (_noSmokingSw == SignSwitch.auto && _phase.gearDown)));
+
+  (bool, bool) get _signs => (seatBeltSignOn, noSmokingSignOn);
+
+  /// A passenger sign switching on or off sounds a single low chime.
+  void _afterSigns((bool, bool) before) {
+    if (_signs != before && !cidsDown) audio.chime(ChimeType.singleLow);
+  }
+
+  /// Trainer: cockpit SEAT BELTS switch.
+  void toggleSeatBeltSwitch() {
+    final before = _signs;
+    _seatBeltSw = !_seatBeltSw;
+    _afterSigns(before);
+    _changed();
+  }
+
+  /// Trainer: cockpit NO SMOKING switch.
+  void setNoSmokingSwitch(SignSwitch s) {
+    final before = _signs;
+    _noSmokingSw = s;
+    _afterSigns(before);
+    _changed();
+  }
+
+  EmerLtSwitch _emerExitLt = EmerLtSwitch.arm;
+  bool _normalPowerLost = false;
+  EmerLtSwitch get emerExitLtSwitch => _emerExitLt;
+  bool get normalPowerLost => _normalPowerLost;
+
+  /// Trainer: cockpit EMER EXIT LT switch.
+  void setEmerExitLt(EmerLtSwitch s) {
+    _emerExitLt = s;
+    _changed();
+  }
+
+  /// Trainer: the aircraft loses its normal electrical supply. In ARM the
+  /// emergency lights come on by themselves.
+  void toggleNormalPowerLost() {
+    _normalPowerLost = !_normalPowerLost;
+    if (_normalPowerLost && _emerExitLt == EmerLtSwitch.arm) {
+      _showNotice(
+        'NORMAL POWER LOST - EMERGENCY LIGHTS ON (AUTO)',
+        color: FapColors.red,
+      );
+    }
+    notifyListeners();
+  }
+
+  bool _lowPressure = false;
+  bool get lowPressure => _lowPressure;
+
+  /// Trainer: low cabin pressure. The CIDS switches every cabin light to
+  /// BRT, the passenger signs come on and the PA volume goes up.
+  void toggleLowCabinPressure() {
+    final before = _signs;
+    _lowPressure = !_lowPressure;
+    audio.setPaBoost(_lowPressure);
+    if (_lowPressure) {
+      _setAllZones(LightLevel.bright);
+      _showNotice(
+        'LOW CABIN PRESSURE - LIGHTS BRT, SIGNS ON, PA LOUDER (AUTO)',
+        color: FapColors.red,
+      );
+    } else {
+      _showNotice('CABIN PRESSURE NORMAL', color: FapColors.okGreen);
+    }
+    _afterSigns(before);
+    _changed();
+  }
+
+  bool _cockpitPa = false;
+  bool get cockpitPa => _cockpitPa;
+
+  /// Trainer: the flight crew makes a PA from the cockpit handset. It has
+  /// priority over the PRAM: a playing announcement stops and the boarding
+  /// music is lowered until the cockpit PA ends.
+  void toggleCockpitPa() {
+    if (!_cockpitPa && cidsDown) {
+      _showNotice('CIDS 1+2 FAULT - PA NOT AVAILABLE', color: FapColors.red);
+      notifyListeners();
+      return;
+    }
+    _cockpitPa = !_cockpitPa;
+    audio.setOtherPaActive(_cockpitPa);
+    if (_cockpitPa) {
+      _playAll = false;
+      _playAllTimer?.cancel();
+      if (_playingAnnouncement != null) {
+        audio.stopAnnouncement();
+        _showNotice('COCKPIT PA - PRAM ANNOUNCEMENT STOPPED (PRIORITY)');
+      }
+    }
+    notifyListeners();
   }
 
   int _lockRemaining = 0;
@@ -890,6 +1143,22 @@ class FapProvider extends ChangeNotifier {
 
   CabinLayout get activeLayout => layoutById(_layoutId);
   int get pendingLayout => _pendingLayout ?? _layoutId;
+
+  /// The CAM whose layout is active (kept by the CIDS after a CAM change
+  /// until a layout of the new CAM is loaded).
+  Cartridge get activeCam => cardById(activeLayout.cam)!;
+
+  /// Layouts of the CAM in the slot (empty without a CAM).
+  List<CabinLayout> get slotLayouts {
+    final cam = cardInSlot(CardSlot.cam);
+    return cam == null ? const [] : layoutsOfCam(cam.id);
+  }
+
+  /// Why LAYOUT SELECTION cannot be used now (empty = available).
+  List<String> get layoutSelectionBlocks => [
+    if (!onGround) 'IN FLIGHT',
+    if (cardInSlot(CardSlot.cam) == null) 'NO CAM IN SLOT',
+  ];
   List<int> classStarts([int? id]) => _starts[id ?? _layoutId]!;
   int layoutCount(int id) => _layoutCount[id]!;
   DateTime? layoutChanged(int id) => _layoutChanged[id];
@@ -916,13 +1185,31 @@ class FapProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// LOAD: activates the highlighted layout.
+  /// LOAD: activates the highlighted layout of the CAM in the slot
+  /// (ground only).
   void loadLayout() {
+    final blocks = layoutSelectionBlocks;
+    if (blocks.isNotEmpty) {
+      _showNotice(
+        'LAYOUT SELECTION NOT AVAILABLE - ${blocks.join(' / ')}',
+        color: FapColors.red,
+      );
+      notifyListeners();
+      return;
+    }
+    if (!slotLayouts.any((l) => l.id == pendingLayout)) {
+      _showNotice('SELECT A LAYOUT OF THE CAM IN THE SLOT');
+      notifyListeners();
+      return;
+    }
     _layoutId = pendingLayout;
     _pendingLayout = null;
     _draftStarts = null;
     _applyAudioOutput();
-    _showNotice('LAYOUT $_layoutId LOADED', color: FapColors.okGreen);
+    _showNotice(
+      'LAYOUT ${activeLayout.number} LOADED (${activeCam.name})',
+      color: FapColors.okGreen,
+    );
     _changed();
   }
 
@@ -974,6 +1261,17 @@ class FapProvider extends ChangeNotifier {
   void saveProgramming() {
     if (!programmingDirty) {
       _showNotice('NOTHING TO SAVE', color: FapColors.textDim);
+      notifyListeners();
+      return;
+    }
+    // The modified layout is written to the CAM of the active layout.
+    if (cardInSlot(CardSlot.cam)?.id != activeLayout.cam) {
+      _showNotice(
+        cardInSlot(CardSlot.cam) == null
+            ? 'NO CAM IN SLOT - CANNOT SAVE'
+            : 'CAM IN SLOT IS NOT THE CAM OF THE ACTIVE LAYOUT',
+        color: FapColors.red,
+      );
       notifyListeners();
       return;
     }
@@ -1062,12 +1360,35 @@ class FapProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// CALL RESET: cancels every passenger call.
+  final Set<Lavatory> _lavCalls = {};
+
+  /// Lavatories whose call button is pressed.
+  List<Lavatory> get lavCalls =>
+      Lavatory.values.where(_lavCalls.contains).toList();
+
+  /// Seat and lavatory calls, as shown in the caution row.
+  List<String> get allCalls => [
+    ..._paxCalls,
+    for (final l in lavCalls) l.label,
+  ];
+
+  /// Trainer: a passenger presses the call button in a lavatory (single
+  /// high chime). Pressing it again cancels the call, like the aircraft.
+  void lavCall(Lavatory l) {
+    if (!_lavCalls.remove(l)) {
+      _lavCalls.add(l);
+      if (!_chimeInhibit && !cidsDown) audio.chime(ChimeType.singleHigh);
+    }
+    notifyListeners();
+  }
+
+  /// CALL RESET: cancels every passenger and lavatory call.
   void callReset() {
-    if (_paxCalls.isEmpty) {
+    if (_paxCalls.isEmpty && _lavCalls.isEmpty) {
       _showNotice('NO PASSENGER CALL', color: FapColors.textDim);
     }
     _paxCalls.clear();
+    _lavCalls.clear();
     notifyListeners();
   }
 
@@ -1212,19 +1533,29 @@ class FapProvider extends ChangeNotifier {
   // ------------------------------------------------------------ software
 
   double? _swProgress;
-  bool _swUpdated = false;
+
+  /// OBRM whose software the CIDS runs.
+  String _activeSw = 'obrm_a';
 
   /// 0..1 while software is loading, otherwise null.
   double? get swProgress => _swProgress;
 
-  /// True once the software in the OBRM slot has been loaded.
-  bool get swUpdated => _swUpdated;
+  Cartridge get activeSoftware => cardById(_activeSw)!;
+
+  /// True when the CIDS runs the software of the OBRM in the slot.
+  bool get swUpdated => cardInSlot(CardSlot.obrm)?.id == _activeSw;
 
   /// LOAD SW: loads the CIDS software from the OBRM; the CIDS restarts
   /// automatically afterwards.
   void loadSoftware() {
     if (_swProgress != null) return;
-    if (_swUpdated) {
+    final obrm = cardInSlot(CardSlot.obrm);
+    if (obrm == null) {
+      _showNotice('NO OBRM IN SLOT', color: FapColors.red);
+      notifyListeners();
+      return;
+    }
+    if (swUpdated) {
       _showNotice('SOFTWARE ALREADY UP TO DATE', color: FapColors.textDim);
       notifyListeners();
       return;
@@ -1237,12 +1568,117 @@ class FapProvider extends ChangeNotifier {
       if (_swProgress! >= 1) {
         t.cancel();
         _swProgress = null;
-        _swUpdated = true;
+        _activeSw = obrm.id;
         fapReset();
+        _changed();
       }
       notifyListeners();
     });
     notifyListeners();
+  }
+
+  // ------------------------------------------------------------ cartridges
+
+  final Map<CardSlot, String?> _slotCard = {...defaultCards};
+
+  /// Slots emptied with REMOVE that still wait for OK.
+  final Set<CardSlot> _slotPending = {};
+
+  /// Card chosen in the trainer card case, per slot.
+  final Map<CardSlot, String> _cardPick = {...defaultCards};
+
+  /// The card physically in [slot] (also while waiting for OK).
+  Cartridge? cardPhysicallyIn(CardSlot slot) => cardById(_slotCard[slot]);
+
+  /// The card the CIDS can use: in the slot and confirmed with OK.
+  Cartridge? cardInSlot(CardSlot slot) =>
+      _slotPending.contains(slot) ? null : cardById(_slotCard[slot]);
+
+  bool slotPending(CardSlot slot) => _slotPending.contains(slot);
+  String cardPick(CardSlot slot) => _cardPick[slot]!;
+
+  Cartridge? get pramCard => cardInSlot(CardSlot.pram);
+
+  /// Announcements and boarding music need a PRAM card.
+  bool get pramAvailable => pramCard != null;
+
+  /// FAP SET-UP > REMOVE: the card can be taken out of [slot].
+  void removeCard(CardSlot slot) {
+    if (slot == CardSlot.obrm && _swProgress != null) {
+      _showNotice(
+        'SOFTWARE LOADING - DO NOT REMOVE THE OBRM',
+        color: FapColors.red,
+      );
+      notifyListeners();
+      return;
+    }
+    if (_slotCard[slot] == null) {
+      _showNotice('${slot.label} SLOT IS EMPTY - INSERT A CARD, THEN PRESS OK');
+      notifyListeners();
+      return;
+    }
+    _slotCard[slot] = null;
+    _slotPending.add(slot);
+    if (slot == CardSlot.pram) {
+      _playAll = false;
+      _playAllTimer?.cancel();
+      if (_playingAnnouncement != null) audio.stopAnnouncement();
+      if (_bgmOn) {
+        _bgmOn = false;
+        audio.stopMusic();
+      }
+    }
+    _showNotice('${slot.label} REMOVED - INSERT THE NEW CARD, THEN PRESS OK');
+    _changed();
+  }
+
+  /// Trainer card case: chooses the card to insert into [slot].
+  void pickCard(CardSlot slot, String id) {
+    _cardPick[slot] = id;
+    notifyListeners();
+  }
+
+  /// Trainer card case: puts the chosen card into the empty [slot].
+  void insertCard(CardSlot slot) {
+    if (_slotCard[slot] != null) {
+      _showNotice('${slot.label} SLOT IS FULL - PRESS REMOVE ON THE FAP FIRST');
+      notifyListeners();
+      return;
+    }
+    _slotCard[slot] = _cardPick[slot];
+    _slotPending.add(slot);
+    _changed();
+  }
+
+  /// FAP SET-UP > OK: the card change of [slot] is finished.
+  void confirmCard(CardSlot slot) {
+    final card = cardPhysicallyIn(slot);
+    if (card == null) {
+      _showNotice('NO CARD IN THE ${slot.label} SLOT', color: FapColors.red);
+      notifyListeners();
+      return;
+    }
+    _slotPending.remove(slot);
+    switch (slot) {
+      case CardSlot.pram:
+        _showNotice('PRAM LOADED - ${card.name}', color: FapColors.okGreen);
+      case CardSlot.cam:
+        _pendingLayout = null;
+        _showNotice(
+          card.id == activeLayout.cam
+              ? 'CAM INSERTED - ${card.name}'
+              : 'CAM INSERTED - LOAD A LAYOUT ON LAYOUT SELECTION',
+          color: FapColors.okGreen,
+        );
+      case CardSlot.obrm:
+        _showNotice(
+          swUpdated
+              ? 'OBRM INSERTED - SOFTWARE UP TO DATE'
+              : 'OBRM INSERTED - LOAD THE SOFTWARE ON SOFTWARE LOADING',
+          color: FapColors.okGreen,
+        );
+    }
+    _changed();
   }
 
   // ------------------------------------------------------------ CIDS
@@ -1256,20 +1692,42 @@ class FapProvider extends ChangeNotifier {
   /// 1 or 2, or null when both directors have failed.
   int? get activeDirector => !_dir1Fault ? 1 : (!_dir2Fault ? 2 : null);
 
+  /// True once the cabin lights went to full brightness after the loss of
+  /// the CIDS (until it is restored).
+  bool _cidsLightsFull = false;
+  bool get cidsLightsFull => _cidsLightsFull;
+
   void toggleDirectorFault(int n) {
+    final wasDown = cidsDown;
     if (n == 1) {
       _dir1Fault = !_dir1Fault;
     } else {
       _dir2Fault = !_dir2Fault;
     }
-    if (cidsDown) {
+    if (cidsDown && !wasDown) {
       // PA, interphone and passenger signs are lost.
       _bgmOn = false;
       _playAll = false;
+      _cockpitPa = false;
+      audio.setOtherPaActive(false);
       audio.stopMusic();
       audio.stopAnnouncement();
+      // Without a CIDS signal the cabin lights go to full brightness
+      // after 3 minutes.
+      _cidsLightTimer?.cancel();
+      _cidsLightTimer = Timer(const Duration(minutes: 3), () {
+        if (_disposed || !cidsDown) return;
+        _setAllZones(LightLevel.bright);
+        _cidsLightsFull = true;
+        _changed();
+      });
+    } else if (wasDown && !cidsDown) {
+      // CIDS back: the lavatory lights dim, the others stay as they are.
+      _cidsLightTimer?.cancel();
+      _cidsLightsFull = false;
+      _lavMaint = false;
     }
-    notifyListeners();
+    _changed();
   }
 
   // ------------------------------------------------------------ status row
@@ -1313,9 +1771,9 @@ class FapProvider extends ChangeNotifier {
         FapColors.amber,
       );
     }
-    if (_paxCalls.isNotEmpty) {
+    if (allCalls.isNotEmpty) {
       return CautionMessage(
-        'PAX CALL  ${_paxCalls.join(' / ')}',
+        'PAX CALL  ${allCalls.join(' / ')}',
         FapColors.cyan,
       );
     }
@@ -1407,6 +1865,28 @@ class FapProvider extends ChangeNotifier {
     _nonSmoker = true;
     _levels.updateAll((_, _) => const LevelSetting());
     _granted.clear();
+    _lavCalls.clear();
+    _phase = FlightPhase.ground;
+    _seatBeltSw = false;
+    _noSmokingSw = SignSwitch.auto;
+    _emerExitLt = EmerLtSwitch.arm;
+    _normalPowerLost = false;
+    _lowPressure = false;
+    audio.setPaBoost(false);
+    _cockpitPa = false;
+    audio.setOtherPaActive(false);
+    _cidsLightTimer?.cancel();
+    _cidsLightsFull = false;
+    _slotCard
+      ..clear()
+      ..addAll(defaultCards);
+    _cardPick
+      ..clear()
+      ..addAll(defaultCards);
+    _slotPending.clear();
+    _activeSw = 'obrm_a';
+    _swTimer?.cancel();
+    _swProgress = null;
     _applyAudioOutput();
     audio.stopAll();
     _page = FapPage.lights;
@@ -1486,9 +1966,15 @@ class FapProvider extends ChangeNotifier {
     'touchClick': _touchClick,
     'muteAll': _muteAll,
     'tempF': _tempF,
-    'swUpdated': _swUpdated,
+    'activeSw': _activeSw,
     'pedPower': _pedPower,
     'chimeInhibit': _chimeInhibit,
+    'phase': _phase.name,
+    'seatBeltSw': _seatBeltSw,
+    'noSmokingSw': _noSmokingSw.name,
+    'emerExitLt': _emerExitLt.name,
+    'cards': {for (final e in _slotCard.entries) e.key.name: e.value},
+    'cardsPending': [for (final s in _slotPending) s.name],
   };
 
   void _fromJson(Map<String, dynamic> j) {
@@ -1613,9 +2099,40 @@ class FapProvider extends ChangeNotifier {
     _touchClick = j['touchClick'] as bool? ?? _touchClick;
     _muteAll = j['muteAll'] as bool? ?? _muteAll;
     _tempF = j['tempF'] as bool? ?? _tempF;
-    _swUpdated = j['swUpdated'] as bool? ?? _swUpdated;
+    final sw = j['activeSw'];
+    if (obrmSoftware.containsKey(sw)) {
+      _activeSw = sw as String;
+    } else if (j['swUpdated'] == true) {
+      _activeSw = 'obrm_b'; // saved by v3.x
+    }
     _pedPower = j['pedPower'] as bool? ?? _pedPower;
     _chimeInhibit = j['chimeInhibit'] as bool? ?? _chimeInhibit;
+    _phase = byName(FlightPhase.values, j['phase']) ?? _phase;
+    _seatBeltSw = j['seatBeltSw'] as bool? ?? _seatBeltSw;
+    _noSmokingSw = byName(SignSwitch.values, j['noSmokingSw']) ?? _noSmokingSw;
+    _emerExitLt = byName(EmerLtSwitch.values, j['emerExitLt']) ?? _emerExitLt;
+    final cards = j['cards'];
+    if (cards is Map<String, dynamic>) {
+      for (final slot in CardSlot.values) {
+        if (!cards.containsKey(slot.name)) continue;
+        final id = cards[slot.name];
+        if (id == null) {
+          _slotCard[slot] = null;
+        } else if (cardsFor(slot).any((c) => c.id == id)) {
+          _slotCard[slot] = id as String;
+        }
+      }
+    }
+    _slotPending
+      ..clear()
+      ..addAll([
+        for (final s in (j['cardsPending'] as List? ?? const []))
+          ?byName(CardSlot.values, s),
+      ]);
+    // An empty slot always waits for a card and OK.
+    for (final slot in CardSlot.values) {
+      if (_slotCard[slot] == null) _slotPending.add(slot);
+    }
   }
 
   @override
@@ -1628,6 +2145,7 @@ class FapProvider extends ChangeNotifier {
     _restartTimer?.cancel();
     _swTimer?.cancel();
     _playAllTimer?.cancel();
+    _cidsLightTimer?.cancel();
     audio.dispose();
     super.dispose();
   }

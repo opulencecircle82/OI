@@ -224,10 +224,22 @@ void main() {
       expect(audio.calls, ['chime:emergency']);
     });
 
-    test('low cabin pressure switches cabin lights to BRT', () {
+    test('low cabin pressure: lights BRT, signs on, PA louder', () {
       fap.setGeneralLight(LightLevel.dim2);
-      fap.lowCabinPressure();
+      fap.setNoSmokingSwitch(SignSwitch.off);
+      expect(fap.seatBeltSignOn, isFalse);
+      audio.calls.clear();
+      fap.toggleLowCabinPressure();
       expect(fap.generalLevel, LightLevel.bright);
+      expect(fap.seatBeltSignOn, isTrue);
+      expect(fap.noSmokingSignOn, isTrue);
+      expect(fap.exitSignsOn, isTrue);
+      expect(audio.paBoost, isTrue);
+      expect(audio.calls, ['chime:singleLow']);
+      fap.toggleLowCabinPressure();
+      expect(fap.seatBeltSignOn, isFalse);
+      expect(fap.noSmokingSignOn, isFalse);
+      expect(audio.paBoost, isFalse);
     });
 
     test('PED POWER toggles and FAP RESET restarts for 4 s', () {

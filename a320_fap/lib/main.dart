@@ -8,7 +8,9 @@ import 'providers/fap_provider.dart';
 import 'screens/disclaimer_screen.dart';
 import 'screens/fap_simulator_screen.dart';
 import 'screens/unlock_screen.dart';
+import 'screens/update_dialog.dart';
 import 'services/access_lock.dart';
+import 'services/update_service.dart';
 import 'theme/fap_theme.dart';
 import 'widgets/blink.dart';
 
@@ -35,6 +37,7 @@ Future<void> main() async {
       unlocked: unlocked,
       demo: demo,
       checkLicenseOnline: unlocked,
+      checkUpdates: true,
     ),
   );
 }
@@ -47,6 +50,7 @@ class AisatFapApp extends StatefulWidget {
     this.demo = false,
     this.showDisclaimer = true,
     this.checkLicenseOnline = false,
+    this.checkUpdates = false,
   });
 
   final FapProvider fap;
@@ -64,6 +68,9 @@ class AisatFapApp extends StatefulWidget {
   /// license (it may have been transferred). Never blocks start-up.
   final bool checkLicenseOnline;
 
+  /// Ask the website for a newer version; offered once the panel shows.
+  final bool checkUpdates;
+
   @override
   State<AisatFapApp> createState() => _AisatFapAppState();
 }
@@ -74,11 +81,30 @@ class _AisatFapAppState extends State<AisatFapApp> {
   late final _unlocked = ValueNotifier<bool>(widget.unlocked);
   late final _demo = ValueNotifier<bool>(widget.demo);
   late final _agreed = ValueNotifier<bool>(!widget.showDisclaimer);
+  final _update = ValueNotifier<UpdateInfo?>(null);
+  bool _updateOffered = false;
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
     super.initState();
     if (widget.checkLicenseOnline) _checkLicense();
+    if (widget.checkUpdates) {
+      UpdateService.check().then((u) {
+        if (mounted) _update.value = u;
+      });
+    }
+  }
+
+  /// Offers the update once, when the panel is on screen.
+  void _offerUpdate() {
+    final info = _update.value;
+    if (info == null || _updateOffered) return;
+    _updateOffered = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final ctx = _navigatorKey.currentContext;
+      if (ctx != null && ctx.mounted) showUpdateDialog(ctx, info);
+    });
   }
 
   Future<void> _checkLicense() async {
@@ -96,6 +122,7 @@ class _AisatFapAppState extends State<AisatFapApp> {
     _unlocked.dispose();
     _demo.dispose();
     _agreed.dispose();
+    _update.dispose();
     super.dispose();
   }
 
@@ -108,7 +135,7 @@ class _AisatFapAppState extends State<AisatFapApp> {
   Widget build(BuildContext context) {
     Route<void> home() => MaterialPageRoute<void>(
       builder: (_) => ListenableBuilder(
-        listenable: Listenable.merge([_unlocked, _demo, _agreed]),
+        listenable: Listenable.merge([_unlocked, _demo, _agreed, _update]),
         builder: (_, _) {
           if (!_unlocked.value && !_demo.value) {
             return UnlockScreen(
@@ -119,10 +146,10 @@ class _AisatFapAppState extends State<AisatFapApp> {
           if (!_agreed.value) {
             return DisclaimerScreen(onAgree: () => _agreed.value = true);
           }
+          _offerUpdate();
           return FapSimulatorScreen(
             demo: !_unlocked.value,
             onLicensed: _licensed,
-            onDeactivated: _deactivated,
           );
         },
       ),
@@ -133,6 +160,7 @@ class _AisatFapAppState extends State<AisatFapApp> {
         ChangeNotifierProvider(create: (_) => Blink()),
       ],
       child: MaterialApp(
+        navigatorKey: _navigatorKey,
         title: AppConfig.appName,
         debugShowCheckedModeBanner: false,
         theme: buildAppTheme(),

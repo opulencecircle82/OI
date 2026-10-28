@@ -22,14 +22,14 @@ export const site = {
 export const fap = {
   /** Show the license-code text once the activation database is live. */
   licensing: true,
-  version: "3.9",
-  releaseTag: "v3.9.0",
-  apkName: "A320_FAP_v3.9.apk",
+  version: "4.0",
+  releaseTag: "v4.0.0",
+  apkName: "A320_FAP_v4.0.apk",
   get apkUrl() {
     return releaseFile(this.releaseTag, this.apkName);
   },
   /** Windows installer (Inno Setup), attached to the same release. */
-  windowsName: "A320_FAP_Setup_v3.9.exe",
+  windowsName: "A320_FAP_Setup_v4.0.exe",
   get windowsUrl() {
     return releaseFile(this.releaseTag, this.windowsName);
   },

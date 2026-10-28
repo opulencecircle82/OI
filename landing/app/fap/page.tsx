@@ -43,14 +43,15 @@ const features = [
   },
   {
     title: "Flight Attendant Training Drills",
-    body: "Arm / disarm and cross-check, lavatory smoke, evacuation, PRAM announcements and CIDS fault scenarios.",
+    body: "Arm / disarm and cross-check, passenger signs, lavatory calls, smoke, evacuation, low cabin pressure, PRAM and CIDS fault scenarios.",
     icon: "M12 4 2 9l10 5 10-5-10-5zm-6 7.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5",
   },
 ];
 
 const pages = [
-  ["STATUS", "Cabin overview of every system at a glance."],
-  ["AUDIO", "4 boarding music channels, PRAM with MEMO / PLAY ALL, chimes."],
+  ["STATUS", "Every system at a glance, passenger signs, flight phase and cockpit trainer."],
+  ["CAUT", "Flashes for a new event and asks for its page; steady once seen."],
+  ["AUDIO", "4 boarding music channels, PRAM with MEMO / PLAY ALL, calls, chimes."],
   ["LIGHTS", "BRT 100% · DIM 1 50% · DIM 2 10% per cabin zone."],
   ["DOORS / SLIDES", "8 exits. Open an armed door and the slide deploys."],
   ["TEMP", "FWD / AFT zones: ±2.5 °C fine adjustment of the cockpit setting."],
@@ -59,9 +60,10 @@ const pages = [
   ["SEAT SETTING", "Inhibit call buttons or reading lights per seat, passenger calls."],
   ["SYSTEM INFO", "CIDS directors, CAPT / CAPT & PURS selector, fault drills."],
   ["CABIN PROG", "Move cabin zones between classes and save to the CAM."],
-  ["LAYOUT SELECT", "Load 1-, 2- or 3-class CAM layouts."],
+  ["LAYOUT SELECT", "Load the layouts of the CAM in the slot (ground only)."],
   ["LEVEL ADJUST", "Announcement and chime levels per zone, -6 to +6 dB."],
-  ["SW LOAD / FAP SET-UP", "Software loading, brightness, loudspeaker, key click."],
+  ["SW LOAD", "Load the CIDS software from the OBRM in the slot."],
+  ["FAP SET-UP", "Brightness, volume, key click; remove and insert PRAM / CAM / OBRM cards."],
 ];
 
 const hardKeys = [
@@ -211,6 +213,12 @@ export default async function FapPage() {
           >
             Watch on YouTube →
           </a>
+          <p className="mt-4 rounded-xl border border-fap-amber/40 bg-fap-amber/10 p-4 text-sm leading-relaxed text-silver">
+            <b className="text-fap-amber">Note:</b> PRAM (pre-recorded
+            announcements and boarding music) is an airline option. Not every
+            A320 has it. Without PRAM, the cabin crew make all announcements
+            with the handset, and there is no boarding music from the FAP.
+          </p>
 
           <div className="mt-8">
             <PdfCard
@@ -218,7 +226,7 @@ export default async function FapPage() {
               icon={manualIcon}
               iconClass="text-cyan"
               title="User Manual (PDF)"
-              body="42 pages: every page, key and hard key explained with screenshots, plus step-by-step training drills and troubleshooting."
+              body="51 pages: every page, key and hard key explained with screenshots, plus step-by-step training drills and troubleshooting."
               href={fap.manualPath}
             />
           </div>
@@ -226,7 +234,7 @@ export default async function FapPage() {
             icon={instructorIcon}
             iconClass="text-fap-amber"
             title="Instructor Guide (PDF)"
-            body="27 pages for the instructor: classroom set-up, license codes, eight lesson plans with expected results, and an assessment checklist."
+            body="34 pages for the instructor: classroom set-up, license codes, ten lesson plans with expected results, and an assessment checklist."
             href={fap.guidePath}
           />
           <PdfCard
@@ -320,9 +328,14 @@ export default async function FapPage() {
                 Ask your instructor for a code.
               </p>
               <p className="mt-2 text-sm leading-relaxed text-silver">
-                New tablet? On the old tablet tap ⚙ SETTINGS on the panel frame, then{" "}
-                <b className="text-white">Deactivate &amp; Transfer License</b>, then
-                enter the same code on the new one.
+                New tablet or PC? Ask your instructor or administrator to move
+                the license, then enter the same code on the new device.
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-silver">
+                Updates: the app checks for a new version when it starts, and
+                ⚙ SETTINGS has <b className="text-white">Check for updates</b>.
+                Tap Update now: it downloads and opens the installer. Your
+                license stays active.
               </p>
               <p className="mt-2 text-sm leading-relaxed text-silver">
                 No code yet? Try the free demo with code{" "}

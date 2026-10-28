@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/cartridge.dart';
 import '../providers/fap_provider.dart';
 import '../theme/fap_theme.dart';
 import 'blink.dart';
@@ -348,12 +349,14 @@ class _Divider extends StatelessWidget {
 
 /// Memory card slots of the FAP lower panel: PRAM (announcements),
 /// CAM (cabin assignment module) and OBRM (on-board replaceable module).
+/// A card in the slot shows as a light edge; an empty slot is dark.
 class _CardSlot extends StatelessWidget {
   const _CardSlot();
 
   @override
   Widget build(BuildContext context) {
-    Widget slot(String name, Color tag) => Padding(
+    final fap = context.watch<FapProvider>();
+    Widget slot(CardSlot s, Color tag) => Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -361,18 +364,29 @@ class _CardSlot extends StatelessWidget {
           Container(
             width: 70,
             height: 10,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
               color: const Color(0xFF1C2127),
               borderRadius: BorderRadius.circular(3),
               border: Border.all(color: const Color(0xFF5B636C)),
             ),
+            child: fap.cardPhysicallyIn(s) == null
+                ? null
+                : Container(
+                    width: 58,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFC9CED4),
+                      borderRadius: BorderRadius.circular(1),
+                    ),
+                  ),
           ),
           const SizedBox(height: 8),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
             color: tag,
             child: Text(
-              name,
+              s.label,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 9.5,
@@ -387,9 +401,9 @@ class _CardSlot extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        slot('PRAM', const Color(0xFF2E7D32)),
-        slot('CAM', const Color(0xFF3F51B5)),
-        slot('OBRM', const Color(0xFF37474F)),
+        slot(CardSlot.pram, const Color(0xFF2E7D32)),
+        slot(CardSlot.cam, const Color(0xFF3F51B5)),
+        slot(CardSlot.obrm, const Color(0xFF37474F)),
       ],
     );
   }

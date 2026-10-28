@@ -86,7 +86,7 @@
   <div class="sub">User Manual &amp; Function Guide</div>
   <img src="img/page_cabinStatus.jpg" alt="">
   <div class="meta">
-    <b>Version 3.9</b> · Android tablet app<br>
+    <b>Version 4.0</b> · Android tablet &amp; Windows PC app<br>
     Every page, key and training drill of the Airbus A320 Cabin Intercommunication<br>
     Data System (CIDS) Flight Attendant Panel, explained step by step.<br><br>
     For academic, familiarization and training purposes only. Not for operational use.
@@ -101,9 +101,9 @@
   <div class="bar"></div>
   <nav class="toc">
     <a href="#c1"><span>01</span>Introduction<small>What the FAP is, colors and TRAINER boxes</small></a>
-    <a href="#c2"><span>02</span>Getting Started<small>Install, license code, demo, notice</small></a>
-    <a href="#c3"><span>03</span>The Screen<small>Header, title bar, page tabs, FAP CONFIG</small></a>
-    <a href="#c4"><span>04</span>Cabin Status<small>Overview of every system</small></a>
+    <a href="#c2"><span>02</span>Getting Started<small>Install, license code, updates, demo, notice</small></a>
+    <a href="#c3"><span>03</span>The Screen<small>Header, CAUT, title bar, page tabs, FAP CONFIG</small></a>
+    <a href="#c4"><span>04</span>Cabin Status<small>Overview, passenger signs, cockpit trainer</small></a>
     <a href="#c5"><span>05</span>Audio<small>Boarding music, PRAM announcements, chimes</small></a>
     <a href="#c6"><span>06</span>Cabin Lighting<small>BRT / DIM 1 / DIM 2, reading lights</small></a>
     <a href="#c7"><span>07</span>Doors / Slides<small>Arming, cross-check, slide deployment</small></a>
@@ -112,7 +112,7 @@
     <a href="#c10"><span>10</span>Smoke Detection<small>Lavatory smoke alerts and SMOKE RESET</small></a>
     <a href="#c11"><span>11</span>Seat Settings<small>Call and reading-light inhibit, passenger calls</small></a>
     <a href="#c12"><span>12</span>System Info<small>CIDS status, faults, cockpit events</small></a>
-    <a href="#c13"><span>13</span>CAM &amp; Maintenance Pages<small>Programming, layouts, levels, software, set-up</small></a>
+    <a href="#c13"><span>13</span>CAM &amp; Maintenance Pages<small>Programming, layouts, levels, software, set-up, cards</small></a>
     <a href="#c14"><span>14</span>Hard Keys<small>The ten keys below the screen</small></a>
     <a href="#c15"><span>15</span>Training Drills<small>Step-by-step classroom exercises</small></a>
     <a href="#c16"><span>16</span>Troubleshooting &amp; FAQ<small>Messages and common questions</small></a>
@@ -132,7 +132,7 @@
   <ul>
     <li><b>Touchscreen</b>: the upper part. It shows the header, the page title bar, the selected page and two rows of page tabs.</li>
     <li><b>Hard keys</b>: ten physical keys below the screen (EVAC, lighting, smoke reset, and more). They keep working even while the touchscreen is locked. See Chapter 14.</li>
-    <li><b>Memory card slots</b>: PRAM (pre-recorded announcements), CAM (cabin assignment module) and OBRM (on-board replaceable module, for software loading).</li>
+    <li><b>Memory card slots</b>: PRAM (pre-recorded announcements and boarding music, an airline option), CAM (cabin assignment module) and OBRM (on-board replaceable module, for software loading). The cards are changed on the FAP SET-UP page (Chapter 13).</li>
   </ul>
 
   <h2>Color conventions</h2>
@@ -171,7 +171,7 @@
     <li>Follow the Setup: choose <i>Install for me only</i> (no administrator needed) or for all users, accept the notice, and click <b>Install</b>. A desktop and Start-menu shortcut is created.</li>
     <li>Open <b>A320 FAP Simulator</b>. It opens full screen; activate it with your license code as below.</li>
   </ol>
-  <p>Requirements: Windows 10 or 11, 64-bit. To remove it, use <i>Settings &gt; Apps &gt; A320 FAP Simulator &gt; Uninstall</i>. A license code activated on a PC is tied to that PC; use Deactivate &amp; Transfer to move it.</p>
+  <p>Requirements: Windows 10 or 11, 64-bit. To remove it, use <i>Settings &gt; Apps &gt; A320 FAP Simulator &gt; Uninstall</i>. A license code activated on a PC is tied to that PC; to move it, ask your instructor or administrator.</p>
 
   <h2>Activating with a license code</h2>
   <figure class="small"><img src="img/unlock_screen.jpg" alt=""><figcaption>The start screen: license code field and the free demo code.</figcaption></figure>
@@ -183,18 +183,22 @@
   <ul>
     <li>Each code works on <b>one device only</b> and can never be used on another device.</li>
     <li><b>Reinstalling is safe.</b> If the app is uninstalled and installed again on the same tablet, it recognizes the device and unlocks automatically (online) without a new code. If the tablet is offline at that moment, connect it and tap <b>CHECK AGAIN</b>.</li>
-    <li>A factory reset of the tablet counts as a new device: move the license first (see below), or ask the administrator to release it.</li>
+    <li>A factory reset of the tablet counts as a new device: ask the administrator to release the code first.</li>
   </ul>
 
-  <h2>Moving your license to a new tablet</h2>
-  <figure class="small"><img src="img/settings_dialog.jpg" alt=""><figcaption>SETTINGS (key on the top frame of the panel, right side): license code, device ID and Deactivate &amp; Transfer.</figcaption></figure>
+  <h2>Settings and moving your license</h2>
+  <figure class="small"><img src="img/settings_dialog.jpg" alt=""><figcaption>SETTINGS (key on the top frame of the panel, right side): license status, device ID, app version and CHECK FOR UPDATES.</figcaption></figure>
+  <p>The <b>⚙ SETTINGS</b> key on the top frame of the panel shows that the license is active on this device, the activation date, the <b>device ID</b> and the app version. The license code itself is not shown.</p>
+  <div class="note warn"><b>NEW TABLET OR PC?</b>Ask your instructor or administrator to <b>release</b> your code from the admin panel (tell them the device ID if they ask), then enter the same code on the new device. If the old device ever comes back online, it locks itself automatically.</div>
+
+  <h2>Updating the app</h2>
+  <figure class="small"><img src="img/update_dialog.jpg" alt=""><figcaption>A new version is available: UPDATE NOW or LATER.</figcaption></figure>
   <ol class="steps">
-    <li>On the <b>old</b> tablet, connected to the internet, tap the <b>⚙ SETTINGS</b> key on the top frame of the panel (right side, above the clock).</li>
-    <li>Settings shows your <b>license code</b>, the <b>device ID</b> and the activation date. Write down the code.</li>
-    <li>Tap <b>DEACTIVATE &amp; TRANSFER LICENSE</b> and confirm. The old tablet locks and returns to the activation screen.</li>
-    <li>On the <b>new</b> tablet, enter the same code and tap ACTIVATE.</li>
+    <li>When the app starts with internet, it checks the website for a new version. You can also tap <b>⚙ SETTINGS &gt; CHECK FOR UPDATES</b>.</li>
+    <li>If one is available, tap <b>UPDATE NOW</b>. The new version downloads (a progress bar shows how much).</li>
+    <li><b>Android:</b> tap <b>INSTALL</b> on the Android screen. The first time, Android may ask to allow <i>Install unknown apps</i> for A320 FAP. <b>Windows:</b> the app closes and the Setup opens; follow it.</li>
   </ol>
-  <div class="note warn"><b>OLD TABLET BROKEN OR LOST?</b>Ask your instructor or administrator to <b>release</b> your code from the admin panel, then activate it on the new tablet. If the old tablet ever comes back online, it locks itself automatically.</div>
+  <p>Your license stays active after the update. <b>LATER</b> closes the window; the app asks again at the next start.</p>
 
   <h2>Free demo</h2>
   <p>Without a license code you can try the simulator: tap <b>TRY DEMO</b> on the start screen, or enter the demo code <span class="mono">A320-DEMO</span>. No internet is needed.</p>
@@ -216,8 +220,10 @@
   <h2>Header (top line)</h2>
   <table>
     <tr><th>Item</th><th>What it shows</th></tr>
+    <tr><td><span class="key a">CAUT</span></td><td>Caution key. <b>Off</b>: no event. <b>Flashing amber</b>: a new event whose page has not been looked at yet (smoke, deployed slide, water / waste, CIDS fault, passenger or lavatory call). <b>Steady amber</b>: every event page has been selected. Press CAUT to open the page of the event.</td></tr>
     <tr><td>FAP 1</td><td>The panel identifier.</td></tr>
-    <tr><td>Message line</td><td>Cautions and information, for example <i>Please check door/slide status prior departure</i>, <i>PAX CALL 9E</i> or <i>SMOKE LAV D</i>. Alarms appear in red.</td></tr>
+    <tr><td>Message line</td><td>Cautions and information, for example <i>Please check door/slide status prior departure</i>, <i>PAX CALL 9E / LAV D</i> or <i>SMOKE LAV D</i>. Alarms appear in red.</td></tr>
+    <tr><td>SELECT … PAGE</td><td>Info row: flashes while a new event waits, and names the page to open, for example <i>SELECT AUDIO PAGE</i>.</td></tr>
     <tr><td>Temperature</td><td>Average cabin temperature (°C or °F, see FAP CONFIG).</td></tr>
     <tr><td>UTC clock</td><td>Current time in UTC.</td></tr>
   </table>
@@ -225,11 +231,11 @@
   <h2>Title bar</h2>
   <table>
     <tr><th>Key</th><th>Function</th></tr>
-    <tr><td><span class="key">SCREEN OFF</span></td><td>Blanks the display. Touch the screen anywhere to wake it.</td></tr>
-    <tr><td><span class="key">CABIN READY</span></td><td>Tells the flight crew the cabin is secured for take-off or landing. Green while active; press again to cancel.</td></tr>
+    <tr><td><span class="key">SCREEN OFF</span></td><td>Blanks the display; touch the screen anywhere to wake it. While a new event is waiting, SCREEN OFF first steps through the event pages one at a time, like the real CIDS.</td></tr>
+    <tr><td><span class="key">CABIN READY</span></td><td>Tells the flight crew the cabin is secured. The cockpit ECAM shows it on the take-off checklist once the engines run, and on the landing checklist with the gear down. Green while active; press again to cancel.</td></tr>
     <tr><td>Page title</td><td>Name of the open page. Short notices temporarily replace the title; during an evacuation it shows <b>EVAC – PRESS EVAC RESET TO SILENCE</b> and flashes red.</td></tr>
     <tr><td><span class="key">FAP CONFIG</span></td><td>Simulator settings (not part of the aircraft FAP): temperature unit <b>CELSIUS / FAHRENHEIT</b> and <b>MUTE</b> all audio.</td></tr>
-    <tr><td><span class="key">⚙ SETTINGS</span></td><td>On the top frame of the panel (right side): simulator license settings, not part of the aircraft FAP (code, device ID, Deactivate &amp; Transfer). See Chapter 2.</td></tr>
+    <tr><td><span class="key">⚙ SETTINGS</span></td><td>On the top frame of the panel (right side): simulator settings, not part of the aircraft FAP (license status, device ID, app version, CHECK FOR UPDATES). See Chapter 2.</td></tr>
   </table>
 
   <h2>Page tabs</h2>
@@ -238,7 +244,7 @@
     <li><b>Row 1, cabin pages:</b> STATUS, AUDIO, LIGHTS, DOORS/SLIDES, TEMP, WATER/WASTE, SMOKE DETECT, SEAT SETTING, SYSTEM INFO.</li>
     <li><b>Row 2, CAM and maintenance pages:</b> CABIN PROG, LAYOUT SELECT, LEVEL ADJUST, SW LOAD, FAP SET-UP (Chapter 13).</li>
   </ul>
-  <p>A tab whose system needs attention changes color even when you are on another page: <b>SMOKE DETECT</b> flashes red on smoke (amber while still monitoring), <b>DOORS/SLIDES</b> turns red when a slide is deployed, <b>WATER/WASTE</b> amber when the waste tank is full, <b>SEAT SETTING</b> amber on a passenger call, and <b>SYSTEM INFO</b> amber or red on CIDS faults.</p>
+  <p>A tab whose system needs attention changes color even when you are on another page: <b>SMOKE DETECT</b> flashes red on smoke (amber while still monitoring), <b>DOORS/SLIDES</b> turns red when a slide is deployed, <b>WATER/WASTE</b> amber when the waste tank is full, <b>SEAT SETTING</b> amber on a passenger call, <b>AUDIO</b> amber on a passenger or lavatory call (CALL RESET is there), and <b>SYSTEM INFO</b> amber or red on CIDS faults.</p>
   <figure><img src="img/scenario_config_fahrenheit.jpg" alt=""><figcaption>FAP CONFIG panel with the temperature unit set to Fahrenheit.</figcaption></figure>
 </section>
 
@@ -247,18 +253,39 @@
   <div class="ch-num">CHAPTER 04</div>
   <h1 class="ch">Cabin Status</h1>
   <div class="bar"></div>
-  <p class="lead">One overview tile for every cabin system. Tap a tile to open that system's page.</p>
-  <figure><img src="img/page_cabinStatus.jpg" alt=""><figcaption>CABIN STATUS page.</figcaption></figure>
+  <p class="lead">One overview tile for every cabin system. Tap a tile to open that system's page. The TRAINER box below it simulates the cockpit, the aircraft and the passengers.</p>
+  <figure><img src="img/scenario_signs_lav_call.jpg" alt=""><figcaption>CABIN STATUS in flight: seat belt signs on, a call from lavatory D waiting (CAUT and SELECT AUDIO PAGE).</figcaption></figure>
   <table>
     <tr><th>Tile</th><th>Summary shown</th></tr>
     <tr><td>DOORS / SLIDES</td><td>Doors closed (for example 7/8) and slides armed (4/8).</td></tr>
-    <tr><td>CABIN LIGHTING</td><td>MAIN ON/OFF and the general light level.</td></tr>
-    <tr><td>AUDIO</td><td>Boarding music on/off and whether a PA announcement is playing.</td></tr>
+    <tr><td>CABIN LIGHTING</td><td>MAIN ON/OFF, the general light level, and EMER LT ON when the emergency lights are on.</td></tr>
+    <tr><td>AUDIO</td><td>Boarding music on/off (or NO PRAM CARD), and whether a PA is on air (PA COCKPIT for a cockpit PA).</td></tr>
     <tr><td>CABIN TEMPERATURE</td><td>Actual FWD and AFT zone temperatures.</td></tr>
     <tr><td>WATER / WASTE</td><td>Potable water and waste tank percentages.</td></tr>
     <tr><td>SMOKE DETECTION</td><td>NORMAL, or the lavatory with smoke.</td></tr>
     <tr><td>SYSTEM INFO</td><td>Active CIDS director and PAX SYS power.</td></tr>
     <tr><td>EVAC</td><td>NORMAL, or evacuation command active.</td></tr>
+    <tr><td>PASSENGER SIGNS</td><td>SEAT BELT, NO SMOKING and EXIT signs ON/OFF; SIGNS LOST with CIDS 1+2 FAULT.</td></tr>
+  </table>
+
+  <h2>Passenger signs</h2>
+  <p>The flight crew switches the signs in the cockpit; the CIDS lights them in the cabin. <b>Every time a sign comes on or goes off, a single low chime sounds.</b></p>
+  <ul>
+    <li><b>SEAT BELTS</b> ON / OFF. The <b>RETURN TO SEAT</b> signs in the lavatories follow the seat belt signs.</li>
+    <li><b>NO SMOKING</b> ON / AUTO / OFF. In <b>AUTO</b> the signs are on while the landing gear is down (on ground and on approach) and off with the gear up.</li>
+    <li>At <b>low cabin pressure</b> (cabin altitude above about 11,300 ft) the seat belt, no smoking and exit signs come on by themselves, whatever the switch positions.</li>
+    <li><b>EXIT</b> signs: with the emergency lights, at low cabin pressure, or in ARM when NO SMOKING is ON or AUTO with the gear down.</li>
+  </ul>
+
+  <h3>TRAINER – cockpit / aircraft / passengers</h3>
+  <table>
+    <tr><th>Control</th><th>Simulates</th></tr>
+    <tr><td><span class="key">FLIGHT PHASE</span></td><td>What the CIDS receives from the aircraft: GROUND, ENGINES RUNNING, FLIGHT (gear up), APPROACH (gear down). LAYOUT SELECTION works on ground only; NO SMOKING in AUTO follows the gear.</td></tr>
+    <tr><td><span class="key">SEAT BELTS</span> / <span class="key">NO SMOKING</span></td><td>The cockpit sign switches.</td></tr>
+    <tr><td><span class="key">EMER EXIT LT</span> ON / ARM / OFF</td><td>The cockpit emergency light switch. In <b>ARM</b> the emergency lights come on by themselves when the normal electrical supply is lost.</td></tr>
+    <tr><td><span class="key">NORMAL POWER LOST</span></td><td>Loss of the normal electrical supply (with ARM: emergency lights on).</td></tr>
+    <tr><td><span class="key">COCKPIT PA</span></td><td>A PA from the cockpit handset. It has priority: a PRAM announcement stops and the boarding music is lowered until the cockpit PA ends. Press again to end it.</td></tr>
+    <tr><td><span class="key">LAV A / D / E</span></td><td>A passenger presses the call button in that lavatory: single high chime, <i>PAX CALL LAV D</i> on the message line. Pressing it again cancels the call, like the button in the lavatory.</td></tr>
   </table>
 </section>
 
@@ -268,6 +295,7 @@
   <h1 class="ch">Audio</h1>
   <div class="bar"></div>
   <p class="lead">Boarding music, pre-recorded announcements (PRAM) and cabin call settings.</p>
+  <div class="note warn"><b>PRAM IS AN AIRLINE OPTION</b>Not every A320 has a PRAM. Without it, the cabin crew make every announcement with the handset, and there is no boarding music from the FAP. In the simulator, removing the PRAM card on FAP SET-UP shows this situation.</div>
   <figure><img src="img/scenario_audio_memo.jpg" alt=""><figcaption>AUDIO page with three announcements in the MEMO list.</figcaption></figure>
 
   <h2>Boarding music (BGM1)</h2>
@@ -306,12 +334,16 @@
     <tr><td>ON ANNOUNCE</td><td>Shows the announcement playing now.</td></tr>
   </table>
   <div class="note warn"><b>ONE ANNOUNCEMENT AT A TIME</b>Two announcements never play together: starting a new one replaces the one playing.</div>
+  <div class="note"><b>PA PRIORITY</b>A PA from the cockpit has priority over the PRAM: a playing announcement stops, and a new one cannot start until the cockpit PA ends.</div>
+  <h3>No PRAM card</h3>
+  <figure><img src="img/scenario_audio_no_pram.jpg" alt=""><figcaption>No PRAM card in the slot: no announcements and no boarding music.</figcaption></figure>
+  <p>The voice of the announcements depends on the PRAM card in the slot (five simulated cards, all female voices; ORIGINAL is the default). See FAP SET-UP in Chapter 13.</p>
 
   <h2>Cabin settings and chimes</h2>
   <table>
     <tr><th>Control</th><th>Function</th></tr>
-    <tr><td><span class="key a">CALL RESET</span></td><td>Cancels every passenger call. Amber while calls are waiting; the seats calling are listed below it.</td></tr>
-    <tr><td><span class="key">CHIME INHIBIT</span></td><td>Silences the cabin chimes.</td></tr>
+    <tr><td><span class="key a">CALL RESET</span></td><td>Cancels every passenger and lavatory call. Amber while calls are waiting; the seats and lavatories calling are listed below it.</td></tr>
+    <tr><td><span class="key">CHIME INHIBIT</span></td><td>Silences the call chimes (the sign chime still sounds).</td></tr>
     <tr><td>TRAINER chimes</td><td><b>HIGH</b> passenger call · <b>HIGH-LOW</b> crew call (interphone) · <b>LOW</b> seat belt / no smoking signs · <b>EMER CALL</b> emergency call from the cockpit (three times).</td></tr>
   </table>
 </section>
@@ -351,6 +383,13 @@
     <tr><td><span class="key">ATTND</span></td><td>Attendant work lights.</td></tr>
   </table>
   <p>The <b>HARD KEY STATUS</b> panel shows the state of the lighting hard keys: MAIN, LAV MAINT (lavatory lights full bright) and EMER (emergency lighting).</p>
+
+  <h2>Automatic lighting</h2>
+  <ul>
+    <li><b>Low cabin pressure</b>: every cabin light goes to BRT.</li>
+    <li><b>CIDS 1+2 FAULT</b>: the FAP can no longer control the lights. After <b>3 minutes</b> without a CIDS signal, the cabin lights go to full brightness. When the CIDS comes back, the lavatory lights dim; the others stay as they are.</li>
+    <li><b>Emergency lights</b>: on with the EMER hard key, the cockpit EMER EXIT LT switch at ON, or by themselves in ARM when the normal electrical supply is lost.</li>
+  </ul>
 </section>
 
 <!-- ============================== 7 -->
@@ -487,9 +526,10 @@
     <tr><th>Control</th><th>Simulates</th></tr>
     <tr><td><span class="key">SELECTOR CAPT / CAPT &amp; PURS</span></td><td>The cockpit evacuation selector. In <b>CAPT</b>, an EVAC CMD from the cabin only sounds the cockpit horn for 3 seconds; in <b>CAPT &amp; PURS</b> it triggers the cabin evacuation alert.</td></tr>
     <tr><td><span class="key r">COCKPIT EVAC CMD</span></td><td>The flight crew sets EVAC COMMAND ON: <i>EVAC COMMANDED FROM THE COCKPIT</i>.</td></tr>
-    <tr><td><span class="key">LOW CABIN PRESSURE</span></td><td>Low cabin pressure: the CIDS switches the cabin lights to BRT automatically.</td></tr>
+    <tr><td><span class="key">LOW CABIN PRESSURE</span></td><td>Low cabin pressure (press again for normal pressure). The CIDS switches the cabin lights to BRT, the seat belt and no smoking signs come on, and the PA volume goes up. The oxygen masks are not a FAP function: they drop by themselves or are released from the cockpit.</td></tr>
     <tr><td><span class="key">RESET SIMULATOR</span></td><td>Restores factory defaults (after a confirmation).</td></tr>
   </table>
+  <figure><img src="img/scenario_low_pressure.jpg" alt=""><figcaption>Low cabin pressure and normal power lost: the MESSAGES list.</figcaption></figure>
 </section>
 
 <!-- ============================== 13 -->
@@ -512,12 +552,18 @@
   <ul>
     <li><b>CABIN ZONES</b>: choose a class boundary and move it by seat rows with the arrow keys; the cabin drawing shows each class with its seat rows.</li>
     <li><b>NON SMOKER A/C</b> <span class="key">ON/OFF</span>: the non-smoking aircraft flag.</li>
-    <li><span class="key">SAVE</span> writes the programming to the CAM. The layout becomes <i>MODIFIED</i> and its change counter goes up.</li>
+    <li><span class="key">SAVE</span> writes the programming to the CAM. The layout becomes <i>MODIFIED</i> and its change counter goes up. The CAM of the active layout must be in the slot.</li>
   </ul>
 
   <h2>Layout Selection</h2>
-  <figure><img src="img/page_layout_open.jpg" alt=""><figcaption>LAYOUT SELECTION: the cabin layouts stored on the CAM.</figcaption></figure>
-  <p>Select a 1-, 2- or 3-class layout and press <span class="key">LOAD</span> to make it active. The lighting zones, seat rows and level adjustment follow the active layout.</p>
+  <figure><img src="img/page_layout_open.jpg" alt=""><figcaption>LAYOUT SELECTION: the cabin layouts stored on the CAM in the slot.</figcaption></figure>
+  <p>Select a layout of the CAM in the slot and press <span class="key">LOAD</span> to make it active. The lighting zones, seat rows and level adjustment follow the active layout.</p>
+  <ul>
+    <li>Layout selection works <b>on ground only</b>. In flight the page shows <i>LAYOUT SELECTION NOT AVAILABLE – IN FLIGHT</i>.</li>
+    <li>Without a CAM in the slot it shows <i>NO CAM IN SLOT</i>.</li>
+    <li>After a new CAM is inserted, the CIDS keeps the old active layout until a layout of the new CAM is loaded here.</li>
+  </ul>
+  <figure><img src="img/scenario_cam_b_inserted.jpg" alt=""><figcaption>CAM B inserted: its three layouts are listed; the active layout is still from the ORIGINAL CAM.</figcaption></figure>
 
   <h2>Level Adjustment</h2>
   <figure><img src="img/page_level_open.jpg" alt=""><figcaption>LEVEL ADJUSTMENT.</figcaption></figure>
@@ -525,11 +571,33 @@
 
   <h2>Software Loading</h2>
   <figure><img src="img/page_swLoad_open.jpg" alt=""><figcaption>SOFTWARE LOADING.</figcaption></figure>
-  <p>Lists the CIDS components with the active software version and the version on the OBRM card in the slot. <b>Amber</b>: a different version is waiting to be loaded. <b>Green</b>: up to date. <span class="key">LOAD SW</span> loads it; the panel is blocked during loading and the CIDS restarts automatically.</p>
+  <p>Lists the CIDS components with the active software version and the version on the OBRM card in the slot. <b>Amber</b>: a different version is waiting to be loaded. <b>Green</b>: the CIDS runs the software of the OBRM in the slot. <span class="key">LOAD SW</span> loads it; the panel is blocked during loading and the CIDS restarts automatically. Without an OBRM the slot column shows <i>NONE</i>.</p>
 
   <h2>FAP Set-Up</h2>
-  <figure><img src="img/page_fapSetup.jpg" alt=""><figcaption>FAP SET-UP.</figcaption></figure>
+  <figure><img src="img/page_fapSetup.jpg" alt=""><figcaption>FAP SET-UP: display, volume, key click and the three cartridges.</figcaption></figure>
   <p><b>DISPLAY</b> brightness, loudspeaker and headphone <b>VOLUME</b> (+ / −), and the <b>TOUCHSCREEN CLICK</b> (ON/OFF). <span class="key">DEFAULT</span> restores the factory values and <span class="key">SAVE</span> stores them.</p>
+
+  <h3>Cartridges: changing a PRAM, CAM or OBRM card</h3>
+  <p>On the A320 the FAP SET-UP page is used to remove and insert the memory cartridges:</p>
+  <table>
+    <tr><th>Card</th><th>Holds</th><th>After the change</th></tr>
+    <tr><td>PRAM</td><td>Pre-recorded announcements and boarding music</td><td>Ready after OK.</td></tr>
+    <tr><td>CAM</td><td>Cabin layouts, zones and options</td><td>Load a layout on LAYOUT SELECTION.</td></tr>
+    <tr><td>OBRM</td><td>CIDS software</td><td>Load it on SOFTWARE LOADING.</td></tr>
+  </table>
+  <ol class="steps">
+    <li>Press <span class="key">REMOVE</span> next to the card. The slot becomes EMPTY (on a PRAM, the announcements and music stop).</li>
+    <li>TRAINER – CARD CASE: choose the new card and press <span class="key">INSERT</span>. The status shows PRESS OK.</li>
+    <li>Press <span class="key a">OK</span> on the FAP to finish the change.</li>
+  </ol>
+  <figure><img src="img/scenario_pram_removed.jpg" alt=""><figcaption>PRAM removed: the slot waits for a new card and OK.</figcaption></figure>
+  <table>
+    <tr><th>Card case</th><th>Cards</th></tr>
+    <tr><td>PRAM</td><td><b>ORIGINAL</b> (Jenny, default) · CARD 2 (Aria) · CARD 3 (Michelle) · CARD 4 (Sonia, UK) · CARD 5 (Natasha, AU). Same announcements and music, different female voice.</td></tr>
+    <tr><td>CAM</td><td><b>ORIGINAL CAM</b> (1, 2 and 3 classes) · CAM B (high density: 1 class 31 rows, 2 classes 29 rows, 2 classes 28 rows).</td></tr>
+    <tr><td>OBRM</td><td>037A (older software) · <b>037B</b> (newer software, in the slot at start).</td></tr>
+  </table>
+  <div class="note warn"><b>MAINTENANCE TASK</b>On the aircraft, maintenance or the airline changes the cards. Cabin crew do not change them in flight. RESET SIMULATOR puts the original cards back.</div>
 </section>
 
 <!-- ============================== 14 -->
@@ -542,7 +610,7 @@
     <tr><th>Key</th><th>Function</th></tr>
     <tr><td><span class="key r">EVAC CMD</span></td><td>Evacuation command, under a hinged <b>guard</b>: the first tap lifts the guard, then press the key. With the cockpit selector in CAPT &amp; PURS the evacuation alert sounds in the cabin; in CAPT only the cockpit horn sounds for 3 s. Tapping the lifted guard closes it.</td></tr>
     <tr><td><span class="key">EVAC RESET</span></td><td>Silences the EVAC tone at this station and clears the EVAC indications.</td></tr>
-    <tr><td><span class="key">EMER</span></td><td>Cabin emergency lighting on/off.</td></tr>
+    <tr><td><span class="key">EMER</span></td><td>Cabin emergency lighting on/off. The light above it also shows emergency lights switched on from the cockpit or by themselves (ARM, normal power lost).</td></tr>
     <tr><td><span class="key">PED POWER</span></td><td>Passenger in-seat power supply on/off.</td></tr>
     <tr><td><span class="key">LIGHTS MAIN ON/OFF</span></td><td>General cabin illumination on/off (same as MAIN ON/OFF on the lighting page).</td></tr>
     <tr><td><span class="key">LAV MAINT</span></td><td>Lavatory lights full bright for maintenance.</td></tr>
@@ -553,7 +621,7 @@
   </table>
   <figure><img src="img/scenario_screen_lock.jpg" alt=""><figcaption>SCREEN 30 SEC LOCK: clean function countdown.</figcaption></figure>
   <h3>Card slots</h3>
-  <p><b>PRAM</b> pre-recorded announcements · <b>CAM</b> cabin assignment module (layouts and cabin programming) · <b>OBRM</b> on-board replaceable module (software loading).</p>
+  <p><b>PRAM</b> pre-recorded announcements · <b>CAM</b> cabin assignment module (layouts and cabin programming) · <b>OBRM</b> on-board replaceable module (software loading). A light card edge shows a card in the slot; an empty slot is dark. Cards are changed on FAP SET-UP.</p>
 </section>
 
 <!-- ============================== 15 -->
@@ -620,7 +688,27 @@
   <h2>Drill 8 – Water / waste and CIDS faults</h2>
   <ol class="steps">
     <li>Instructor: <span class="key">ADD WASTE +10%</span> until the tank is full; student identifies the INOP lavatories and presses RESET WARN.</li>
-    <li>Instructor: <span class="key">DIR 1 FAULT</span>, then <span class="key">DIR 2 FAULT</span>; student explains the CIDS 1+2 FAULT consequences (no PA, interphone or signs).</li>
+    <li>Instructor: <span class="key">DIR 1 FAULT</span>, then <span class="key">DIR 2 FAULT</span>; student explains the CIDS 1+2 FAULT consequences (no PA, interphone or signs; no light control, full bright after 3 minutes).</li>
+  </ol>
+
+  <h2>Drill 9 – Signs, lavatory call and cockpit PA</h2>
+  <ol class="steps">
+    <li>Instructor (CABIN STATUS TRAINER): FLIGHT PHASE <span class="key">FLIGHT</span>, SEAT BELTS <span class="key">ON</span>. Student: hears the low chime and reads the PASSENGER SIGNS tile.</li>
+    <li>Instructor: <span class="key">LAV D</span> call. Student: CAUT flashes and <i>SELECT AUDIO PAGE</i> appears; press CAUT, read the call, press <span class="key a">CALL RESET</span>.</li>
+    <li>Student: start an announcement. Instructor: <span class="key">COCKPIT PA</span>. Student: explains why the PRAM stopped (cockpit PA priority).</li>
+  </ol>
+
+  <h2>Drill 10 – Low cabin pressure and emergency lights</h2>
+  <ol class="steps">
+    <li>Instructor: LOW CABIN PRESSURE (SYSTEM INFO). Student: lights BRT, signs on, PA louder.</li>
+    <li>Instructor: EMER EXIT LT <span class="key">ARM</span>, then <span class="key">NORMAL POWER LOST</span>. Student: the emergency lights are on by themselves (EMER light lit).</li>
+  </ol>
+
+  <h2>Drill 11 – Card change (no PRAM)</h2>
+  <ol class="steps">
+    <li>Instructor: FAP SET-UP, <span class="key">REMOVE</span> the PRAM. Student: the AUDIO page shows NO PRAM CARD; explain how announcements are made without a PRAM (handset).</li>
+    <li>Instructor: insert another PRAM card and press <span class="key a">OK</span>; play an announcement with the new voice.</li>
+    <li>Instructor: change the CAM to CAM B. Student: load one of its layouts on LAYOUT SELECTION (ground only) and check the new zones on CABIN LIGHTING.</li>
   </ol>
 </section>
 
@@ -645,9 +733,15 @@
   <h3>I uninstalled the app. Do I need a new code?</h3>
   <p>No. Install it again on the same tablet and open it while online; it is restored automatically. A factory reset counts as a new device.</p>
   <h3>I have a new tablet. Can I keep my code?</h3>
-  <p>Yes. On the old tablet tap ⚙ SETTINGS on the panel frame, then DEACTIVATE &amp; TRANSFER LICENSE (internet needed), then enter the same code on the new tablet. If the old tablet is broken, ask the administrator to release the code.</p>
+  <p>Yes. Ask your instructor or administrator to release the code, then enter the same code on the new tablet.</p>
   <h3>The app went back to the activation screen by itself.</h3>
-  <p>The license was moved to another device (deactivated there or released by the administrator). Enter a valid code to activate again.</p>
+  <p>The administrator released the license for another device. Enter a valid code to activate again.</p>
+  <h3>How do I get a new version?</h3>
+  <p>The app offers it when it starts (internet needed), or use ⚙ SETTINGS &gt; CHECK FOR UPDATES, then UPDATE NOW. The license stays active.</p>
+  <h3>There are no announcements or boarding music.</h3>
+  <p>Check FAP SET-UP: the PRAM card may have been removed. Insert one and press OK, or use RESET SIMULATOR.</p>
+  <h3>LAYOUT SELECT says it is not available.</h3>
+  <p>Layout selection works on ground only, with a CAM in the slot. Set FLIGHT PHASE to GROUND on CABIN STATUS (TRAINER), or insert a CAM on FAP SET-UP.</p>
   <h3>A page asks for an access code.</h3>
   <p>CABIN PROG, LAYOUT SELECT and LEVEL ADJUST use <span class="mono">318</span>; SW LOAD uses <span class="mono">813</span>.</p>
   <h3>The screen is black.</h3>
@@ -670,7 +764,7 @@
     <li><b>ACCURACY &amp; LIABILITY:</b> While modeled for realistic interaction, operational variances may exist. This software must NOT be used for real-world aircraft operation, checklist validation, or actual emergency procedures. Overdrive Interactive assumes no liability for misuse.</li>
   </ol>
   <div class="note warn"><b>ALWAYS</b>Follow your airline's cabin crew operations manual and your instructor's procedures.</div>
-  <p style="margin-top:14mm;text-align:center;color:var(--mute);font-size:9pt">© Overdrive Interactive · A320 FAP Simulator v3.9 · User Manual</p>
+  <p style="margin-top:14mm;text-align:center;color:var(--mute);font-size:9pt">© Overdrive Interactive · A320 FAP Simulator v4.0 · User Manual</p>
 </section>
 </main>
 </body>

@@ -3,11 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/fap_state.dart';
 import '../providers/fap_provider.dart';
 import '../theme/fap_theme.dart';
 import 'blink.dart';
+import 'fap_button.dart';
 
-/// FAP header: system badge, caution/info row, cabin temperature and UTC.
+/// FAP header: CAUT key, system badge, caution/info row, cabin temperature
+/// and UTC. CAUT flashes while an event page has not been looked at, and
+/// stays lit once every event page has been selected; the info row then
+/// asks for the page of the new event.
 class TopStatusBar extends StatelessWidget {
   const TopStatusBar({super.key});
 
@@ -19,6 +24,8 @@ class TopStatusBar extends StatelessWidget {
     final textColor = caution.flashing && !blink
         ? caution.color.withValues(alpha: 0.3)
         : caution.color;
+    final caut = fap.cautState;
+    final info = fap.infoPage;
 
     return Container(
       height: 42,
@@ -26,6 +33,18 @@ class TopStatusBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [
+          FapButton(
+            label: 'CAUT',
+            width: 64,
+            height: 30,
+            fontSize: 11,
+            tone: caut == CautState.off
+                ? FapButtonTone.normal
+                : FapButtonTone.amber,
+            flashing: caut == CautState.flashing,
+            onTap: caut == CautState.off ? null : fap.cautPressed,
+          ),
+          const SizedBox(width: 8),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
@@ -60,6 +79,27 @@ class TopStatusBar extends StatelessWidget {
               ),
             ),
           ),
+          if (info != null) ...[
+            const SizedBox(width: 8),
+            Container(
+              height: 28,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: blink ? FapColors.amber : const Color(0xFF050B11),
+                borderRadius: BorderRadius.circular(3),
+                border: Border.all(color: FapColors.amber),
+              ),
+              child: Text(
+                'SELECT ${info.tabLabel.replaceAll('\n', ' ')} PAGE',
+                style: FapText.monoStyle(
+                  size: 13,
+                  color: blink ? Colors.black : FapColors.amber,
+                  weight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
           const SizedBox(width: 16),
           const Icon(Icons.thermostat, color: FapColors.cyan, size: 18),
           Text(

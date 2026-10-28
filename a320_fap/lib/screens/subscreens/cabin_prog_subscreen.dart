@@ -32,7 +32,7 @@ class CabinProgSubscreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'ACTIVE LAYOUT: ${layout.id}${count > 0 ? ' MODIFIED' : ''}'
+                'ACTIVE LAYOUT: ${layout.number}${count > 0 ? ' MODIFIED' : ''}'
                 '  -  COUNT ${count.toString().padLeft(3, '0')}'
                 '${fap.programmingDirty ? '   (NOT SAVED)' : ''}',
                 textAlign: TextAlign.center,
@@ -334,7 +334,10 @@ class _SavedDialog extends StatelessWidget {
                   style: FapText.title.copyWith(fontSize: 22),
                 ),
                 const SizedBox(height: 16),
-                line('LAYOUT', 'CAM ${info.layout} MODIFIED'),
+                line(
+                  'LAYOUT',
+                  'CAM ${layoutById(info.layout).number} MODIFIED',
+                ),
                 line('COUNT', info.count.toString().padLeft(3, '0')),
                 line('DATE', date),
                 const SizedBox(height: 20),

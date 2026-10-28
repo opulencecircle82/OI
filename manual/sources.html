@@ -104,7 +104,7 @@
   <div class="sub">Feature Sources &amp; A320 Conformance Report</div>
   <img src="img/page_cabinStatus.jpg" alt="">
   <div class="meta">
-    <b>Simulator version 3.9</b> · Report date 12 October 2026<br>
+    <b>Simulator version 4.0</b> · Report date 29 October 2026<br>
     Where every feature of the simulator comes from, and whether it<br>
     matches the real Airbus A320 CIDS Flight Attendant Panel.<br><br>
     Based on public technical and training sources, not on official Airbus documents.
@@ -144,6 +144,7 @@
     <tr><td>2. Check against the real A320</td><td>Technical notes and training sources <span class="mono">[4]–[19]</span></td><td>Corrections where the brief differed from the real CIDS (Section 05), and missing functions: PED POWER, FAP RESET, SMOKE RESET on the page, CHIME INHIB, emergency call chime, CAPT / CAPT &amp; PURS selector, cockpit EVAC, low cabin pressure.</td></tr>
     <tr><td>3. Full page set (v3.0)</td><td>Reference screenshots of an Airbus-style FAP trainer <span class="mono">[3]</span>, checked against the A320 CIDS document <span class="mono">[4]</span></td><td>Second row of pages: Cabin Programming, Layout Selection, Level Adjustment, Software Loading, FAP Set-Up; Seat Settings; Cabin Status; BGM channels; PRAM MEMO list; access-code keypad.</td></tr>
     <tr><td>4. Training content</td><td>Typical airline announcement wording; standard life-vest briefing</td><td>The 13 PRAM announcement scripts (English), including the life-vest part of the safety demonstration.</td></tr>
+    <tr><td>5. Cabin crew functions (v4.0)</td><td>A320 CIDS document <span class="mono">[4]</span>, A32NX signs panel <span class="mono">[21]</span>, A320 lights notes <span class="mono">[22]</span>, reference video of a commercial FAP trainer <span class="mono">[23]</span></td><td>Passenger signs and their chime, flight phase, CAUT key and info row, lavatory calls, cockpit PA priority, emergency lighting in ARM, low cabin pressure sequence, loss of CIDS, PRAM / CAM / OBRM card change, layout selection on ground only.</td></tr>
   </table>
   <div class="note"><b>RULE USED THROUGHOUT</b>When the project brief and the real A320 disagreed, the simulator follows the real A320 CIDS.</div>
 </section>
@@ -154,13 +155,13 @@
   <h1 class="ch">Summary</h1>
   <div class="bar"></div>
   <div class="score">
-    <div><b style="color:#15803d">57</b>MATCHES</div>
+    <div><b style="color:#15803d">70</b>MATCHES</div>
     <div><b style="color:#b45309">17</b>SIMPLIFIED</div>
-    <div><b style="color:#0369a1">9</b>TRAINER</div>
-    <div><b style="color:#6d28d9">7</b>SIMULATOR</div>
+    <div><b style="color:#0369a1">11</b>TRAINER</div>
+    <div><b style="color:#6d28d9">8</b>SIMULATOR</div>
     <div><b style="color:#64748b">12</b>NOT INCLUDED</div>
   </div>
-  <p><b>Conclusion.</b> Every FAP page, hard key and card slot of the simulator exists on the real A320 CIDS FAP, and the core behaviour of each one matches the sources: the ten hard keys, the colour code, BRT / DIM 1 / DIM 2, ±2.5 °C temperature fine adjustment, 200 L water and 170 L waste, automatic smoke page with SMOKE RESET and automatic clearing, guarded EVAC CMD with the CAPT / CAPT &amp; PURS selector, CIDS 1+2 FAULT, and the default access codes 318 and 813.</p>
+  <p><b>Conclusion.</b> Every FAP page, hard key and card slot of the simulator exists on the real A320 CIDS FAP, and the core behaviour of each one matches the sources: the ten hard keys, the colour code, BRT / DIM 1 / DIM 2, ±2.5 °C temperature fine adjustment, 200 L water and 170 L waste, automatic smoke page with SMOKE RESET and automatic clearing, guarded EVAC CMD with the CAPT / CAPT &amp; PURS selector, CIDS 1+2 FAULT, and the default access codes 318 and 813. Version 4.0 adds the passenger signs with their chime, the CAUT key, lavatory calls, cockpit PA priority, emergency lighting in ARM, the full low cabin pressure and CIDS loss behaviour, layout selection on ground only, and the PRAM / CAM / OBRM card change.</p>
   <p>The <span class="st sim">SIMPLIFIED</span> items are mainly airline-configured content (announcement list, music channels, number of lighting scenarios, level values) where the simulator shows one typical configuration. The functions listed as <span class="st no">NOT INCLUDED</span> are maintenance or optional features that a cabin crew trainee does not normally use.</p>
   <p>The simulator is a classroom familiarization tool. It is not a certified training device (see the disclaimer in Section 07).</p>
 </section>
@@ -177,11 +178,12 @@
     <tr><td>Touchscreen + hard-key sub-panel + card slots</td><td>Display unit, 10 hard keys, PRAM / CAM / OBRM slots</td><td>Display unit, sub-panel with hard keys, memory-card slots</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [6]</td></tr>
     <tr><td>Colour code</td><td>Grey available, green selected, amber caution, red alarm</td><td>Same button colours; red alerts/smoke, amber warnings</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>Caution / info row</td><td>Message line in the header (e.g. door check, PAX CALL, SMOKE LAV)</td><td>Caution/info row with pending messages</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
+    <tr><td>CAUT key and event queue</td><td>CAUT off / flashing (new event) / steady (all event pages seen); info row asks for the page</td><td>CAUT off, flashing for new events, steady when all event pages were selected; info row while an event page is not selected</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [23]</td></tr>
     <tr><td>Page tabs, two rows</td><td>Cabin pages and CAM/maintenance pages with arrows</td><td>Standard page set incl. programming pages</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [3]</td></tr>
     <tr><td>Automatic page on events</td><td>Smoke opens the Smoke page</td><td>Smoke event triggers automatic page display</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [7]</td></tr>
-    <tr><td>SCREEN OFF</td><td>Blanks the display; touch to wake</td><td>SCREEN OFF button; also turns off after 10 min idle; optional wake password</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[4]</td></tr>
-    <tr><td>CABIN READY</td><td>Key in the title bar</td><td>Cabin ready function (shown on Cabin Status)</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
-    <tr><td>Cabin Status page</td><td>One tile per system</td><td>Cabin Status page exists; exact tile content not described</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[4] [3]</td></tr>
+    <tr><td>SCREEN OFF</td><td>Blanks the display; touch to wake; steps through new event pages first</td><td>SCREEN OFF button; steps through queued auto events; also turns off after 10 min idle; optional wake password</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[4]</td></tr>
+    <tr><td>CABIN READY</td><td>Key in the title bar; message follows the flight phase</td><td>Cabin ready set by the crew; ECAM take-off checklist after engine start, landing checklist with gear down</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
+    <tr><td>Cabin Status page</td><td>One tile per system, incl. passenger signs</td><td>Cabin Status page exists; exact tile content not described</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[4] [3]</td></tr>
   </table>
 
   <h2>Hard keys and card slots</h2>
@@ -197,7 +199,7 @@
     <tr><td>SMOKE RESET</td><td>Silences the lavatory smoke alert</td><td>Clears lavatory smoke alerts</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [6]</td></tr>
     <tr><td>FAP RESET</td><td>Restarts the FAP screen; cabin systems keep state</td><td>FAP-PC RESET: manual reset of the PC card</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>PAX SYS</td><td>Passenger system power on/off</td><td>Switches IFE and ISPSS on/off</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
-    <tr><td>PRAM / CAM / OBRM slots</td><td>Shown on the sub-panel; used by Audio, Layout and SW Load pages</td><td>PRAM announcements/music, CAM configuration, OBRM software</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [6]</td></tr>
+    <tr><td>PRAM / CAM / OBRM slots</td><td>Shown on the sub-panel (card or empty); used by Audio, Layout and SW Load pages</td><td>PRAM announcements/music, CAM configuration, OBRM software</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [6]</td></tr>
   </table>
 </section>
 
@@ -213,6 +215,8 @@
     <tr><td>Reading lights R/L SET / RESET, ATTND</td><td>All reading lights on/off (except inhibited seats), attendant lights</td><td>Reading lights controlled by CIDS; enable/disable per seat</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [17]</td></tr>
     <tr><td>Fuselage diagram shows zone brightness</td><td>Gold diagram dims per zone</td><td>FAP graphics from CAM-B; exact rendering varies</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[4]</td></tr>
     <tr><td>Low cabin pressure → lights BRT</td><td>TRAINER event switches lights to BRT</td><td>All lights go to full brightness at low cabin pressure</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
+    <tr><td>Loss of the CIDS</td><td>No light control; lights full bright after 3 min; lavatory lights dim when the CIDS returns</td><td>CIDS-controlled lights go to full brightness 3 min after the signal is lost; at CIDS activation the lavatory lights dim</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
+    <tr><td>Emergency lighting</td><td>EMER key; cockpit EMER EXIT LT ON / ARM / OFF; in ARM on by itself when normal power is lost</td><td>EMER on the FAP; EMER EXIT LT ARM: emergency lights on when the normal electrical supply fails</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [21]</td></tr>
   </table>
 
   <h2>Doors and slides</h2>
@@ -241,8 +245,21 @@
     <tr><td>DIRECT PLAY, MEMO, PLAY NEXT / ALL, STOP</td><td>Select and play, play list</td><td>Announcement selection and playback; exact keys vary by CIDS version</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[3] [4]</td></tr>
     <tr><td>CALL RESET, CHIME INHIBIT on the Audio page</td><td>Cancel calls, silence chimes</td><td>CALL RESET and CHIME INHIB buttons on the Audio page</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>Chimes</td><td>High = passenger call, high-low = crew call, low = signs</td><td>Same chime meanings</td><td><span class="st ok">MATCHES</span></td><td class="src">[6] [12]</td></tr>
+    <tr><td>PRAM is an airline option</td><td>PRAM card can be removed: no announcements, no boarding music, note to use the handset</td><td>PRAM optional; pre-recorded announcements on the optional IPRAM card</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [17]</td></tr>
+    <tr><td>PRAM card voices</td><td>Five simulated PRAM cards, same content, different female voice</td><td>Content and voice recorded by the airline on its card</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">—</td></tr>
+    <tr><td>Cockpit PA priority</td><td>Cockpit PA stops the PRAM announcement and lowers the music</td><td>PA source priority: cockpit handset before PRAM</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
+    <tr><td>PA volume at low cabin pressure</td><td>Announcements and chimes louder</td><td>PA volume increased at low cabin pressure</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>Emergency call from the cockpit</td><td>High-low chime three times</td><td>High-low chime repeated three times, pink lights on ACPs</td><td><span class="st ok">MATCHES</span></td><td class="src">[9]</td></tr>
     <tr><td>TRAINER chime keys</td><td>Play each chime on demand</td><td>Not FAP keys</td><td><span class="st tr">TRAINER</span></td><td class="src">—</td></tr>
+  </table>
+
+  <h2>Passenger signs</h2>
+  <table class="conf">
+    <tr><th>Feature</th><th>In the simulator</th><th>Real A320 FAP</th><th>Status</th><th>Source</th></tr>
+    <tr><td>Seat belt / no smoking / return to seat signs</td><td>Set by the cockpit switches; low chime on every change; RTS follows the seat belt signs</td><td>FASTEN SEAT BELT and RETURN TO SEAT signs; low tone chime when signs go on or off</td><td><span class="st ok">MATCHES</span></td><td class="src">[21]</td></tr>
+    <tr><td>NO SMOKING AUTO and EXIT signs</td><td>AUTO: on with the landing gear down; EXIT signs with NO SMOKING (EMER EXIT LT in ARM)</td><td>AUTO: NO SMOKING and EXIT signs on when the landing gear is extended</td><td><span class="st ok">MATCHES</span></td><td class="src">[21]</td></tr>
+    <tr><td>Signs at low cabin pressure</td><td>Seat belt, no smoking and exit signs on by themselves</td><td>Above about 11,300 ft cabin altitude the signs come on whatever the switches</td><td><span class="st ok">MATCHES</span></td><td class="src">[22]</td></tr>
+    <tr><td>Flight phase, sign and EMER EXIT LT switches, power loss, cockpit PA, lavatory calls</td><td>Instructor controls on Cabin Status</td><td>Cockpit and passenger actions</td><td><span class="st tr">TRAINER</span></td><td class="src">—</td></tr>
   </table>
 
   <h2>Cabin temperature</h2>
@@ -286,6 +303,7 @@
     <tr><td>Inhibit call / reading light per seat</td><td>Seat row + letter, INHIBIT / ENABLE</td><td>Enable/disable reading lights and inhibit calls for single seats or groups</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>CALL INHIBIT, CHIME INHIBIT, PES</td><td>Cabin-wide settings</td><td>Call/chime inhibit and passenger entertainment power</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>Passenger call</td><td>High chime, PAX CALL with seat, amber tab</td><td>Single high chime, call light, attendant indications</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [12]</td></tr>
+    <tr><td>Lavatory call</td><td>Single high chime, PAX CALL LAV x; CALL RESET or second press cancels</td><td>Lav call: chime and indications; reset with the call button, CALL RESET or CHIME INHIB for the chime</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>PASSENGER PRESSES CALL</td><td>Random seat calls</td><td>Real passenger action</td><td><span class="st tr">TRAINER</span></td><td class="src">—</td></tr>
   </table>
 
@@ -310,11 +328,14 @@
     <tr><td>Cabin Programming</td><td>Move class borders by seat rows, SAVE to CAM</td><td>Moves the borders between cabin classes; password protected</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>NON SMOKER A/C flag</td><td>ON/OFF on Cabin Programming</td><td>Not described in the sources</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[3]</td></tr>
     <tr><td>Layout Selection</td><td>1-, 2-, 3-class layouts, LOAD; MODIFIED counter after SAVE</td><td>Up to 3 predefined layouts + modified layouts; Save; modification counter</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
-    <tr><td>Layout Selection on ground only</td><td>Always available</td><td>Ground only</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[4]</td></tr>
+    <tr><td>Layout Selection on ground only</td><td>Not available in flight or without a CAM</td><td>Ground only</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
+    <tr><td>New CAM loaded by hand</td><td>After a CAM change the old layout stays active until a layout of the new CAM is loaded</td><td>After a CAM or OBRM change the layout and software pages are used to download manually</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>Level Adjustment</td><td>Announcement and chime levels for cabin zones, attendant areas, lavatories</td><td>Loudspeaker and chime levels for cabin zones, attendant areas, rooms, lavatories</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>Level range −6 … +6 dB</td><td>Fixed range</td><td>Range not given in the sources</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[3]</td></tr>
     <tr><td>Software Loading</td><td>OBRM versions, LOAD SW, CIDS restarts; green when up to date</td><td>OBRM holds DIR / SDF / FAP software; page fully green when successful</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
-    <tr><td>FAP Set-Up</td><td>Brightness, loudspeaker / headphone volume, touchscreen click</td><td>Display brightness, FAP loudspeaker and headset volume, cartridge removal</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
+    <tr><td>FAP Set-Up</td><td>Brightness, loudspeaker / headphone volume, touchscreen click; REMOVE and OK for the PRAM, CAM and OBRM cards</td><td>Display brightness, FAP loudspeaker and headset volume; remove and insert IPRAM, CAM and OBRM cartridges</td><td><span class="st ok">MATCHES</span></td><td class="src">[4] [23]</td></tr>
+    <tr><td>OBRM change</td><td>SW Load compares the active software with the OBRM in the slot (NONE when empty)</td><td>Software page used to download after an OBRM change</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
+    <tr><td>Card case</td><td>Choose and insert a card (maintenance / airline task)</td><td>Done by maintenance at the FAP slots</td><td><span class="st tr">TRAINER</span></td><td class="src">—</td></tr>
   </table>
 
   <h2>Simulator-only features</h2>
@@ -322,7 +343,8 @@
     <tr><th>Feature</th><th>Purpose</th><th>Status</th></tr>
     <tr><td>License code activation and device binding</td><td>Protects the app; one device per code</td><td><span class="st app">SIMULATOR</span></td></tr>
     <tr><td>Free demo (A320-DEMO)</td><td>Try MAIN ON/OFF and boarding music only</td><td><span class="st app">SIMULATOR</span></td></tr>
-    <tr><td>⚙ SETTINGS: code, device ID, Deactivate &amp; Transfer</td><td>Move the license to a new tablet</td><td><span class="st app">SIMULATOR</span></td></tr>
+    <tr><td>⚙ SETTINGS: license status, device ID, version (no code shown; licenses are moved by the administrator)</td><td>License support</td><td><span class="st app">SIMULATOR</span></td></tr>
+    <tr><td>Check for updates / in-app update</td><td>Download and install a new version</td><td><span class="st app">SIMULATOR</span></td></tr>
     <tr><td>FAP CONFIG: °C / °F</td><td>Temperature unit for the classroom</td><td><span class="st app">SIMULATOR</span></td></tr>
     <tr><td>FAP CONFIG: MUTE</td><td>Silence the simulator</td><td><span class="st app">SIMULATOR</span></td></tr>
     <tr><td>Important notice at every start</td><td>Training disclaimer</td><td><span class="st app">SIMULATOR</span></td></tr>
@@ -358,16 +380,17 @@
     <tr><td>Door / slide bottle pressure on the Doors page</td><td>Maintenance indication (optional except overwing exits)</td><td class="src">[4]</td></tr>
     <tr><td>Screen auto-off after 10 minutes and wake-up password</td><td>Not useful in a classroom</td><td class="src">[4]</td></tr>
     <tr><td>Mandatory Layout mode (unreadable CAM)</td><td>Maintenance failure case</td><td class="src">[4]</td></tr>
-    <tr><td>MCDU Simulator Menu page</td><td>Maintenance only</td><td class="src">[4]</td></tr>
+    <tr><td>MCDU Simulator Menu page</td><td>Maintenance only (see the separate A320 MCDU Trainer)</td><td class="src">[4]</td></tr>
     <tr><td>Integrated PRAM page variant / CAM-B graphics</td><td>One audio page is enough for training</td><td class="src">[4]</td></tr>
     <tr><td>Up to 6 lighting scenarios (100 % … 5 %)</td><td>Airline-configured; the three standard presets are taught</td><td class="src">[19]</td></tr>
     <tr><td>Automatic emergency announcements</td><td>Airline-specific</td><td class="src">[4]</td></tr>
-    <tr><td>PA volume increase at low cabin pressure</td><td>Not audible as a training point</td><td class="src">[4]</td></tr>
+    <tr><td>Temperature shown outside 18–30 °C in a blue box (no FAP control)</td><td>Behaviour not described in enough detail to reproduce</td><td class="src">[4]</td></tr>
     <tr><td>Attendant panels AIP / ACP / AAP</td><td>Separate panels at each attendant station, not the FAP</td><td class="src">[6] [12]</td></tr>
     <tr><td>Interphone handset calls</td><td>Separate handset system</td><td class="src">[6]</td></tr>
     <tr><td>CFDS emulation / BITE tests</td><td>Maintenance only</td><td class="src">[6]</td></tr>
     <tr><td>Cargo smoke detection</td><td>Cockpit system, not a cabin crew task</td><td class="src">[4]</td></tr>
   </table>
+  <p><b>Not FAP functions</b> (and therefore not on the panel): oxygen masks (automatic or from the cockpit), the BRACE command and ditching (cockpit), the crew emergency call (handset), and the cabin entertainment content (separate IFE system; the FAP only switches PAX SYS, PED POWER and PES).</p>
 </section>
 
 <!-- ============================== 8 -->
@@ -403,8 +426,11 @@
     <li><span>HAW Hamburg, Flight Systems notes ATA 33 Lights:</span> https://www.fzt.haw-hamburg.de/pers/Scholz/materialFS/FS-Notes-ATA33.pdf</li>
     <li><span>"33 Lights — the aircraft" (A320 CFM56 lighting training document):</span> https://www.slideshare.net/slideshow/33-lights-the-aircraft-t1t2-cfm-56pdf/266627117</li>
     <li><span>Airbus FAST magazine #64 (October 2019), CIDS:</span> https://www.aircraft.airbus.com/sites/g/files/jlcbta126/files/2021-11/Airbus-FAST64-magazine.pdf</li>
+    <li><span>FlyByWire documentation, A32NX signs panel (SEAT BELTS, NO SMOKING, EMER EXIT LT):</span> https://docs.flybywiresim.com/pilots-corner/a32nx/a32nx-briefing/flight-deck/ovhd/signs/</li>
+    <li><span>The Flying Engineer, Airbus lights (signs at high cabin altitude):</span> https://theflyingengineer.com/projects/airbus-tech/lights/</li>
+    <li><span>Reference video of a commercial A320 FAP trainer (functions only; design not copied):</span> https://www.youtube.com/watch?v=O_-hNlPsD8o</li>
   </ol>
-  <p style="margin-top:10mm;text-align:center;color:var(--mute);font-size:9pt">© Overdrive Interactive · A320 FAP Simulator v3.9 · Feature Sources &amp; Conformance Report</p>
+  <p style="margin-top:10mm;text-align:center;color:var(--mute);font-size:9pt">© Overdrive Interactive · A320 FAP Simulator v4.0 · Feature Sources &amp; Conformance Report</p>
 </section>
 </main>
 </body>

@@ -30,6 +30,9 @@ class BottomTouchNav extends StatelessWidget {
           if (fap.wasteFull) return FapButtonTone.amber;
         case FapPage.seat:
           if (fap.paxCalls.isNotEmpty) return FapButtonTone.amber;
+        case FapPage.audio:
+          // CALL RESET is on the audio page.
+          if (fap.allCalls.isNotEmpty) return FapButtonTone.amber;
         case FapPage.systemInfo:
           if (fap.cidsDown) return FapButtonTone.red;
           if (fap.dir1Fault || fap.dir2Fault) return FapButtonTone.amber;
