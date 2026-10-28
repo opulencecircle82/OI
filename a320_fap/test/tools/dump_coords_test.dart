@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:aisat_fap/main.dart';
+import 'package:aisat_fap/models/cartridge.dart';
 import 'package:aisat_fap/models/fap_state.dart';
 import 'package:aisat_fap/providers/fap_provider.dart';
 import 'package:flutter/material.dart';
@@ -61,15 +62,26 @@ void main() {
     };
 
     final out = <String, dynamic>{};
-    // Every page as first seen, then the protected pages once unlocked
-    // (stored as '<page>_open').
+    // The notice shown at every start comes first (stored as 'disclaimer'),
+    // then every page as first seen, the protected pages once unlocked
+    // ('<page>_open'), and a few states used by the tutorial video.
     final shots = <(FapPage, String)>[
+      (FapPage.lights, 'disclaimer'),
       for (final p in FapPage.values) (p, p.name),
       for (final p in FapPage.values.where((p) => p.protected))
         (p, '${p.name}_open'),
       (FapPage.cabinProg, 'cabinProg_saved'),
+      (FapPage.fapSetup, 'fapSetup_pramRemoved'),
+      (FapPage.audio, 'audio_noPram'),
+      (FapPage.layout, 'layout_camB'),
     ];
     for (final (p, key) in shots) {
+      if (key == 'cabinStatus') {
+        // Leave the notice for the panel.
+        await tester.tap(find.text('I AGREE & CONTINUE'));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+      }
       if (key.endsWith('_open')) {
         fap.enterAccessCode(p, p == FapPage.swLoad ? '813' : '318');
       }
@@ -77,7 +89,20 @@ void main() {
         fap.moveBoundary(1);
         fap.saveProgramming();
       }
-      fap.goTo(p);
+      if (key == 'fapSetup_pramRemoved') {
+        fap.dismissSaved();
+        fap.removeCard(CardSlot.pram);
+      }
+      if (key == 'layout_camB') {
+        fap.pickCard(CardSlot.pram, 'pram_aria');
+        fap.insertCard(CardSlot.pram);
+        fap.confirmCard(CardSlot.pram);
+        fap.removeCard(CardSlot.cam);
+        fap.pickCard(CardSlot.cam, 'cam_b');
+        fap.insertCard(CardSlot.cam);
+        fap.confirmCard(CardSlot.cam);
+      }
+      if (key != 'disclaimer') fap.goTo(p);
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));
       final texts = <Map<String, dynamic>>[];
@@ -126,6 +151,10 @@ void main() {
         'AccessKeypad',
         '_SavedDialog',
         '_SeatMap',
+        '_CockpitTrainer',
+        '_CartridgePanel',
+        '_CardCase',
+        '_CardSlot',
       };
       final regions = <Map<String, dynamic>>[];
       for (final e

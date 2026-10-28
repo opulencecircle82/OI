@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/cartridge.dart';
 import '../../models/fap_state.dart';
 import '../../providers/fap_provider.dart';
 import '../../theme/fap_theme.dart';
@@ -21,31 +22,25 @@ class SwLoadSubscreen extends StatelessWidget {
       return const AccessKeypad(page: FapPage.swLoad);
     }
     final updated = fap.swUpdated;
-    String active(String oldV, String newV) => updated ? newV : oldV;
+    final slot = fap.cardInSlot(CardSlot.obrm);
+    final act = obrmSoftware[fap.activeSoftware.id]!;
+    final inSlot = slot == null ? null : obrmSoftware[slot.id]!;
 
     final components = [
-      (
-        'DIRECTOR 1 (${fap.activeDirector == 1 ? 'ACT.' : 'PAS.'})',
-        'PNR: Z014H010035C   SER: 5057   FIN: 101RH',
-        [
-          ('MAINBOARD', 'KID09-DMB1-126', 'KID09-DMB1-127'),
-          ('DIB', 'KID15-DIB3-332', 'KID15-DIB3-333'),
-          ('SDF', 'KID15-DF2-123', 'KID15-DF2-124'),
-        ],
-      ),
-      (
-        'DIRECTOR 2 (${fap.activeDirector == 2 ? 'ACT.' : 'PAS.'})',
-        'PNR: Z014H010035C   SER: 5055   FIN: 102RH',
-        [
-          ('MAINBOARD', 'KID09-DMB1-126', 'KID09-DMB1-127'),
-          ('DIB', 'KID15-DIB3-332', 'KID15-DIB3-333'),
-          ('SDF', 'KID15-DF2-123', 'KID15-DF2-124'),
-        ],
-      ),
+      for (final n in [1, 2])
+        (
+          'DIRECTOR $n (${fap.activeDirector == n ? 'ACT.' : 'PAS.'})',
+          'PNR: Z014H010035C   SER: ${n == 1 ? 5057 : 5055}   FIN: 10${n}RH',
+          [
+            ('MAINBOARD', act.mainboard, inSlot?.mainboard),
+            ('DIB', act.dib, inSlot?.dib),
+            ('SDF', act.sdf, inSlot?.sdf),
+          ],
+        ),
       (
         'FAP',
         'PNR: Z145H0052120   SER: 5011   FIN: 120RH',
-        [('MAINBOARD', 'KID11-FAP3-311', 'KID11-FAP3-311')],
+        [('MAINBOARD', act.fap, inSlot?.fap)],
       ),
     ];
 
@@ -66,14 +61,14 @@ class SwLoadSubscreen extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: Text(
-                          'OBRM ACTIVE  ${updated ? 'Z064H010037B' : 'Z064H010037A'}',
+                          'OBRM ACTIVE  ${fap.activeSoftware.partNumber}',
                           style: FapText.label,
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 4,
                         child: Text(
-                          'IN SLOT  Z064H010037B',
+                          'IN SLOT  ${slot?.partNumber ?? 'NONE'}',
                           style: FapText.label,
                         ),
                       ),
@@ -110,14 +105,14 @@ class SwLoadSubscreen extends StatelessWidget {
                             flex: 10,
                             child: Column(
                               children: [
-                                for (final (part, oldV, newV) in parts)
+                                for (final (part, act, newV) in parts)
                                   Builder(
                                     builder: (_) {
-                                      final act = active(oldV, newV);
-                                      final same = act == newV;
-                                      final c = same
-                                          ? FapColors.okGreen
-                                          : FapColors.amber;
+                                      final c = newV == null
+                                          ? FapColors.textDim
+                                          : (act == newV
+                                                ? FapColors.okGreen
+                                                : FapColors.amber);
                                       return Padding(
                                         padding: const EdgeInsets.symmetric(
                                           vertical: 1,
@@ -148,7 +143,7 @@ class SwLoadSubscreen extends StatelessWidget {
                                             Expanded(
                                               flex: 4,
                                               child: Text(
-                                                newV,
+                                                newV ?? '-',
                                                 style: FapText.monoStyle(
                                                   size: 12,
                                                   color: c,
@@ -187,10 +182,14 @@ class SwLoadSubscreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  updated
-                      ? 'All components are up to date.'
-                      : 'Press LOAD SW to load the software from the OBRM. '
-                            'The CIDS restarts when loading is completed.',
+                  slot == null
+                      ? 'No OBRM in the slot. Insert one on FAP SET-UP.'
+                      : (updated
+                            ? 'All components run the software of the OBRM '
+                                  'in the slot.'
+                            : 'Press LOAD SW to load the software from the '
+                                  'OBRM. The CIDS restarts when loading is '
+                                  'completed.'),
                   style: FapText.label,
                 ),
                 const SizedBox(height: 12),
@@ -198,7 +197,9 @@ class SwLoadSubscreen extends StatelessWidget {
                   label: 'LOAD SW',
                   width: double.infinity,
                   height: 56,
-                  tone: updated ? FapButtonTone.normal : FapButtonTone.amber,
+                  tone: slot == null || updated
+                      ? FapButtonTone.normal
+                      : FapButtonTone.amber,
                   onTap: fap.loadSoftware,
                 ),
               ],

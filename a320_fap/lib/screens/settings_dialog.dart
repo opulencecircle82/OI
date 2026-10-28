@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 
 import '../config.dart';
 import '../services/access_lock.dart';
+import '../services/update_service.dart';
 import '../theme/fap_theme.dart';
+import 'update_dialog.dart';
 
-/// Gear-icon settings: shows the license on this device and lets the
-/// owner deactivate it here to activate it on another device.
-Future<void> showSettingsDialog(
-  BuildContext context, {
-  required VoidCallback onDeactivated,
-}) {
+/// SETTINGS key: license status of this device, app version and the
+/// update check. The license code is not shown and the license cannot be
+/// moved from here (the administrator releases it for a new device).
+Future<void> showSettingsDialog(BuildContext context) {
   return showDialog<void>(
     context: context,
     barrierColor: Colors.black87,
@@ -18,36 +18,27 @@ Future<void> showSettingsDialog(
       backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.all(24),
       child: SingleChildScrollView(
-        child: _SettingsCard(
-          onClose: () => Navigator.of(dialogContext).pop(),
-          onDeactivated: () {
-            Navigator.of(dialogContext).pop();
-            onDeactivated();
-          },
-        ),
+        child: _SettingsCard(onClose: () => Navigator.of(dialogContext).pop()),
       ),
     ),
   );
 }
 
 class _SettingsCard extends StatefulWidget {
-  const _SettingsCard({required this.onClose, required this.onDeactivated});
+  const _SettingsCard({required this.onClose});
 
   final VoidCallback onClose;
-  final VoidCallback onDeactivated;
 
   @override
   State<_SettingsCard> createState() => _SettingsCardState();
 }
 
 class _SettingsCardState extends State<_SettingsCard> {
-  String? _code;
   String? _device;
   DateTime? _since;
-  bool _loading = true;
-  bool _busy = false;
   String? _info; // shown when the server could not be reached
-  String? _error;
+  bool _checking = false;
+  String? _updateMessage;
 
   @override
   void initState() {
@@ -56,19 +47,13 @@ class _SettingsCardState extends State<_SettingsCard> {
   }
 
   Future<void> _load() async {
-    final saved = await AccessLock.savedCode();
     final device = await AccessLock.deviceId();
     if (!mounted) return;
-    setState(() {
-      _code = saved;
-      _device = device;
-    });
+    setState(() => _device = device);
     final info = await AccessLock.licenseInfo();
     if (!mounted) return;
     setState(() {
-      _loading = false;
       if (info.result == LicenseResult.ok) {
-        _code = info.code ?? _code;
         _since = info.usedAt;
       } else if (info.result == LicenseResult.offline) {
         _info = 'Offline: connect to the internet to check the license.';
@@ -80,50 +65,31 @@ class _SettingsCardState extends State<_SettingsCard> {
     });
   }
 
-  Future<void> _deactivate() async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (c) => AlertDialog(
-        backgroundColor: FapColors.panel,
-        title: const Text('Deactivate license?', style: FapText.panelTitle),
-        content: const Text(
-          'Deactivating will lock this device and allow your code to be '
-          'activated on a new machine. Proceed?',
-          style: FapText.body,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(c).pop(false),
-            child: const Text('CANCEL'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(c).pop(true),
-            style: FilledButton.styleFrom(
-              backgroundColor: FapColors.amber,
-              foregroundColor: Colors.black,
-            ),
-            child: const Text('DEACTIVATE'),
-          ),
-        ],
-      ),
-    );
-    if (ok != true || !mounted) return;
+  Future<void> _checkUpdates() async {
     setState(() {
-      _busy = true;
-      _error = null;
+      _checking = true;
+      _updateMessage = null;
     });
-    final result = await AccessLock.deactivate();
+    final result = await UpdateService.checkNow();
     if (!mounted) return;
-    if (result == LicenseResult.ok) {
-      widget.onDeactivated();
-      return;
-    }
     setState(() {
-      _busy = false;
-      _error = result == LicenseResult.offline
-          ? 'No internet connection. Deactivation must be done online.'
-          : 'Deactivation failed. Please try again later.';
+      _checking = false;
+      _updateMessage = switch (result.status) {
+        UpdateStatus.available => null,
+        UpdateStatus.upToDate =>
+          'You have the latest version (${AppConfig.version}).',
+        UpdateStatus.unavailable =>
+          'Could not check for updates. Connect to the internet and try '
+              'again.',
+      };
     });
+    final info = result.info;
+    if (info != null) {
+      // This dialog closes; the update dialog opens on the navigator.
+      final navContext = Navigator.of(context).context;
+      widget.onClose();
+      if (navContext.mounted) await showUpdateDialog(navContext, info);
+    }
   }
 
   Widget _row(String label, String value, {bool copy = false}) => Padding(
@@ -181,7 +147,7 @@ class _SettingsCardState extends State<_SettingsCard> {
                 const Expanded(child: Text('SETTINGS', style: FapText.title)),
                 IconButton(
                   tooltip: 'Close',
-                  onPressed: _busy ? null : widget.onClose,
+                  onPressed: widget.onClose,
                   icon: const Icon(Icons.close, color: FapColors.textDim),
                 ),
               ],
@@ -192,56 +158,52 @@ class _SettingsCardState extends State<_SettingsCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  _row(
-                    'LICENSE CODE',
-                    _code ?? (_loading ? 'Loading...' : 'Not available'),
-                  ),
-                  _row('DEVICE ID', _device ?? '...', copy: _device != null),
+                  _row('LICENSE', 'ACTIVE ON THIS DEVICE'),
                   if (since != null)
                     _row(
                       'ACTIVATED',
                       '${since.year}-${_two(since.month)}-${_two(since.day)} '
                           '${_two(since.hour)}:${_two(since.minute)}',
                     ),
+                  _row('DEVICE ID', _device ?? '...', copy: _device != null),
                   _row('APP VERSION', AppConfig.version),
                   if (_info != null)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Text(_info!, style: FapText.label),
                     ),
-                  const Divider(color: FapColors.panelBorder),
-                  const SizedBox(height: 8),
                   const Text(
-                    'New tablet or PC? Deactivate the license here (internet '
-                    'needed), then enter the same code on the new device.',
+                    'New tablet or PC? Ask your instructor or administrator '
+                    'to move the license.',
                     style: FapText.label,
                   ),
-                  const SizedBox(height: 12),
-                  OutlinedButton.icon(
-                    onPressed: _busy ? null : _deactivate,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: FapColors.amber,
-                      side: const BorderSide(color: FapColors.amber),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                  if (UpdateService.supported) ...[
+                    const Divider(color: FapColors.panelBorder, height: 28),
+                    OutlinedButton.icon(
+                      onPressed: _checking ? null : _checkUpdates,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: FapColors.cyan,
+                        side: const BorderSide(color: FapColors.cyan),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      icon: _checking
+                          ? const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.2,
+                              ),
+                            )
+                          : const Icon(Icons.system_update),
+                      label: const Text(
+                        'CHECK FOR UPDATES',
+                        style: TextStyle(fontWeight: FontWeight.w800),
+                      ),
                     ),
-                    icon: _busy
-                        ? const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2.2),
-                          )
-                        : const Icon(Icons.swap_horiz),
-                    label: const Text(
-                      'DEACTIVATE & TRANSFER LICENSE',
-                      style: TextStyle(fontWeight: FontWeight.w800),
-                    ),
-                  ),
-                  if (_error != null) ...[
-                    const SizedBox(height: 10),
-                    Text(
-                      _error!,
-                      style: FapText.label.copyWith(color: FapColors.red),
-                    ),
+                    if (_updateMessage != null) ...[
+                      const SizedBox(height: 10),
+                      Text(_updateMessage!, style: FapText.label),
+                    ],
                   ],
                 ],
               ),

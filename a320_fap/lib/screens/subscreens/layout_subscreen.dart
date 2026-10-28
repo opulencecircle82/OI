@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/cabin_setup.dart';
+import '../../models/cartridge.dart';
 import '../../models/fap_state.dart';
 import '../../providers/fap_provider.dart';
 import '../../theme/fap_theme.dart';
 import '../../widgets/access_keypad.dart';
 import '../../widgets/fap_button.dart';
 
-/// LAYOUT SELECTION (access code): the cabin layouts stored on the CAM.
-/// Select one and press LOAD to make it active; lighting zones, seat rows
-/// and level adjustment follow the active layout.
+/// LAYOUT SELECTION (access code, ground only): the cabin layouts stored
+/// on the CAM in the slot. Select one and press LOAD to make it active;
+/// lighting zones, seat rows and level adjustment follow the active layout.
 class LayoutSubscreen extends StatelessWidget {
   const LayoutSubscreen({super.key});
 
@@ -37,6 +38,43 @@ class LayoutSubscreen extends StatelessWidget {
     String fmt(DateTime d) =>
         '${d.day.toString().padLeft(2, '0')}.${months[d.month - 1]} ${d.year}';
 
+    final blocks = fap.layoutSelectionBlocks;
+    final cam = fap.cardInSlot(CardSlot.cam);
+    if (blocks.isNotEmpty) {
+      return Center(
+        child: Container(
+          width: 640,
+          padding: const EdgeInsets.fromLTRB(40, 36, 40, 40),
+          decoration: BoxDecoration(
+            color: const Color(0xFF2B3A8C),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: const Color(0xFF5C6BC0), width: 2),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'LAYOUT SELECTION NOT AVAILABLE',
+                style: FapText.title.copyWith(color: FapColors.amber),
+              ),
+              const SizedBox(height: 18),
+              for (final b in blocks)
+                Text(
+                  '- $b',
+                  style: FapText.title.copyWith(color: FapColors.amber),
+                ),
+              const SizedBox(height: 22),
+              Text(
+                'ACTIVE: LAYOUT ${fap.activeLayout.number}  (${fap.activeCam.name})',
+                style: FapText.label,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    final pendingOk = fap.slotLayouts.any((l) => l.id == fap.pendingLayout);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
       child: Row(
@@ -46,11 +84,11 @@ class LayoutSubscreen extends StatelessWidget {
           SizedBox(
             width: 760,
             child: FapPanel(
-              title: 'CAM IN SLOT   Z053H0000010',
+              title: 'CAM IN SLOT   ${cam!.partNumber}   ${cam.name}',
               titleColor: FapColors.cyan,
               child: Column(
                 children: [
-                  for (final l in cabinLayouts)
+                  for (final l in fap.slotLayouts)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: _LayoutRow(
@@ -62,6 +100,16 @@ class LayoutSubscreen extends StatelessWidget {
                             ? null
                             : fmt(fap.layoutChanged(l.id)!),
                         onTap: () => fap.selectLayoutRow(l.id),
+                      ),
+                    ),
+                  if (fap.activeLayout.cam != cam.id)
+                    Text(
+                      'ACTIVE: LAYOUT ${fap.activeLayout.number} OF '
+                      '${fap.activeCam.name} - LOAD A LAYOUT OF THIS CAM',
+                      style: FapText.monoStyle(
+                        size: 12,
+                        color: FapColors.amber,
+                        weight: FontWeight.w700,
                       ),
                     ),
                 ],
@@ -78,7 +126,7 @@ class LayoutSubscreen extends StatelessWidget {
                   label: 'LOAD',
                   width: 170,
                   height: 56,
-                  tone: fap.pendingLayout != fap.activeLayout.id
+                  tone: pendingOk && fap.pendingLayout != fap.activeLayout.id
                       ? FapButtonTone.amber
                       : FapButtonTone.normal,
                   onTap: fap.loadLayout,
@@ -136,7 +184,7 @@ class _LayoutRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'LAYOUT ${layout.id}',
+                      'LAYOUT ${layout.number}',
                       style: TextStyle(
                         color: fg,
                         fontWeight: FontWeight.w800,
@@ -154,7 +202,7 @@ class _LayoutRow extends StatelessWidget {
                     ),
                     if (count > 0)
                       Text(
-                        'LAYOUT ${layout.id} MODIFIED - COUNT '
+                        'LAYOUT ${layout.number} MODIFIED - COUNT '
                         '${count.toString().padLeft(3, '0')}'
                         '${changed == null ? '' : '   $changed'}',
                         style: TextStyle(

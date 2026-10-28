@@ -16,12 +16,21 @@ enum CabinClass {
 class CabinLayout {
   const CabinLayout({
     required this.id,
+    required this.cam,
+    required this.number,
     required this.rows,
     required this.classes,
     required this.defaultStarts,
   });
 
+  /// Unique over every CAM (keys the saved class borders and counters).
   final int id;
+
+  /// Card id of the CAM that holds this layout.
+  final String cam;
+
+  /// Layout number shown on the FAP (1-3 on each CAM).
+  final int number;
   final int rows;
   final List<CabinClass> classes;
 
@@ -33,29 +42,67 @@ class CabinLayout {
       '$rows SEATROWS';
 }
 
+const camOriginalId = 'cam_orig';
+const camHighDensityId = 'cam_b';
+
 const cabinLayouts = <CabinLayout>[
   CabinLayout(
     id: 1,
+    cam: camOriginalId,
+    number: 1,
     rows: 30,
     classes: [CabinClass.tourist],
     defaultStarts: [1],
   ),
   CabinLayout(
     id: 2,
+    cam: camOriginalId,
+    number: 2,
     rows: 30,
     classes: [CabinClass.business, CabinClass.tourist],
     defaultStarts: [1, 5],
   ),
   CabinLayout(
     id: 3,
+    cam: camOriginalId,
+    number: 3,
     rows: 36,
     classes: [CabinClass.first, CabinClass.business, CabinClass.tourist],
     defaultStarts: [1, 4, 11],
   ),
+  // CAM B: a second, high-density cabin configuration.
+  CabinLayout(
+    id: 11,
+    cam: camHighDensityId,
+    number: 1,
+    rows: 31,
+    classes: [CabinClass.tourist],
+    defaultStarts: [1],
+  ),
+  CabinLayout(
+    id: 12,
+    cam: camHighDensityId,
+    number: 2,
+    rows: 29,
+    classes: [CabinClass.business, CabinClass.tourist],
+    defaultStarts: [1, 4],
+  ),
+  CabinLayout(
+    id: 13,
+    cam: camHighDensityId,
+    number: 3,
+    rows: 28,
+    classes: [CabinClass.business, CabinClass.tourist],
+    defaultStarts: [1, 6],
+  ),
 ];
 
 CabinLayout layoutById(int id) =>
-    cabinLayouts.firstWhere((l) => l.id == id, orElse: () => cabinLayouts.last);
+    cabinLayouts.firstWhere((l) => l.id == id, orElse: () => cabinLayouts[2]);
+
+/// The layouts stored on CAM [camId].
+List<CabinLayout> layoutsOfCam(String camId) =>
+    cabinLayouts.where((l) => l.cam == camId).toList();
 
 /// Seat letters of an A320 single-aisle row (3 + 3).
 const seatLetters = ['A', 'B', 'C', 'D', 'E', 'F'];

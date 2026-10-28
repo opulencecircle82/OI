@@ -64,10 +64,19 @@ class FakeAudio implements FapAudio {
   Future<void> stopMusic() async => music = false;
 
   @override
-  Future<bool> announce(String pramId) async {
-    calls.add('announce:$pramId');
+  Future<bool> announce(String pramId, {String voice = ''}) async {
+    calls.add(voice.isEmpty ? 'announce:$pramId' : 'announce:$voice/$pramId');
     return ttsAvailable;
   }
+
+  bool otherPa = false;
+  bool paBoost = false;
+
+  @override
+  void setOtherPaActive(bool on) => otherPa = on;
+
+  @override
+  void setPaBoost(bool on) => paBoost = on;
 
   @override
   Future<void> stopAnnouncement() async {

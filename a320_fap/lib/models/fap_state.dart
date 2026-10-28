@@ -153,6 +153,50 @@ class LavSmokeStatus {
       LavSmokeStatus(alert: alert ?? this.alert, source: source ?? this.source);
 }
 
+/// Flight phase the CIDS receives from the aircraft (trainer controlled).
+/// Layout selection works on ground only; NO SMOKING in AUTO follows the
+/// landing gear.
+enum FlightPhase {
+  ground('GROUND', onGround: true, gearDown: true),
+  enginesRunning('ENGINES\nRUNNING', onGround: true, gearDown: true),
+  flight('FLIGHT', onGround: false, gearDown: false),
+  approach('APPROACH\nGEAR DOWN', onGround: false, gearDown: true);
+
+  const FlightPhase(
+    this.label, {
+    required this.onGround,
+    required this.gearDown,
+  });
+  final String label;
+  final bool onGround;
+  final bool gearDown;
+}
+
+/// Cockpit NO SMOKING switch (the SEAT BELTS switch is ON / OFF).
+enum SignSwitch {
+  on('ON'),
+  auto('AUTO'),
+  off('OFF');
+
+  const SignSwitch(this.label);
+  final String label;
+}
+
+/// Cockpit EMER EXIT LT switch. In ARM the emergency lights come on by
+/// themselves when the normal electrical supply is lost.
+enum EmerLtSwitch {
+  on('ON'),
+  arm('ARM'),
+  off('OFF');
+
+  const EmerLtSwitch(this.label);
+  final String label;
+}
+
+/// CAUT key: off = no event, flashing = new event not yet looked at,
+/// steady = every event page has been selected.
+enum CautState { off, flashing, steady }
+
 enum TempZone {
   fwd('FWD CABIN'),
   aft('AFT CABIN');

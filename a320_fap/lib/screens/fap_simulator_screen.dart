@@ -32,12 +32,7 @@ import 'unlock_screen.dart';
 /// It is laid out once on a fixed design canvas and scaled to fit the
 /// device, so the panel looks identical on every tablet and browser.
 class FapSimulatorScreen extends StatelessWidget {
-  const FapSimulatorScreen({
-    super.key,
-    this.demo = false,
-    this.onLicensed,
-    this.onDeactivated,
-  });
+  const FapSimulatorScreen({super.key, this.demo = false, this.onLicensed});
 
   static const route = '/fap';
 
@@ -48,9 +43,6 @@ class FapSimulatorScreen extends StatelessWidget {
   /// else asks for the license code.
   final bool demo;
   final VoidCallback? onLicensed;
-
-  /// Settings > Deactivate & Transfer locked this device.
-  final VoidCallback? onDeactivated;
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +56,7 @@ class FapSimulatorScreen extends StatelessWidget {
             final panel = _panel(
               askLicense,
               // Licensed only: the demo has its own ENTER LICENSE CODE button.
-              demo
-                  ? null
-                  : () => showSettingsDialog(
-                      context,
-                      onDeactivated: () => onDeactivated?.call(),
-                    ),
+              demo ? null : () => showSettingsDialog(context),
             );
             // The FAP is always horizontal. If the system still shows the
             // app upright (some Android tablets ignore the landscape lock),
@@ -158,7 +145,7 @@ class _DemoBar extends StatelessWidget {
 class _Device extends StatelessWidget {
   const _Device({this.onSettings});
 
-  /// Simulator SETTINGS key in the top frame (license, transfer).
+  /// Simulator SETTINGS key in the top frame (license, updates).
   final VoidCallback? onSettings;
 
   @override
@@ -431,7 +418,7 @@ class _TitleBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          small('SCREEN OFF', () => fap.setScreenOff(true)),
+          small('SCREEN OFF', fap.screenOffKey),
           const SizedBox(width: 6),
           small('CABIN READY', fap.toggleCabinReady, active: fap.cabinReady),
           Expanded(

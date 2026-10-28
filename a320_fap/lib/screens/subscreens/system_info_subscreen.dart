@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/cartridge.dart';
 import '../../providers/fap_provider.dart';
 import '../../config.dart';
 import '../../theme/fap_theme.dart';
@@ -39,8 +40,10 @@ class SystemInfoSubscreen extends StatelessWidget {
       ),
       (
         'PRAM / AUDIO',
-        fap.cidsDown ? 'NOT AVAIL' : 'OK',
-        fap.cidsDown ? FapColors.red : FapColors.okGreen,
+        fap.cidsDown ? 'NOT AVAIL' : (fap.pramAvailable ? 'OK' : 'NO PRAM'),
+        fap.cidsDown
+            ? FapColors.red
+            : (fap.pramAvailable ? FapColors.okGreen : FapColors.amber),
       ),
       (
         'PAX SYSTEMS',
@@ -57,7 +60,7 @@ class SystemInfoSubscreen extends StatelessWidget {
         fap.evacCaptOnly ? 'CAPT' : 'CAPT & PURS',
         fap.evacCaptOnly ? FapColors.amber : FapColors.white,
       ),
-      ('CAM (CABIN ASSIGNMENT MODULE)', 'A320 STD', FapColors.white),
+      ('CAM (CABIN ASSIGNMENT MODULE)', fap.activeCam.name, FapColors.white),
     ];
 
     final messages = <(String, Color)>[
@@ -67,8 +70,17 @@ class SystemInfoSubscreen extends StatelessWidget {
         ('CIDS DIR 1 FAULT - DIR 2 TAKES OVER', FapColors.amber)
       else if (fap.dir2Fault)
         ('CIDS DIR 2 FAULT - NO STANDBY', FapColors.amber),
+      if (fap.cidsLightsFull)
+        ('NO CIDS SIGNAL - CABIN LIGHTS FULL BRIGHT', FapColors.amber),
+      if (fap.lowPressure)
+        ('LOW CABIN PRESSURE - LIGHTS BRT, SIGNS ON, PA LOUDER', FapColors.red),
+      if (fap.normalPowerLost && fap.emerLights)
+        ('NORMAL POWER LOST - EMERGENCY LIGHTS ON', FapColors.red),
       if (fap.lavsInop) ('WASTE TANK FULL - LAVS INOP', FapColors.amber),
       if (fap.anySlideDeployed) ('SLIDE DEPLOYED', FapColors.red),
+      for (final s in CardSlot.values)
+        if (fap.cardInSlot(s) == null)
+          ('NO ${s.label} IN SLOT', FapColors.amber),
       if (fap.screenLocked) ('FAP SCREEN LOCKED', FapColors.white),
     ];
 
@@ -137,8 +149,9 @@ class SystemInfoSubscreen extends StatelessWidget {
                               ),
                             ),
                           )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        : ListView(
+                            primary: false,
+                            padding: EdgeInsets.zero,
                             children: [
                               for (final m in messages)
                                 Padding(
@@ -219,7 +232,8 @@ class SystemInfoSubscreen extends StatelessWidget {
                         width: 130,
                         height: 46,
                         fontSize: 12,
-                        onTap: fap.lowCabinPressure,
+                        active: fap.lowPressure,
+                        onTap: fap.toggleLowCabinPressure,
                       ),
                     ],
                   ),

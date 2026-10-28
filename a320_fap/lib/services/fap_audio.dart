@@ -87,10 +87,30 @@ class FapAudio {
   double _chimeTrim = 1.0;
   BgmChannel? _musicChannel;
 
-  double get _voiceVol => (_paGain * _master * _announceTrim).clamp(0.0, 1.0);
-  double get _chimeVol => (_paGain * _master * _chimeTrim).clamp(0.0, 1.0);
+  bool _otherPa = false; // a PA from another station (e.g. the cockpit)
+  double _paBoost = 1.0; // CIDS raises the PA volume at low cabin pressure
+
+  double get _voiceVol =>
+      (_paGain * _master * _announceTrim * _paBoost).clamp(0.0, 1.0);
+  double get _chimeVol =>
+      (_paGain * _master * _chimeTrim * _paBoost).clamp(0.0, 1.0);
   double get _musicVol =>
-      (_musicLevel * _master * (_ducked ? _duckFactor : 1.0)).clamp(0.0, 1.0);
+      (_musicLevel * _master * (_ducked || _otherPa ? _duckFactor : 1.0)).clamp(
+        0.0,
+        1.0,
+      );
+
+  /// A PA from another station is on air: the boarding music is lowered.
+  void setOtherPaActive(bool on) {
+    _otherPa = on;
+    _applyMusicVolume();
+  }
+
+  /// Low cabin pressure: announcements and chimes louder.
+  void setPaBoost(bool on) {
+    _paBoost = on ? 1.4 : 1.0;
+    _applyVolumes();
+  }
 
   void setPaGain(double v) {
     _paGain = v.clamp(0.0, 1.0);
@@ -243,8 +263,9 @@ class FapAudio {
   BgmChannel? get musicChannel => _musicChannel;
 
   /// Plays the PA chime, then the recorded announcement
-  /// `assets/pram/<pramId>.mp3`. Returns false if it cannot be played.
-  Future<bool> announce(String pramId) async {
+  /// `assets/pram/[voice]/<pramId>.mp3` of the PRAM card in the slot
+  /// ([voice] '' = ORIGINAL card). Returns false if it cannot be played.
+  Future<bool> announce(String pramId, {String voice = ''}) async {
     final token = ++_announcementToken;
     if (_speaking) {
       _speaking = false;
@@ -258,7 +279,9 @@ class FapAudio {
     _speaking = true;
     try {
       await _voicePlayer.play(
-        AssetSource('pram/$pramId.mp3'),
+        AssetSource(
+          voice.isEmpty ? 'pram/$pramId.mp3' : 'pram/$voice/$pramId.mp3',
+        ),
         volume: _voiceVol,
       );
       return true;

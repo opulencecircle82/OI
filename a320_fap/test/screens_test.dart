@@ -3,9 +3,11 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:aisat_fap/main.dart';
+import 'package:aisat_fap/models/cartridge.dart';
 import 'package:aisat_fap/models/fap_state.dart';
 import 'package:aisat_fap/providers/fap_provider.dart';
 import 'package:aisat_fap/services/access_lock.dart';
+import 'package:aisat_fap/services/update_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:aisat_fap/widgets/top_status_bar.dart';
@@ -158,6 +160,61 @@ void main() {
     await shot(tester, 'scenario_sw_loading');
     await tester.pump(const Duration(seconds: 12));
     await tester.pump(const Duration(seconds: 5));
+    await teardown(tester);
+  });
+
+  testWidgets('v4.0 scenarios render', (tester) async {
+    await boot(tester, const Size(1600, 1000));
+    // Flight with seat belts on, a lavatory call waiting (CAUT flashing).
+    fap.operateDoor(DoorId.l1);
+    fap.armAllSlides();
+    fap.setFlightPhase(FlightPhase.flight);
+    fap.toggleSeatBeltSwitch();
+    fap.goTo(FapPage.cabinStatus);
+    fap.lavCall(Lavatory.d);
+    await shot(tester, 'scenario_signs_lav_call');
+    expect(fap.cautState, CautState.flashing);
+    fap.callReset();
+
+    // Layout selection is not available in flight.
+    fap.enterAccessCode(FapPage.layout, '318');
+    fap.goTo(FapPage.layout);
+    await shot(tester, 'scenario_layout_in_flight');
+    fap.setFlightPhase(FlightPhase.ground);
+
+    // PRAM removed: FAP SET-UP waits for a card; the audio page has none.
+    fap.removeCard(CardSlot.pram);
+    fap.goTo(FapPage.fapSetup);
+    await shot(tester, 'scenario_pram_removed');
+    fap.goTo(FapPage.audio);
+    await shot(tester, 'scenario_audio_no_pram');
+    fap.pickCard(CardSlot.pram, 'pram_natasha');
+    fap.insertCard(CardSlot.pram);
+    fap.confirmCard(CardSlot.pram);
+
+    // CAM B inserted and one of its layouts loaded.
+    fap.removeCard(CardSlot.cam);
+    fap.pickCard(CardSlot.cam, 'cam_b');
+    fap.insertCard(CardSlot.cam);
+    fap.confirmCard(CardSlot.cam);
+    fap.goTo(FapPage.layout);
+    await shot(tester, 'scenario_cam_b_inserted');
+    fap.selectLayoutRow(12);
+    fap.loadLayout();
+    fap.goTo(FapPage.lights);
+    await shot(tester, 'scenario_cam_b_lights');
+
+    // No OBRM in the slot.
+    fap.removeCard(CardSlot.obrm);
+    fap.enterAccessCode(FapPage.swLoad, '813');
+    fap.goTo(FapPage.swLoad);
+    await shot(tester, 'scenario_sw_no_obrm');
+
+    // Low cabin pressure and normal power lost.
+    fap.toggleLowCabinPressure();
+    fap.toggleNormalPowerLost();
+    fap.goTo(FapPage.systemInfo);
+    await shot(tester, 'scenario_low_pressure');
     await teardown(tester);
   });
 
@@ -432,30 +489,38 @@ void main() {
     await teardown(tester);
   });
 
-  testWidgets('settings gear: deactivate & transfer locks the device', (
-    tester,
-  ) async {
+  testWidgets('settings: no code, no transfer; update check', (tester) async {
     var online = false;
-    var released = false;
+    var latest = '4.0';
     AccessLock.androidIdReader = () async => 'aaaa000011112222';
     AccessLock.clientFactory = () => MockClient((req) async {
       if (!online) throw http.ClientException('no network');
       final fn = req.url.pathSegments.last;
       final Map<String, dynamic> body = switch (fn) {
-        'a320_my_license' =>
-          released
-              ? {'ok': false, 'reason': 'NO_LICENSE'}
-              : {
-                  'ok': true,
-                  'code': 'A320-k7Rm9Qx2',
-                  'used_at': '2026-10-08T06:00:00Z',
-                },
-        'a320_release_license' => {'ok': true, 'code': 'A320-k7Rm9Qx2'},
-        'a320_restore_license' => {'ok': !released},
+        'a320_my_license' => {
+          'ok': true,
+          'code': 'A320-k7Rm9Qx2',
+          'used_at': '2026-10-08T06:00:00Z',
+        },
+        'a320_restore_license' => {'ok': true},
         _ => {'ok': false},
       };
-      if (fn == 'a320_release_license') released = true;
       return http.Response(jsonEncode(body), 200);
+    });
+    UpdateService.platformName = () => 'android';
+    UpdateService.clientFactory = () => MockClient((req) async {
+      if (!online) throw http.ClientException('no network');
+      return http.Response(
+        jsonEncode({
+          'version': latest,
+          'notes': ['Passenger signs and lavatory calls'],
+          'android': {
+            'url': 'https://example.com/A320_FAP_v$latest.apk',
+            'name': 'A320_FAP_v$latest.apk',
+          },
+        }),
+        200,
+      );
     });
     // A licensed tablet.
     final device = await AccessLock.deviceId();
@@ -478,51 +543,44 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
     }
 
-    // Offline: the settings still show the saved code and the device id.
+    // Offline: the device id, never the code; no transfer from the app.
     await tester.tap(find.byTooltip('Settings'));
     await settle();
-    expect(find.text('A320-k7Rm9Qx2'), findsOneWidget);
+    expect(find.text('A320-k7Rm9Qx2'), findsNothing);
+    expect(find.textContaining('A320-'), findsNothing);
     expect(find.text(device), findsOneWidget);
     expect(find.textContaining('Offline'), findsOneWidget);
-    await tester.tap(find.text('DEACTIVATE & TRANSFER LICENSE'));
+    expect(find.textContaining('DEACTIVATE'), findsNothing);
+    expect(find.textContaining('TRANSFER'), findsNothing);
+    await tester.tap(find.text('CHECK FOR UPDATES'));
     await settle();
-    expect(
-      find.textContaining('Deactivating will lock this device'),
-      findsOneWidget,
-    );
-    await tester.tap(find.text('DEACTIVATE'));
-    await settle();
-    expect(
-      find.textContaining('Deactivation must be done online'),
-      findsOneWidget,
-    );
-    expect(await AccessLock.isUnlocked(), isTrue);
+    expect(find.textContaining('Could not check for updates'), findsOneWidget);
     await tester.tap(find.byTooltip('Close'));
     await settle();
 
-    // Online: shows the activation date; cancel keeps the license.
+    // Online: activation date; up to date.
     online = true;
     await tester.tap(find.byTooltip('Settings'));
     await settle();
     expect(find.text('ACTIVATED'), findsOneWidget);
+    expect(find.text('A320-k7Rm9Qx2'), findsNothing);
+    await tester.tap(find.text('CHECK FOR UPDATES'));
+    await settle();
+    expect(find.textContaining('You have the latest version'), findsOneWidget);
     await shot(tester, 'settings_dialog');
-    await tester.tap(find.text('DEACTIVATE & TRANSFER LICENSE'));
-    await settle();
-    await tester.tap(find.text('CANCEL'));
-    await settle();
-    expect(released, isFalse);
 
-    // Confirm: the code is released and the app goes back to activation.
-    await tester.tap(find.text('DEACTIVATE & TRANSFER LICENSE'));
+    // A newer version: the settings close and the update is offered.
+    latest = '4.1';
+    await tester.tap(find.text('CHECK FOR UPDATES'));
     await settle();
-    await tester.tap(find.text('DEACTIVATE'));
+    expect(find.text('UPDATE AVAILABLE'), findsOneWidget);
+    expect(find.textContaining('Version 4.1 is available'), findsOneWidget);
+    expect(find.text('CHECK FOR UPDATES'), findsNothing); // settings closed
+    await shot(tester, 'update_dialog');
+    await tester.tap(find.text('LATER'));
     await settle();
-    await settle();
-    expect(released, isTrue);
-    expect(find.text('ACTIVATE'), findsOneWidget);
-    expect(find.byTooltip('Settings'), findsNothing);
-    expect(await AccessLock.isUnlocked(), isFalse);
-    expect(await AccessLock.savedCode(), isNull);
+    expect(find.text('UPDATE AVAILABLE'), findsNothing);
+    expect(await AccessLock.isUnlocked(), isTrue);
     await teardown(tester);
   });
 

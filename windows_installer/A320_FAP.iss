@@ -1,10 +1,10 @@
-; A320 FAP Simulator - Windows installer (Inno Setup 6).
+﻿; A320 FAP Simulator - Windows installer (Inno Setup 6).
 ; Build the app first:  cd a320_fap && flutter build windows --release
 ; Then compile:         ISCC.exe windows_installer\A320_FAP.iss
 ; Output:               Windows_Setup\A320_FAP_Setup_v<version>.exe
 
 #define AppName "A320 FAP Simulator"
-#define AppVersion "3.9"
+#define AppVersion "4.0"
 #define AppExe "A320_FAP.exe"
 #define SrcDir "..\a320_fap\build\windows\x64\runner\Release"
 
