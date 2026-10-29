@@ -184,6 +184,7 @@ class _ProcedurePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!trainerVisible(context)) return const SizedBox.shrink();
     return FapPanel(
       title: 'LAV SMOKE - CREW ACTIONS',
       titleColor: FapColors.cyan,

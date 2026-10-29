@@ -239,17 +239,18 @@ class SystemInfoSubscreen extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Row(
-                  children: [
-                    FapButton(
-                      label: 'RESET SIMULATOR',
-                      width: 190,
-                      height: 50,
-                      tone: FapButtonTone.amber,
-                      onTap: () => _confirmReset(context, fap),
-                    ),
-                  ],
-                ),
+                if (trainerVisible(context))
+                  Row(
+                    children: [
+                      FapButton(
+                        label: 'RESET SIMULATOR',
+                        width: 190,
+                        height: 50,
+                        tone: FapButtonTone.amber,
+                        onTap: () => _confirmReset(context, fap),
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),

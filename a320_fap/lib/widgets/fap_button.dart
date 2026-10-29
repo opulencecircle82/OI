@@ -247,7 +247,8 @@ class StatusTag extends StatelessWidget {
 }
 
 /// Dashed-border frame that marks instructor / trainer-only controls, so
-/// students can tell them apart from real FAP functions.
+/// students can tell them apart from real FAP functions. Not shown when
+/// SETTINGS > TRAINER CONTROLS is HIDE.
 class TrainerBox extends StatelessWidget {
   const TrainerBox({
     super.key,
@@ -262,6 +263,7 @@ class TrainerBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!trainerVisible(context)) return const SizedBox.shrink();
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -287,6 +289,16 @@ class TrainerBox extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+/// False when SETTINGS > TRAINER CONTROLS is HIDE (always true without a
+/// FapProvider above, e.g. in a widget test of a single control).
+bool trainerVisible(BuildContext context) {
+  try {
+    return context.select<FapProvider, bool>((f) => f.showTrainer);
+  } on ProviderNotFoundException {
+    return true;
   }
 }
 

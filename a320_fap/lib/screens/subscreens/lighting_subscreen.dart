@@ -240,6 +240,7 @@ class _HardKeyStatusPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!trainerVisible(context)) return const SizedBox.shrink();
     final fap = context.watch<FapProvider>();
     Widget row(String name, bool on, String hint, Color onColor) => Padding(
       padding: const EdgeInsets.symmetric(vertical: 3),
@@ -299,6 +300,7 @@ class _LegendPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!trainerVisible(context)) return const SizedBox.shrink();
     Widget item(String level, String use) => Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: Row(
