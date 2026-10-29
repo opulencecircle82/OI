@@ -39,8 +39,8 @@ export const fap = {
   reportPath: `${BASE_PATH}/A320_FAP_Sources_and_Conformance.pdf`,
   /** Instructor guide (built from PRIVATE_instructor_guide, copied to landing/public). */
   guidePath: `${BASE_PATH}/A320_FAP_Instructor_Guide.pdf`,
-  /** YouTube tutorial (school-free version). */
-  tutorialId: "KAeq-nrS088",
+  /** YouTube tutorial (v4.1: INSTRUCTOR panel). */
+  tutorialId: "0W5akZnpBKQ",
   get tutorialUrl() {
     return `https://www.youtube.com/watch?v=${this.tutorialId}`;
   },
