@@ -88,10 +88,9 @@ void main() {
       (FapPage.fapSetup, 'fapSetup_pramRemoved'),
       (FapPage.audio, 'audio_noPram'),
       (FapPage.layout, 'layout_camB'),
-      // SETTINGS dialog, then the panel with TRAINER CONTROLS hidden.
-      (FapPage.cabinStatus, 'settings'),
-      (FapPage.cabinStatus, 'settings_hidden'),
-      (FapPage.cabinStatus, 'cabinStatus_hidden'),
+      // The INSTRUCTOR panel, one state per tab (over CABIN STATUS).
+      for (final t in InstructorTab.values)
+        (FapPage.cabinStatus, 'instructor_${t.name}'),
     ];
     for (final (p, key) in shots) {
       if (key == 'cabinStatus') {
@@ -120,23 +119,12 @@ void main() {
         fap.insertCard(CardSlot.cam);
         fap.confirmCard(CardSlot.cam);
       }
-      if (key == 'settings') {
+      if (key.startsWith('instructor_')) {
         fap.goTo(p);
-        await tester.pump();
-        await tester.tap(find.text('SETTINGS'));
-        await tester.pump();
-        await tester.runAsync(
-          () => Future<void>.delayed(const Duration(milliseconds: 200)),
+        if (!fap.instructorOpen) fap.toggleInstructor();
+        fap.setInstructorTab(
+          InstructorTab.values.byName(key.substring('instructor_'.length)),
         );
-        await tester.pump(const Duration(milliseconds: 400));
-      } else if (key == 'settings_hidden') {
-        await tester.tap(find.text('HIDE'));
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 300));
-      } else if (key == 'cabinStatus_hidden') {
-        await tester.tap(find.byIcon(Icons.close));
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 400));
       } else if (key != 'disclaimer') {
         fap.goTo(p);
       }
@@ -174,7 +162,7 @@ void main() {
         'HardwareBezelStrip',
         'AircraftDiagram',
         'FapPanel',
-        'TrainerBox',
+        '_FrameKey',
         '_DoorCard',
         '_TileView',
         '_LavCard',
@@ -192,8 +180,8 @@ void main() {
         '_CartridgePanel',
         '_CardCase',
         '_CardSlot',
-        '_SettingsCard',
-        '_TrainerSwitch',
+        'InstructorPanel',
+        '_Group',
       };
       final regions = <Map<String, dynamic>>[];
       for (final e

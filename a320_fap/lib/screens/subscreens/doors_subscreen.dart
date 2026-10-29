@@ -46,42 +46,6 @@ class DoorsSubscreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
-          TrainerBox(
-            label: 'TRAINER  -  CABIN CREW COMMANDS',
-            child: Row(
-              children: [
-                FapButton(
-                  label: 'ARM SLIDES\nX-CHECK',
-                  width: 150,
-                  height: 42,
-                  fontSize: 12,
-                  onTap: fap.armAllSlides,
-                ),
-                const SizedBox(width: 12),
-                FapButton(
-                  label: 'DISARM SLIDES\nX-CHECK',
-                  width: 150,
-                  height: 42,
-                  fontSize: 12,
-                  onTap: fap.disarmAllSlides,
-                ),
-                const SizedBox(width: 12),
-                FapButton(
-                  label: 'RESET DRILL',
-                  width: 150,
-                  height: 42,
-                  fontSize: 12,
-                  tone: fap.anySlideDeployed
-                      ? FapButtonTone.amber
-                      : FapButtonTone.normal,
-                  onTap: fap.resetDoorsDrill,
-                ),
-                const SizedBox(width: 20),
-                const Expanded(child: _Legend()),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -241,34 +205,6 @@ class _DoorCard extends StatelessWidget {
               ],
             ),
           ),
-          TrainerBox(
-            label: 'AT DOOR',
-            padding: const EdgeInsets.fromLTRB(6, 10, 6, 6),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FapButton(
-                  label: id.isOverwing
-                      ? 'AUTO ARM'
-                      : (d.armed ? 'DISARM' : 'ARM'),
-                  width: 86,
-                  height: 26,
-                  fontSize: 10.5,
-                  enabled: !id.isOverwing && !d.slideDeployed,
-                  onTap: () => fap.toggleSlideArm(id),
-                ),
-                const SizedBox(height: 5),
-                FapButton(
-                  label: d.closed ? 'OPEN' : 'CLOSE',
-                  width: 86,
-                  height: 26,
-                  fontSize: 10.5,
-                  enabled: !d.slideDeployed,
-                  onTap: () => fap.operateDoor(id),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -286,32 +222,4 @@ class _DoorCard extends StatelessWidget {
       StatusTag(v, c, flashing: flashing),
     ],
   );
-}
-
-class _Legend extends StatelessWidget {
-  const _Legend();
-
-  @override
-  Widget build(BuildContext context) {
-    Widget item(Color c, String t) => Padding(
-      padding: const EdgeInsets.only(right: 14),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(width: 10, height: 14, color: c),
-          const SizedBox(width: 5),
-          Text(t, style: FapText.label.copyWith(fontSize: 11)),
-        ],
-      ),
-    );
-    return Wrap(
-      runSpacing: 4,
-      children: [
-        item(FapColors.okGreen, 'CLOSED + ARMED'),
-        item(Colors.white, 'CLOSED + DISARMED'),
-        item(FapColors.amber, 'OPEN'),
-        item(FapColors.red, 'SLIDE DEPLOYED'),
-      ],
-    );
-  }
 }

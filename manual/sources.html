@@ -104,7 +104,7 @@
   <div class="sub">Feature Sources &amp; A320 Conformance Report</div>
   <img src="img/page_cabinStatus.jpg" alt="">
   <div class="meta">
-    <b>Simulator version 4.0</b> · Report date 29 October 2026<br>
+    <b>Simulator version 4.1</b> · Report date 29 October 2026<br>
     Where every feature of the simulator comes from, and whether it<br>
     matches the real Airbus A320 CIDS Flight Attendant Panel.<br><br>
     Based on public technical and training sources, not on official Airbus documents.
@@ -123,7 +123,7 @@
     <tr><th>Label</th><th>Meaning</th></tr>
     <tr><td><span class="st ok">MATCHES</span></td><td>Behaves like the real A320 FAP, confirmed by at least one technical or training source.</td></tr>
     <tr><td><span class="st sim">SIMPLIFIED</span></td><td>The function exists on the real FAP, but the simulator shows a simplified or typical version (for example a fixed list, fewer options, or values that differ between airlines).</td></tr>
-    <tr><td><span class="st tr">TRAINER</span></td><td>Not a FAP function. Dashed TRAINER boxes let the instructor simulate what happens away from the panel (cockpit, doors, lavatory, passengers).</td></tr>
+    <tr><td><span class="st tr">TRAINER</span></td><td>Not a FAP function. The INSTRUCTOR panel (INSTRUCTOR key on the frame, outside the FAP screen) lets the instructor simulate what happens away from the panel (cockpit, doors, lavatory, passengers).</td></tr>
     <tr><td><span class="st app">SIMULATOR</span></td><td>Part of the app only (license, demo, settings, simulator options). Not on the aircraft.</td></tr>
     <tr><td><span class="st no">NOT INCLUDED</span></td><td>A real A320 function that the simulator does not reproduce (Section 06).</td></tr>
   </table>
@@ -224,7 +224,7 @@
     <tr><th>Feature</th><th>In the simulator</th><th>Real A320 FAP</th><th>Status</th><th>Source</th></tr>
     <tr><td>8 exits</td><td>L1, R1, 4 overwing exits, L2, R2</td><td>8 exits (2 forward doors, 4 overwing, 2 aft doors)</td><td><span class="st ok">MATCHES</span></td><td class="src">[15] [16]</td></tr>
     <tr><td>Door / slide status</td><td>Closed/open, armed/disarmed, slide deployed</td><td>Door open/closed, slide armed/disarmed (+ bottle pressure)</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
-    <tr><td>FAP only displays the status</td><td>Doors operated with TRAINER controls</td><td>Doors operated at the door; ECAM DOOR page is primary</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
+    <tr><td>FAP only displays the status</td><td>Doors operated from the INSTRUCTOR panel</td><td>Doors operated at the door; ECAM DOOR page is primary</td><td><span class="st ok">MATCHES</span></td><td class="src">[4]</td></tr>
     <tr><td>Overwing slides always armed</td><td>No arming lever (AUTO ARM)</td><td>Overwing exit slides are armed automatically</td><td><span class="st ok">MATCHES</span></td><td class="src">[15]</td></tr>
     <tr><td>Armed door opened → slide deploys</td><td>Red alarm, SLIDE DEPLOYED</td><td>Opening an armed door deploys the slide</td><td><span class="st ok">MATCHES</span></td><td class="src">[15]</td></tr>
     <tr><td>Door names L1/R1/L2/R2</td><td>As in the project brief</td><td>Newer Airbus documents also use 1L/1R/4L/4R</td><td><span class="st sim">SIMPLIFIED</span></td><td class="src">[1] [16]</td></tr>
@@ -259,7 +259,7 @@
     <tr><td>Seat belt / no smoking / return to seat signs</td><td>Set by the cockpit switches; low chime on every change; RTS follows the seat belt signs</td><td>FASTEN SEAT BELT and RETURN TO SEAT signs; low tone chime when signs go on or off</td><td><span class="st ok">MATCHES</span></td><td class="src">[21]</td></tr>
     <tr><td>NO SMOKING AUTO and EXIT signs</td><td>AUTO: on with the landing gear down; EXIT signs with NO SMOKING (EMER EXIT LT in ARM)</td><td>AUTO: NO SMOKING and EXIT signs on when the landing gear is extended</td><td><span class="st ok">MATCHES</span></td><td class="src">[21]</td></tr>
     <tr><td>Signs at low cabin pressure</td><td>Seat belt, no smoking and exit signs on by themselves</td><td>Above about 11,300 ft cabin altitude the signs come on whatever the switches</td><td><span class="st ok">MATCHES</span></td><td class="src">[22]</td></tr>
-    <tr><td>Flight phase, sign and EMER EXIT LT switches, power loss, cockpit PA, lavatory calls</td><td>Instructor controls on Cabin Status</td><td>Cockpit and passenger actions</td><td><span class="st tr">TRAINER</span></td><td class="src">—</td></tr>
+    <tr><td>Flight phase, sign and EMER EXIT LT switches, power loss, cockpit PA, lavatory calls</td><td>INSTRUCTOR panel, COCKPIT and CABIN tabs</td><td>Cockpit and passenger actions</td><td><span class="st tr">TRAINER</span></td><td class="src">—</td></tr>
   </table>
 
   <h2>Cabin temperature</h2>
@@ -345,8 +345,8 @@
     <tr><td>Free demo (A320-DEMO)</td><td>Try MAIN ON/OFF and boarding music only</td><td><span class="st app">SIMULATOR</span></td></tr>
     <tr><td>⚙ SETTINGS: license status, device ID, version (no code shown; licenses are moved by the administrator)</td><td>License support</td><td><span class="st app">SIMULATOR</span></td></tr>
     <tr><td>Check for updates / in-app update</td><td>Download and install a new version</td><td><span class="st app">SIMULATOR</span></td></tr>
-    <tr><td>FAP CONFIG: °C / °F</td><td>Temperature unit for the classroom</td><td><span class="st app">SIMULATOR</span></td></tr>
-    <tr><td>FAP CONFIG: MUTE</td><td>Silence the simulator</td><td><span class="st app">SIMULATOR</span></td></tr>
+    <tr><td>INSTRUCTOR &gt; SIMULATOR: °C / °F</td><td>Temperature unit for the classroom</td><td><span class="st app">SIMULATOR</span></td></tr>
+    <tr><td>INSTRUCTOR &gt; SIMULATOR: MUTE</td><td>Silence the simulator</td><td><span class="st app">SIMULATOR</span></td></tr>
     <tr><td>Important notice at every start</td><td>Training disclaimer</td><td><span class="st app">SIMULATOR</span></td></tr>
     <tr><td>Always horizontal / panel scaling</td><td>Same panel on every tablet</td><td><span class="st app">SIMULATOR</span></td></tr>
   </table>
@@ -430,7 +430,7 @@
     <li><span>The Flying Engineer, Airbus lights (signs at high cabin altitude):</span> https://theflyingengineer.com/projects/airbus-tech/lights/</li>
     <li><span>Reference video of a commercial A320 FAP trainer (functions only; design not copied):</span> https://www.youtube.com/watch?v=O_-hNlPsD8o</li>
   </ol>
-  <p style="margin-top:10mm;text-align:center;color:var(--mute);font-size:9pt">© Overdrive Interactive · A320 FAP Simulator v4.0 · Feature Sources &amp; Conformance Report</p>
+  <p style="margin-top:10mm;text-align:center;color:var(--mute);font-size:9pt">© Overdrive Interactive · A320 FAP Simulator v4.1 · Feature Sources &amp; Conformance Report</p>
 </section>
 </main>
 </body>

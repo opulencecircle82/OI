@@ -1,16 +1,16 @@
 {
-  "version": "4.0.2",
+  "version": "4.1",
   "notes": [
-    "SETTINGS > TRAINER CONTROLS: SHOW or HIDE",
-    "HIDE shows only the real A320 FAP (for an assessment)",
-    "COCKPIT PA: the captain's voice"
+    "The FAP screen now shows only the real A320 FAP",
+    "New INSTRUCTOR key: every trainer control in one panel (cockpit, cabin, doors, aircraft, maintenance, simulator)",
+    "FAP CONFIG and RESET SIMULATOR moved to INSTRUCTOR > SIMULATOR"
   ],
   "android": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.2/A320_FAP_v4.0.2.apk",
-    "name": "A320_FAP_v4.0.2.apk"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.1.0/A320_FAP_v4.1.apk",
+    "name": "A320_FAP_v4.1.apk"
   },
   "windows": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.2/A320_FAP_Setup_v4.0.2.exe",
-    "name": "A320_FAP_Setup_v4.0.2.exe"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.1.0/A320_FAP_Setup_v4.1.exe",
+    "name": "A320_FAP_Setup_v4.1.exe"
   }
 }

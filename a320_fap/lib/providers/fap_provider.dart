@@ -181,24 +181,21 @@ class FapProvider extends ChangeNotifier {
     if (next != null) goTo(next);
   }
 
-  bool _configOpen = false;
-  bool get configOpen => _configOpen;
+  bool _instructorOpen = false;
+  bool get instructorOpen => _instructorOpen;
+  InstructorTab _instructorTab = InstructorTab.cockpit;
+  InstructorTab get instructorTab => _instructorTab;
 
-  bool _showTrainer = true;
-  bool get showTrainer => _showTrainer;
-
-  /// SETTINGS > TRAINER CONTROLS: the dashed TRAINER boxes and the FAP
-  /// CONFIG key are not on the real A320 FAP. Hidden, only the real FAP is
-  /// on screen (e.g. for an assessment).
-  void setShowTrainer(bool show) {
-    _showTrainer = show;
-    if (!show) _configOpen = false;
-    _changed();
+  /// INSTRUCTOR key on the panel frame: opens / closes the instructor
+  /// panel (events away from the FAP and simulator settings). The FAP
+  /// screen itself only shows what the real A320 FAP shows.
+  void toggleInstructor() {
+    _instructorOpen = !_instructorOpen;
+    notifyListeners();
   }
 
-  /// FAP CONFIG panel (simulator settings) open / closed.
-  void toggleConfig() {
-    _configOpen = !_configOpen;
+  void setInstructorTab(InstructorTab tab) {
+    _instructorTab = tab;
     notifyListeners();
   }
 
@@ -744,7 +741,7 @@ class FapProvider extends ChangeNotifier {
   bool _tempF = false;
   bool get tempFahrenheit => _tempF;
 
-  /// FAP CONFIG: temperature unit.
+  /// INSTRUCTOR > SIMULATOR: temperature unit.
   void setTempUnit(bool fahrenheit) {
     _tempF = fahrenheit;
     _changed();
@@ -1992,7 +1989,6 @@ class FapProvider extends ChangeNotifier {
     'touchClick': _touchClick,
     'muteAll': _muteAll,
     'tempF': _tempF,
-    'showTrainer': _showTrainer,
     'activeSw': _activeSw,
     'pedPower': _pedPower,
     'chimeInhibit': _chimeInhibit,
@@ -2126,7 +2122,6 @@ class FapProvider extends ChangeNotifier {
     _touchClick = j['touchClick'] as bool? ?? _touchClick;
     _muteAll = j['muteAll'] as bool? ?? _muteAll;
     _tempF = j['tempF'] as bool? ?? _tempF;
-    _showTrainer = j['showTrainer'] as bool? ?? _showTrainer;
     final sw = j['activeSw'];
     if (obrmSoftware.containsKey(sw)) {
       _activeSw = sw as String;

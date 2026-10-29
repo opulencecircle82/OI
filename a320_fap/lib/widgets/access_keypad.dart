@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/cabin_setup.dart';
 import '../models/fap_state.dart';
 import '../providers/fap_provider.dart';
 import '../theme/fap_theme.dart';
@@ -97,21 +96,6 @@ class _AccessKeypadState extends State<AccessKeypad> {
                     style: FapText.label,
                   ),
                 ],
-              ),
-            ),
-          ),
-          const SizedBox(width: 30),
-          SizedBox(
-            width: 300,
-            child: TrainerBox(
-              label: 'TRAINER  -  ACCESS CODES',
-              child: Text(
-                'CIDS default codes:\n'
-                '${SetupLimits.programmingCode} - Cabin Prog, Layout Select, '
-                'Level Adjust\n'
-                '${SetupLimits.softwareCode} - SW Load\n\n'
-                'Access is kept until FAP RESET.',
-                style: FapText.body.copyWith(fontSize: 13, height: 1.5),
               ),
             ),
           ),

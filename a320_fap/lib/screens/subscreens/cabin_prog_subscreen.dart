@@ -67,12 +67,6 @@ class CabinProgSubscreen extends StatelessWidget {
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  const Text(
-                                    'Select the boundary, then move it with '
-                                    '▲ (forward) / ▼ (aft).',
-                                    style: FapText.label,
-                                  ),
-                                  const SizedBox(height: 10),
                                   for (
                                     var i = 1;
                                     i < layout.classes.length;

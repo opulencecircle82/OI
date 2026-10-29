@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../models/cabin_setup.dart';
 import '../../models/pram_item.dart';
 import '../../providers/fap_provider.dart';
-import '../../services/fap_audio.dart';
 import '../../theme/fap_theme.dart';
 import '../../widgets/blink.dart';
 import '../../widgets/demo_gate.dart';
@@ -32,11 +31,7 @@ class AudioSubscreen extends StatelessWidget {
             width: 250,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _CabinSettings(fap: fap),
-                const Spacer(),
-                _ChimePanel(fap: fap),
-              ],
+              children: [_CabinSettings(fap: fap)],
             ),
           ),
         ],
@@ -104,15 +99,13 @@ class _BgmPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          Text(
-            fap.pramAvailable
-                ? 'During a PA announcement the music is lowered automatically.'
-                : 'No PRAM card: no boarding music.',
-            style: fap.pramAvailable
-                ? FapText.label
-                : FapText.label.copyWith(color: FapColors.amber),
-          ),
+          if (!fap.pramAvailable) ...[
+            const SizedBox(height: 12),
+            Text(
+              'No PRAM card: no boarding music.',
+              style: FapText.label.copyWith(color: FapColors.amber),
+            ),
+          ],
         ],
       ),
     );
@@ -543,58 +536,6 @@ class _CabinSettings extends StatelessWidget {
                     color: FapColors.cyan,
                     weight: FontWeight.w700,
                   ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ChimePanel extends StatelessWidget {
-  const _ChimePanel({required this.fap});
-  final FapProvider fap;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget chime(String label, String meaning, ChimeType type) => Expanded(
-      child: Column(
-        children: [
-          FapButton(
-            label: label,
-            width: double.infinity,
-            height: 40,
-            fontSize: 11.5,
-            enabled: !fap.cidsDown,
-            onTap: () => fap.playChime(type),
-          ),
-          const SizedBox(height: 3),
-          Text(
-            meaning,
-            textAlign: TextAlign.center,
-            style: FapText.label.copyWith(fontSize: 10),
-          ),
-        ],
-      ),
-    );
-
-    return TrainerBox(
-      label: 'TRAINER  -  CABIN CHIMES',
-      child: Column(
-        children: [
-          Row(
-            children: [
-              chime('HIGH', 'Passenger call', ChimeType.singleHigh),
-              const SizedBox(width: 8),
-              chime('HIGH-LOW', 'Crew call', ChimeType.highLow),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              chime('LOW', 'Seat belt / NS', ChimeType.singleLow),
-              const SizedBox(width: 8),
-              chime('EMER CALL', 'Cockpit (3x)', ChimeType.emergency),
-            ],
           ),
         ],
       ),

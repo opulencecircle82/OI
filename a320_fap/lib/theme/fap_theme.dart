@@ -24,6 +24,9 @@ class FapColors {
   static const amber = Color(0xFFFFB000);
   static const gold = Color(0xFFFFD700);
   static const cyan = Color(0xFF00E5FF);
+
+  /// INSTRUCTOR panel (not part of the FAP): a colour the CIDS never uses.
+  static const instructor = Color(0xFFC4A2FF);
   static const white = Color(0xFFFFFFFF);
   static const textDim = Color(0xFF9DB0C3);
 

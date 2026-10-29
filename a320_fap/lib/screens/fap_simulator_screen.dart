@@ -24,6 +24,7 @@ import 'subscreens/sw_load_subscreen.dart';
 import 'subscreens/system_info_subscreen.dart';
 import 'subscreens/temperature_subscreen.dart';
 import 'subscreens/water_subscreen.dart';
+import 'instructor_panel.dart';
 import 'settings_dialog.dart';
 import 'unlock_screen.dart';
 
@@ -84,7 +85,13 @@ class FapSimulatorScreen extends StatelessWidget {
               fit: BoxFit.contain,
               child: SizedBox.fromSize(
                 size: _deviceSize,
-                child: _Device(onSettings: onSettings),
+                child: Stack(
+                  children: [
+                    Positioned.fill(child: _Device(onSettings: onSettings)),
+                    // Licensed only, like SETTINGS.
+                    if (onSettings != null) const _InstructorOverlay(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -189,13 +196,33 @@ class _Device extends StatelessWidget {
                     letterSpacing: 3,
                   ),
                 ),
-                if (onSettings != null)
+                if (onSettings != null) ...[
+                  Positioned(
+                    left: 22,
+                    top: 2,
+                    bottom: 2,
+                    child: _FrameKey(
+                      icon: Icons.school,
+                      label: 'INSTRUCTOR',
+                      color: FapColors.instructor,
+                      active: context.select<FapProvider, bool>(
+                        (f) => f.instructorOpen,
+                      ),
+                      onTap: context.read<FapProvider>().toggleInstructor,
+                    ),
+                  ),
                   Positioned(
                     right: 22,
                     top: 2,
                     bottom: 2,
-                    child: _SettingsKey(onTap: onSettings!),
+                    child: _FrameKey(
+                      icon: Icons.settings,
+                      label: 'SETTINGS',
+                      color: FapColors.cyan,
+                      onTap: onSettings!,
+                    ),
                   ),
+                ],
               ],
             ),
           ),
@@ -219,31 +246,61 @@ class _Device extends StatelessWidget {
   }
 }
 
-/// Simulator settings key on the panel frame (not part of the real FAP).
-class _SettingsKey extends StatelessWidget {
-  const _SettingsKey({required this.onTap});
-  final VoidCallback onTap;
+/// INSTRUCTOR panel over the right side of the panel, below the frame.
+class _InstructorOverlay extends StatelessWidget {
+  const _InstructorOverlay();
 
   @override
   Widget build(BuildContext context) {
+    final open = context.select<FapProvider, bool>((f) => f.instructorOpen);
+    if (!open) return const SizedBox.shrink();
+    return const Positioned(
+      right: 0,
+      top: 36,
+      bottom: 0,
+      width: InstructorPanel.width,
+      child: InstructorPanel(),
+    );
+  }
+}
+
+/// Simulator key on the panel frame, outside the FAP screen (INSTRUCTOR,
+/// SETTINGS): not part of the real FAP.
+class _FrameKey extends StatelessWidget {
+  const _FrameKey({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+    this.active = false,
+  });
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+  final bool active;
+
+  @override
+  Widget build(BuildContext context) {
+    final tip = label[0] + label.substring(1).toLowerCase();
     return Tooltip(
-      message: 'Settings',
+      message: tip,
       child: Material(
-        color: const Color(0xFF2B3640),
+        color: active ? color.withValues(alpha: 0.35) : const Color(0xFF2B3640),
         borderRadius: BorderRadius.circular(6),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(6),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.settings, size: 18, color: FapColors.cyan),
-                SizedBox(width: 6),
+                Icon(icon, size: 18, color: color),
+                const SizedBox(width: 6),
                 Text(
-                  'SETTINGS',
-                  style: TextStyle(
+                  label,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 13,
                     fontWeight: FontWeight.w800,
@@ -318,7 +375,6 @@ class _Touchscreen extends StatelessWidget {
                 ),
               ),
             ),
-          if (fap.configOpen) const _FapConfigPanel(),
           if (fap.swProgress != null) _SwLoadingOverlay(fap.swProgress!),
           if (fap.screenLocked) _LockOverlay(seconds: fap.lockRemaining),
           if (fap.fapRestarting) const _RestartOverlay(),
@@ -431,9 +487,6 @@ class _TitleBar extends StatelessWidget {
                     ),
             ),
           ),
-          // Simulator settings: hidden with the TRAINER controls.
-          if (fap.showTrainer)
-            small('FAP CONFIG', fap.toggleConfig, active: fap.configOpen),
         ],
       ),
     );
@@ -604,93 +657,6 @@ class _SwLoadingOverlay extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// FAP CONFIG: simulator settings (temperature unit, mute).
-class _FapConfigPanel extends StatelessWidget {
-  const _FapConfigPanel();
-
-  @override
-  Widget build(BuildContext context) {
-    final fap = context.watch<FapProvider>();
-    return Positioned(
-      right: 12,
-      top: 80,
-      width: 420,
-      child: Material(
-        color: Colors.transparent,
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: FapColors.panel,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: FapColors.cyan, width: 1.5),
-            boxShadow: const [
-              BoxShadow(color: Color(0xAA000000), blurRadius: 20),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  const Expanded(
-                    child: Text('FAP CONFIG', style: FapText.title),
-                  ),
-                  FapButton(
-                    label: '',
-                    icon: Icons.close,
-                    width: 44,
-                    height: 36,
-                    onTap: fap.toggleConfig,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 14),
-              const Text('TEMP. UNIT', style: FapText.label),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  FapButton(
-                    label: 'CELSIUS',
-                    width: 130,
-                    active: !fap.tempFahrenheit,
-                    onTap: () => fap.setTempUnit(false),
-                  ),
-                  const SizedBox(width: 10),
-                  FapButton(
-                    label: 'FAHRENHEIT',
-                    width: 130,
-                    active: fap.tempFahrenheit,
-                    onTap: () => fap.setTempUnit(true),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 14),
-              const Text('MUTE ALL AUDIO', style: FapText.label),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  FapButton(
-                    label: 'MUTE',
-                    width: 130,
-                    active: fap.muteAll,
-                    onTap: () => fap.setMuteAll(!fap.muteAll),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Simulator settings - not part of the aircraft FAP.',
-                style: FapText.label,
-              ),
-            ],
           ),
         ),
       ),
