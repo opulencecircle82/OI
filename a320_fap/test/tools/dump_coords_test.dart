@@ -10,9 +10,13 @@ import 'package:aisat_fap/main.dart';
 import 'package:aisat_fap/models/cartridge.dart';
 import 'package:aisat_fap/models/fap_state.dart';
 import 'package:aisat_fap/providers/fap_provider.dart';
+import 'package:aisat_fap/services/access_lock.dart';
+import 'package:aisat_fap/services/update_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../fake_audio.dart';
@@ -45,7 +49,17 @@ Future<void> _loadFonts() async {
 void main() {
   testWidgets('dump coordinates', (tester) async {
     await _loadFonts();
-    SharedPreferences.setMockInitialValues({});
+    // As in the recording browser (web build): the device id of the
+    // tutorial recording, license server not reached, no update check.
+    const recDevice = 'tutorial0recording0device0000000';
+    SharedPreferences.setMockInitialValues({
+      'fap_device_id': recDevice,
+      'fap_license_v2': recDevice,
+    });
+    AccessLock.androidIdReader = () async => null;
+    AccessLock.clientFactory = () =>
+        MockClient((_) async => throw http.ClientException('offline'));
+    UpdateService.platformName = () => 'web';
     tester.view.physicalSize = const Size(1350, 940);
     tester.view.devicePixelRatio = 1;
     final fap = FapProvider(audio: FakeAudio());
@@ -74,6 +88,10 @@ void main() {
       (FapPage.fapSetup, 'fapSetup_pramRemoved'),
       (FapPage.audio, 'audio_noPram'),
       (FapPage.layout, 'layout_camB'),
+      // SETTINGS dialog, then the panel with TRAINER CONTROLS hidden.
+      (FapPage.cabinStatus, 'settings'),
+      (FapPage.cabinStatus, 'settings_hidden'),
+      (FapPage.cabinStatus, 'cabinStatus_hidden'),
     ];
     for (final (p, key) in shots) {
       if (key == 'cabinStatus') {
@@ -102,7 +120,26 @@ void main() {
         fap.insertCard(CardSlot.cam);
         fap.confirmCard(CardSlot.cam);
       }
-      if (key != 'disclaimer') fap.goTo(p);
+      if (key == 'settings') {
+        fap.goTo(p);
+        await tester.pump();
+        await tester.tap(find.text('SETTINGS'));
+        await tester.pump();
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 200)),
+        );
+        await tester.pump(const Duration(milliseconds: 400));
+      } else if (key == 'settings_hidden') {
+        await tester.tap(find.text('HIDE'));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
+      } else if (key == 'cabinStatus_hidden') {
+        await tester.tap(find.byIcon(Icons.close));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 400));
+      } else if (key != 'disclaimer') {
+        fap.goTo(p);
+      }
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));
       final texts = <Map<String, dynamic>>[];
@@ -155,6 +192,8 @@ void main() {
         '_CartridgePanel',
         '_CardCase',
         '_CardSlot',
+        '_SettingsCard',
+        '_TrainerSwitch',
       };
       final regions = <Map<String, dynamic>>[];
       for (final e

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../config.dart';
+import '../providers/fap_provider.dart';
 import '../services/access_lock.dart';
 import '../services/update_service.dart';
 import '../theme/fap_theme.dart';
@@ -167,6 +169,7 @@ class _SettingsCardState extends State<_SettingsCard> {
                     ),
                   _row('DEVICE ID', _device ?? '...', copy: _device != null),
                   _row('APP VERSION', AppConfig.version),
+                  const _TrainerSwitch(),
                   if (_info != null)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12),
@@ -210,6 +213,66 @@ class _SettingsCardState extends State<_SettingsCard> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// TRAINER CONTROLS: SHOW (practice) or HIDE (only the real A320 FAP on
+/// screen, e.g. for an assessment).
+class _TrainerSwitch extends StatelessWidget {
+  const _TrainerSwitch();
+
+  @override
+  Widget build(BuildContext context) {
+    final show = context.select<FapProvider, bool>((f) => f.showTrainer);
+    final fap = context.read<FapProvider>();
+    Widget choice(String label, bool value) {
+      final on = show == value;
+      return Expanded(
+        child: OutlinedButton(
+          onPressed: on ? null : () => fap.setShowTrainer(value),
+          style: OutlinedButton.styleFrom(
+            backgroundColor: on ? FapColors.activeGreen : null,
+            disabledBackgroundColor: on ? FapColors.activeGreen : null,
+            foregroundColor: FapColors.cyan,
+            disabledForegroundColor: Colors.black,
+            side: BorderSide(
+              color: on ? FapColors.activeGreen : FapColors.cyan,
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+          ),
+          child: Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.w800),
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 6, bottom: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text('TRAINER CONTROLS', style: FapText.label),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              choice('SHOW', true),
+              const SizedBox(width: 10),
+              choice('HIDE', false),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            show
+                ? 'The dashed TRAINER boxes, help notes and FAP CONFIG are '
+                      'simulator only, not part of the A320 FAP.'
+                : 'Only the real A320 FAP is shown (for an assessment).',
+            style: FapText.label,
+          ),
+        ],
       ),
     );
   }

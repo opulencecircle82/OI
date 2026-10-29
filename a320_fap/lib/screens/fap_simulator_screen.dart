@@ -431,7 +431,9 @@ class _TitleBar extends StatelessWidget {
                     ),
             ),
           ),
-          small('FAP CONFIG', fap.toggleConfig, active: fap.configOpen),
+          // Simulator settings: hidden with the TRAINER controls.
+          if (fap.showTrainer)
+            small('FAP CONFIG', fap.toggleConfig, active: fap.configOpen),
         ],
       ),
     );

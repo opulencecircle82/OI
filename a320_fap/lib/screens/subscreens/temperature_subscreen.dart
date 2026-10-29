@@ -85,17 +85,20 @@ class TemperatureSubscreen extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Expanded(
-                child: FapPanel(
-                  title: 'NOTE',
-                  child: Text(
-                    'The flight crew selects each zone temperature in the '
-                    'cockpit. From the FAP the cabin crew can fine-adjust each '
-                    'zone by ±2.5 °C in 0.5 °C steps. For a bigger change, ask '
-                    'the flight crew.',
-                    style: FapText.label,
-                  ),
-                ),
+              Expanded(
+                // Explanation for the student (hidden with TRAINER controls).
+                child: trainerVisible(context)
+                    ? const FapPanel(
+                        title: 'NOTE',
+                        child: Text(
+                          'The flight crew selects each zone temperature in '
+                          'the cockpit. From the FAP the cabin crew can '
+                          'fine-adjust each zone by ±2.5 °C in 0.5 °C steps. '
+                          'For a bigger change, ask the flight crew.',
+                          style: FapText.label,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ),
               const SizedBox(width: 16),
               FapButton(

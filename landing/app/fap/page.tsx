@@ -226,7 +226,7 @@ export default async function FapPage() {
               icon={manualIcon}
               iconClass="text-cyan"
               title="User Manual (PDF)"
-              body="51 pages: every page, key and hard key explained with screenshots, plus step-by-step training drills and troubleshooting."
+              body="52 pages: every page, key and hard key explained with screenshots, plus step-by-step training drills and troubleshooting."
               href={fap.manualPath}
             />
           </div>
@@ -252,7 +252,7 @@ export default async function FapPage() {
             <SectionTitle
               kicker="THE PANEL"
               title="Every page of the classic CIDS FAP"
-              body="Follows the real A320: grey keys are available, green is selected, amber is caution and red is alarm. Dashed TRAINER boxes let the instructor simulate what happens away from the panel."
+              body="Follows the real A320: grey keys are available, green is selected, amber is caution and red is alarm. Dashed TRAINER boxes (not on the real FAP) let the instructor simulate what happens away from the panel; SETTINGS > TRAINER CONTROLS > HIDE leaves only the real A320 FAP for an assessment."
             />
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {pages.map(([name, desc]) => (

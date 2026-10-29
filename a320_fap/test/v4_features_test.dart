@@ -380,6 +380,25 @@ void main() {
       },
     );
 
+    test('TRAINER controls HIDE survives a restart and a reset', () async {
+      fakeAsync((async) {
+        final f = FapProvider(audio: audio);
+        expect(f.showTrainer, isTrue);
+        f.toggleConfig();
+        f.setShowTrainer(false);
+        expect(f.configOpen, isFalse);
+        async.elapse(const Duration(seconds: 1));
+        async.flushMicrotasks();
+        f.dispose();
+      });
+      final r = FapProvider(audio: FakeAudio());
+      await r.load();
+      expect(r.showTrainer, isFalse);
+      r.resetSimulator(); // a setting, not simulator state
+      expect(r.showTrainer, isFalse);
+      r.dispose();
+    });
+
     test('a v3.x save with the software loaded keeps it loaded', () async {
       SharedPreferences.setMockInitialValues({
         'fap_state_v1': jsonEncode({'swUpdated': true, 'layout': 2}),

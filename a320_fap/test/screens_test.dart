@@ -97,6 +97,23 @@ void main() {
     await teardown(tester);
   });
 
+  testWidgets('TRAINER controls hidden: only the real FAP', (tester) async {
+    await boot(tester, const Size(1600, 1000));
+    fap.setShowTrainer(false);
+    fap.enterAccessCode(FapPage.cabinProg, '318');
+    for (final p in FapPage.values) {
+      fap.goTo(p);
+      await shot(tester, 'hidden_${p.name}');
+      expect(find.textContaining('TRAINER'), findsNothing);
+      expect(find.text('FAP CONFIG'), findsNothing);
+    }
+    fap.setShowTrainer(true);
+    fap.goTo(FapPage.cabinStatus);
+    await tester.pump();
+    expect(find.text('FAP CONFIG'), findsOneWidget);
+    await teardown(tester);
+  });
+
   testWidgets('CAM, audio and set-up scenarios render', (tester) async {
     await boot(tester, const Size(1600, 1000));
     // Audio: music on, memo list, an announcement playing.

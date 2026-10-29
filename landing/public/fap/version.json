@@ -1,15 +1,16 @@
 {
-  "version": "4.0.1",
+  "version": "4.0.2",
   "notes": [
-    "COCKPIT PA: the captain's voice is now heard",
-    "The cockpit PA ends by itself when the captain finishes"
+    "SETTINGS > TRAINER CONTROLS: SHOW or HIDE",
+    "HIDE shows only the real A320 FAP (for an assessment)",
+    "COCKPIT PA: the captain's voice"
   ],
   "android": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.1/A320_FAP_v4.0.1.apk",
-    "name": "A320_FAP_v4.0.1.apk"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.2/A320_FAP_v4.0.2.apk",
+    "name": "A320_FAP_v4.0.2.apk"
   },
   "windows": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.1/A320_FAP_Setup_v4.0.1.exe",
-    "name": "A320_FAP_Setup_v4.0.1.exe"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.2/A320_FAP_Setup_v4.0.2.exe",
+    "name": "A320_FAP_Setup_v4.0.2.exe"
   }
 }
