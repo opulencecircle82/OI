@@ -11,6 +11,7 @@ import 'package:aisat_fap/services/update_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:aisat_fap/widgets/top_status_bar.dart';
+import 'package:flutter/material.dart' show Icons;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -97,20 +98,36 @@ void main() {
     await teardown(tester);
   });
 
-  testWidgets('TRAINER controls hidden: only the real FAP', (tester) async {
+  testWidgets('FAP pages show only the real FAP; INSTRUCTOR panel', (
+    tester,
+  ) async {
     await boot(tester, const Size(1600, 1000));
-    fap.setShowTrainer(false);
     fap.enterAccessCode(FapPage.cabinProg, '318');
     for (final p in FapPage.values) {
       fap.goTo(p);
-      await shot(tester, 'hidden_${p.name}');
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
       expect(find.textContaining('TRAINER'), findsNothing);
       expect(find.text('FAP CONFIG'), findsNothing);
+      expect(find.text('RESET SIMULATOR'), findsNothing);
     }
-    fap.setShowTrainer(true);
     fap.goTo(FapPage.cabinStatus);
+    await tester.tap(find.byTooltip('Instructor'));
     await tester.pump();
-    expect(find.text('FAP CONFIG'), findsOneWidget);
+    expect(find.text('INSTRUCTOR PANEL'), findsOneWidget);
+    for (final t in InstructorTab.values) {
+      fap.setInstructorTab(t);
+      await shot(tester, 'instructor_${t.name}');
+    }
+    // The keys work from the panel.
+    fap.setInstructorTab(InstructorTab.cockpit);
+    await tester.pump();
+    await tester.tap(find.text('COCKPIT\nPA'));
+    await tester.pump();
+    expect(fap.cockpitPa, isTrue);
+    await tester.tap(find.byIcon(Icons.close).first);
+    await tester.pump();
+    expect(find.text('INSTRUCTOR PANEL'), findsNothing);
     await teardown(tester);
   });
 
@@ -160,13 +177,12 @@ void main() {
     fap.goTo(FapPage.level);
     await shot(tester, 'scenario_level');
 
-    // FAP config open + Fahrenheit + dimmed screen.
+    // Fahrenheit (INSTRUCTOR > SIMULATOR) + dimmed screen.
     fap.setTempUnit(true);
     fap.adjustBrightness(-30);
-    fap.toggleConfig();
     fap.goTo(FapPage.temperature);
     await shot(tester, 'scenario_config_fahrenheit');
-    fap.toggleConfig();
+    fap.setTempUnit(false);
     fap.adjustBrightness(30);
 
     // Software loading in progress.
@@ -587,11 +603,11 @@ void main() {
     await shot(tester, 'settings_dialog');
 
     // A newer version: the settings close and the update is offered.
-    latest = '4.1';
+    latest = '4.2';
     await tester.tap(find.text('CHECK FOR UPDATES'));
     await settle();
     expect(find.text('UPDATE AVAILABLE'), findsOneWidget);
-    expect(find.textContaining('Version 4.1 is available'), findsOneWidget);
+    expect(find.textContaining('Version 4.2 is available'), findsOneWidget);
     expect(find.text('CHECK FOR UPDATES'), findsNothing); // settings closed
     await shot(tester, 'update_dialog');
     await tester.tap(find.text('LATER'));
@@ -718,6 +734,8 @@ void main() {
   testWidgets('small tablet scales the whole panel', (tester) async {
     await boot(tester, const Size(1024, 600));
     await shot(tester, 'tablet_1024x600');
+    fap.toggleInstructor();
+    await shot(tester, 'tablet_instructor');
     await teardown(tester);
   });
 

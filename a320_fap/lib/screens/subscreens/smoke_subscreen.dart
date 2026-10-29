@@ -41,8 +41,7 @@ class SmokeSubscreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 24),
-          const Expanded(child: _ProcedurePanel()),
+          const Spacer(),
         ],
       ),
     );
@@ -84,30 +83,6 @@ class _LavCard extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          TrainerBox(
-            padding: const EdgeInsets.fromLTRB(8, 12, 8, 8),
-            child: Row(
-              children: [
-                FapButton(
-                  label: 'SMOKE',
-                  width: 100,
-                  height: 36,
-                  fontSize: 12,
-                  enabled: !s.source,
-                  onTap: () => fap.triggerSmoke(lav),
-                ),
-                const SizedBox(width: 8),
-                FapButton(
-                  label: 'EXTINGUISH',
-                  width: 110,
-                  height: 36,
-                  fontSize: 12,
-                  enabled: s.source,
-                  onTap: () => fap.extinguishSmoke(lav),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
@@ -162,65 +137,6 @@ class _ResetHint extends StatelessWidget {
             tone: fap.smokeAlarm ? FapButtonTone.red : FapButtonTone.normal,
             flashing: fap.smokeAlarm,
             onTap: fap.smokeReset,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ProcedurePanel extends StatelessWidget {
-  const _ProcedurePanel();
-
-  static const _steps = [
-    'Press SMOKE RESET to silence the aural alert.',
-    'Go to the lavatory. Feel the door with the back of your hand before '
-        'opening.',
-    'Locate the source. If fire: get the nearest extinguisher and fight it.',
-    'Inform the cockpit immediately (interphone).',
-    'Keep the door closed after extinguishing; monitor for re-ignition.',
-    'When no more smoke is detected, the CIDS clears all indications.',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    if (!trainerVisible(context)) return const SizedBox.shrink();
-    return FapPanel(
-      title: 'LAV SMOKE - CREW ACTIONS',
-      titleColor: FapColors.cyan,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (var i = 0; i < _steps.length; i++)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 26,
-                    child: Text(
-                      '${i + 1}.',
-                      style: FapText.monoStyle(
-                        size: 13,
-                        color: FapColors.cyan,
-                        weight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      _steps[i],
-                      style: FapText.body.copyWith(fontSize: 13),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          const SizedBox(height: 8),
-          Text(
-            'Always follow your airline cabin crew manual.',
-            style: FapText.label.copyWith(fontStyle: FontStyle.italic),
           ),
         ],
       ),

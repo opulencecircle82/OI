@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../models/fap_state.dart';
 import '../../providers/fap_provider.dart';
 import '../../theme/fap_theme.dart';
-import '../../widgets/fap_button.dart';
 
 /// CABIN STATUS page: one overview tile per system; tap a tile to open
 /// that system's page. The trainer box below simulates what happens away
@@ -159,8 +158,6 @@ class CabinStatusSubscreen extends StatelessWidget {
               },
             ),
           ),
-          const SizedBox(height: 16),
-          _CockpitTrainer(fap: fap),
         ],
       ),
     );
@@ -240,112 +237,6 @@ class _TileView extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-/// Instructor controls for events away from the FAP.
-class _CockpitTrainer extends StatelessWidget {
-  const _CockpitTrainer({required this.fap});
-  final FapProvider fap;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget key(
-      String label,
-      VoidCallback onTap, {
-      bool active = false,
-      double width = 78,
-    }) => Padding(
-      padding: const EdgeInsets.only(right: 6),
-      child: FapButton(
-        label: label,
-        width: width,
-        height: 40,
-        fontSize: 10.5,
-        active: active,
-        onTap: onTap,
-      ),
-    );
-
-    Widget caption(String text, {double width = 86}) => SizedBox(
-      width: width,
-      child: Text(text, style: FapText.label.copyWith(fontSize: 11)),
-    );
-
-    const sep = SizedBox(width: 18);
-
-    return TrainerBox(
-      label: 'TRAINER  -  COCKPIT / AIRCRAFT / PASSENGERS',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              caption('FLIGHT\nPHASE', width: 58),
-              for (final p in FlightPhase.values)
-                key(
-                  p.label,
-                  () => fap.setFlightPhase(p),
-                  active: fap.flightPhase == p,
-                  width: 96,
-                ),
-              sep,
-              caption('SEAT BELTS', width: 76),
-              key(
-                fap.seatBeltSwitch ? 'ON' : 'OFF',
-                fap.toggleSeatBeltSwitch,
-                active: fap.seatBeltSwitch,
-                width: 64,
-              ),
-              sep,
-              caption('NO SMOKING', width: 80),
-              for (final s in SignSwitch.values)
-                key(
-                  s.label,
-                  () => fap.setNoSmokingSwitch(s),
-                  active: fap.noSmokingSwitch == s,
-                  width: 60,
-                ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              caption('EMER EXIT\nLT', width: 58),
-              for (final s in EmerLtSwitch.values)
-                key(
-                  s.label,
-                  () => fap.setEmerExitLt(s),
-                  active: fap.emerExitLtSwitch == s,
-                  width: 60,
-                ),
-              key(
-                'NORMAL\nPOWER LOST',
-                fap.toggleNormalPowerLost,
-                active: fap.normalPowerLost,
-                width: 104,
-              ),
-              sep,
-              key(
-                'COCKPIT\nPA',
-                fap.toggleCockpitPa,
-                active: fap.cockpitPa,
-                width: 90,
-              ),
-              sep,
-              caption('PASSENGER\nLAV CALL', width: 80),
-              for (final l in Lavatory.values)
-                key(
-                  l.label,
-                  () => fap.lavCall(l),
-                  active: fap.lavCalls.contains(l),
-                  width: 70,
-                ),
-            ],
-          ),
-        ],
       ),
     );
   }

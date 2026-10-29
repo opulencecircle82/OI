@@ -49,7 +49,7 @@ const features = [
 ];
 
 const pages = [
-  ["STATUS", "Every system at a glance, passenger signs, flight phase and cockpit trainer."],
+  ["STATUS", "Every system at a glance, including the passenger signs."],
   ["CAUT", "Flashes for a new event and asks for its page; steady once seen."],
   ["AUDIO", "4 boarding music channels, PRAM with MEMO / PLAY ALL, calls, chimes."],
   ["LIGHTS", "BRT 100% · DIM 1 50% · DIM 2 10% per cabin zone."],
@@ -58,7 +58,7 @@ const pages = [
   ["WATER / WASTE", "200 L potable water, 170 L waste, lavatory status."],
   ["SMOKE", "LAV A / D / E detectors, SMOKE RESET, auto-clear when smoke is gone."],
   ["SEAT SETTING", "Inhibit call buttons or reading lights per seat, passenger calls."],
-  ["SYSTEM INFO", "CIDS directors, CAPT / CAPT & PURS selector, fault drills."],
+  ["SYSTEM INFO", "CIDS directors and messages, CAPT / CAPT & PURS selector."],
   ["CABIN PROG", "Move cabin zones between classes and save to the CAM."],
   ["LAYOUT SELECT", "Load the layouts of the CAM in the slot (ground only)."],
   ["LEVEL ADJUST", "Announcement and chime levels per zone, -6 to +6 dB."],
@@ -252,7 +252,7 @@ export default async function FapPage() {
             <SectionTitle
               kicker="THE PANEL"
               title="Every page of the classic CIDS FAP"
-              body="Follows the real A320: grey keys are available, green is selected, amber is caution and red is alarm. Dashed TRAINER boxes (not on the real FAP) let the instructor simulate what happens away from the panel; SETTINGS > TRAINER CONTROLS > HIDE leaves only the real A320 FAP for an assessment."
+              body="Follows the real A320: grey keys are available, green is selected, amber is caution and red is alarm. The FAP screen shows only the real A320 FAP. Everything the instructor simulates (cockpit, passengers, doors, aircraft, maintenance) is in a separate INSTRUCTOR panel outside the FAP."
             />
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {pages.map(([name, desc]) => (

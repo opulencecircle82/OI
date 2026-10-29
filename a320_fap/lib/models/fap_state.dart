@@ -119,6 +119,19 @@ class DoorStatus {
   );
 }
 
+/// Tabs of the INSTRUCTOR panel.
+enum InstructorTab {
+  cockpit('COCKPIT'),
+  cabin('CABIN'),
+  doors('DOORS'),
+  aircraft('AIRCRAFT'),
+  maint('MAINT.'),
+  simulator('SIMULATOR');
+
+  const InstructorTab(this.label);
+  final String label;
+}
+
 enum Lavatory {
   a('LAV A', 'FWD'),
   d('LAV D', 'AFT LH'),

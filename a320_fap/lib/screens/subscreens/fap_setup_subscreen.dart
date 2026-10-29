@@ -179,8 +179,6 @@ class FapSetupSubscreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(width: 560, child: _CartridgePanel(fap: fap)),
-                const SizedBox(width: 16),
-                Expanded(child: _CardCase(fap: fap)),
               ],
             ),
           ),
@@ -271,77 +269,7 @@ class _CartridgePanel extends StatelessWidget {
       titleColor: FapColors.cyan,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final s in CardSlot.values) row(s),
-          const Text(
-            '1. REMOVE   2. Insert the new card   3. OK.  '
-            'After a CAM or OBRM change, load it on LAYOUT SELECTION or '
-            'SOFTWARE LOADING.',
-            style: FapText.label,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Trainer card case: the cards the maintenance / airline staff can put
-/// into the slots.
-class _CardCase extends StatelessWidget {
-  const _CardCase({required this.fap});
-  final FapProvider fap;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget row(CardSlot slot) => Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Row(
-        children: [
-          SizedBox(width: 50, child: Text(slot.label, style: FapText.label)),
-          for (final c in cardsFor(slot))
-            Padding(
-              padding: const EdgeInsets.only(right: 5),
-              child: FapButton(
-                label: c.shortName,
-                width: 84,
-                height: 40,
-                fontSize: 10,
-                active: fap.cardPick(slot) == c.id,
-                onTap: () => fap.pickCard(slot, c.id),
-              ),
-            ),
-          const Spacer(),
-          FapButton(
-            label: 'INSERT',
-            width: 76,
-            height: 40,
-            fontSize: 11,
-            enabled: fap.cardPhysicallyIn(slot) == null,
-            onTap: () => fap.insertCard(slot),
-          ),
-        ],
-      ),
-    );
-
-    return TrainerBox(
-      label: 'TRAINER  -  CARD CASE (MAINTENANCE / AIRLINE TASK)',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final s in CardSlot.values) row(s),
-          const SizedBox(height: 2),
-          for (final s in CardSlot.values)
-            Builder(
-              builder: (_) {
-                final c = cardById(fap.cardPick(s))!;
-                return Text(
-                  '${s.label}: ${c.partNumber}  -  ${c.contents}',
-                  overflow: TextOverflow.ellipsis,
-                  style: FapText.label.copyWith(fontSize: 11),
-                );
-              },
-            ),
-        ],
+        children: [for (final s in CardSlot.values) row(s)],
       ),
     );
   }

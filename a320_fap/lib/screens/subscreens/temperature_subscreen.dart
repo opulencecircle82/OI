@@ -33,73 +33,11 @@ class TemperatureSubscreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 16),
-          TrainerBox(
-            label: 'TRAINER  -  COCKPIT ZONE TEMPERATURE SELECTORS',
-            child: Row(
-              children: [
-                for (final z in TempZone.values) ...[
-                  Text(z.label, style: FapText.panelTitle),
-                  const SizedBox(width: 12),
-                  FapButton(
-                    label: '-',
-                    icon: Icons.remove,
-                    width: 56,
-                    height: 38,
-                    enabled: fap.cockpitTemp(z) > FapConstants.minTemp,
-                    onTap: () =>
-                        fap.adjustCockpitTemp(z, -FapConstants.tempStep),
-                  ),
-                  SizedBox(
-                    width: 92,
-                    child: Text(
-                      fap.formatTemp(fap.cockpitTemp(z)),
-                      textAlign: TextAlign.center,
-                      style: FapText.monoStyle(
-                        size: 16,
-                        weight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                  FapButton(
-                    label: '+',
-                    icon: Icons.add,
-                    width: 56,
-                    height: 38,
-                    enabled: fap.cockpitTemp(z) < FapConstants.maxTemp,
-                    onTap: () =>
-                        fap.adjustCockpitTemp(z, FapConstants.tempStep),
-                  ),
-                  const SizedBox(width: 40),
-                ],
-                const Expanded(
-                  child: Text(
-                    'Flight crew selection, 18-30 °C',
-                    style: FapText.label,
-                  ),
-                ),
-              ],
-            ),
-          ),
           const SizedBox(height: 14),
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Expanded(
-                // Explanation for the student (hidden with TRAINER controls).
-                child: trainerVisible(context)
-                    ? const FapPanel(
-                        title: 'NOTE',
-                        child: Text(
-                          'The flight crew selects each zone temperature in '
-                          'the cockpit. From the FAP the cabin crew can '
-                          'fine-adjust each zone by ±2.5 °C in 0.5 °C steps. '
-                          'For a bigger change, ask the flight crew.',
-                          style: FapText.label,
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-              ),
+              const Spacer(),
               const SizedBox(width: 16),
               FapButton(
                 label: 'RESET TO COCKPIT\nSELECTED TEMP',

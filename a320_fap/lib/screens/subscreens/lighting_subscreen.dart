@@ -34,8 +34,6 @@ class LightingSubscreen extends StatelessWidget {
               children: [
                 _ZonePanel(LightZone.fwdEntry),
                 Spacer(),
-                _LegendPanel(),
-                Spacer(),
                 _ZonePanel(LightZone.aftEntry),
               ],
             ),
@@ -67,8 +65,6 @@ class LightingSubscreen extends StatelessWidget {
                 _CabinLightsPanel(),
                 SizedBox(height: 14),
                 _ReadingPanel(),
-                Spacer(),
-                _HardKeyStatusPanel(),
               ],
             ),
           ),
@@ -222,111 +218,6 @@ class _ReadingPanel extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          const Text(
-            'R/L SET: all passenger reading lights on. R/L RESET: all off. '
-            'ATTND: attendant work lights.',
-            style: FapText.label,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Read-out of the lighting-related hard keys below the screen.
-class _HardKeyStatusPanel extends StatelessWidget {
-  const _HardKeyStatusPanel();
-
-  @override
-  Widget build(BuildContext context) {
-    if (!trainerVisible(context)) return const SizedBox.shrink();
-    final fap = context.watch<FapProvider>();
-    Widget row(String name, bool on, String hint, Color onColor) => Padding(
-      padding: const EdgeInsets.symmetric(vertical: 3),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 64,
-            child: StatusTag(
-              on ? 'ON' : 'OFF',
-              on ? onColor : FapColors.textDim,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(text: '$name  ', style: FapText.body),
-                  TextSpan(text: hint, style: FapText.label),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    return FapPanel(
-      title: 'HARD KEY STATUS',
-      child: Column(
-        children: [
-          row(
-            'MAIN',
-            fap.mainLightsOn,
-            'LIGHTS MAIN ON/OFF key',
-            FapColors.okGreen,
-          ),
-          row(
-            'LAV',
-            fap.lavMaint,
-            'LAV MAINT - full bright',
-            FapColors.okGreen,
-          ),
-          row(
-            'EMER',
-            fap.emerLights,
-            'EMER - emergency lighting',
-            FapColors.amber,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LegendPanel extends StatelessWidget {
-  const _LegendPanel();
-
-  @override
-  Widget build(BuildContext context) {
-    if (!trainerVisible(context)) return const SizedBox.shrink();
-    Widget item(String level, String use) => Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 82,
-            child: Text(
-              level,
-              style: FapText.monoStyle(
-                size: 12,
-                color: FapColors.gold,
-                weight: FontWeight.w700,
-              ),
-            ),
-          ),
-          Expanded(child: Text(use, style: FapText.label)),
-        ],
-      ),
-    );
-    return FapPanel(
-      title: 'LIGHT LEVELS',
-      child: Column(
-        children: [
-          item('BRT 100%', 'Boarding, disembarking'),
-          item('DIM 1 50%', 'Meal service'),
-          item('DIM 2 10%', 'Rest, night take-off & landing'),
         ],
       ),
     );

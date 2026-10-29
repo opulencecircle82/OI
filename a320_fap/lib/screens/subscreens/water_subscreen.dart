@@ -79,8 +79,8 @@ class WaterSubscreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Tank is filled to the preselected level at the next '
-                        'servicing (${(FapConstants.potableWaterLitres * fap.waterPreselect / 100).round()} L).',
+                        'NEXT SERVICING: '
+                        '${(FapConstants.potableWaterLitres * fap.waterPreselect / 100).round()} L',
                         style: FapText.label,
                       ),
                     ],
@@ -115,18 +115,6 @@ class WaterSubscreen extends StatelessWidget {
                     onTap: fap.resetWarn,
                   ),
                 ),
-                const Spacer(),
-                TrainerBox(
-                  label: 'TRAINER  -  GROUND SERVICE / FLIGHT',
-                  child: Row(
-                    children: [
-                      _trainer('USE WATER\n-10%', fap.consumeWater),
-                      _trainer('REFILL\nWATER', fap.refillWater),
-                      _trainer('ADD WASTE\n+10%', fap.addWaste),
-                      _trainer('DRAIN\nWASTE', fap.drainWaste),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
@@ -134,19 +122,6 @@ class WaterSubscreen extends StatelessWidget {
       ),
     );
   }
-
-  Widget _trainer(String label, VoidCallback onTap) => Expanded(
-    child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
-      child: FapButton(
-        label: label,
-        width: double.infinity,
-        height: 46,
-        fontSize: 12,
-        onTap: onTap,
-      ),
-    ),
-  );
 }
 
 class _Gauge extends StatelessWidget {

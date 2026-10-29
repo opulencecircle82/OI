@@ -199,15 +199,6 @@ class _SeatSubscreenState extends State<SeatSubscreen> {
                           height: 44,
                           onTap: () => setState(() => _letter = null),
                         ),
-                        const SizedBox(height: 14),
-                        Text(
-                          fap.seatReadingMode
-                              ? 'An inhibited reading light stays off, even '
-                                    'with R/L SET.'
-                              : 'An inhibited call button is ignored (for '
-                                    'example a faulty button).',
-                          style: FapText.label,
-                        ),
                       ],
                     ),
                   ),
@@ -289,45 +280,6 @@ class _SeatSubscreenState extends State<SeatSubscreen> {
                   ),
                 ),
                 const Spacer(),
-                TrainerBox(
-                  label: 'TRAINER  -  PASSENGER CALLS',
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      FapButton(
-                        label: 'PASSENGER\nPRESSES CALL',
-                        width: double.infinity,
-                        height: 50,
-                        fontSize: 12,
-                        onTap: fap.simulatePaxCall,
-                      ),
-                      const SizedBox(height: 8),
-                      FapButton(
-                        label: 'CALL RESET',
-                        width: double.infinity,
-                        height: 44,
-                        fontSize: 12,
-                        tone: fap.paxCalls.isNotEmpty
-                            ? FapButtonTone.amber
-                            : FapButtonTone.normal,
-                        onTap: fap.callReset,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        fap.paxCalls.isEmpty
-                            ? 'No active call'
-                            : 'ACTIVE: ${fap.paxCalls.join(', ')}',
-                        style: FapText.monoStyle(
-                          size: 12,
-                          color: fap.paxCalls.isEmpty
-                              ? FapColors.textDim
-                              : FapColors.cyan,
-                          weight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),

@@ -86,7 +86,7 @@
   <div class="sub">User Manual &amp; Function Guide</div>
   <img src="img/page_cabinStatus.jpg" alt="">
   <div class="meta">
-    <b>Version 4.0</b> · Android tablet &amp; Windows PC app<br>
+    <b>Version 4.1</b> · Android tablet &amp; Windows PC app<br>
     Every page, key and training drill of the Airbus A320 Cabin Intercommunication<br>
     Data System (CIDS) Flight Attendant Panel, explained step by step.<br><br>
     For academic, familiarization and training purposes only. Not for operational use.
@@ -100,10 +100,10 @@
   <h1 class="ch">Table of Contents</h1>
   <div class="bar"></div>
   <nav class="toc">
-    <a href="#c1"><span>01</span>Introduction<small>What the FAP is, colors and TRAINER boxes</small></a>
+    <a href="#c1"><span>01</span>Introduction<small>What the FAP is, colors and the INSTRUCTOR panel</small></a>
     <a href="#c2"><span>02</span>Getting Started<small>Install, license code, updates, demo, notice</small></a>
-    <a href="#c3"><span>03</span>The Screen<small>Header, CAUT, title bar, page tabs, FAP CONFIG</small></a>
-    <a href="#c4"><span>04</span>Cabin Status<small>Overview, passenger signs, cockpit trainer</small></a>
+    <a href="#c3"><span>03</span>The Screen<small>Header, CAUT, title bar, page tabs</small></a>
+    <a href="#c4"><span>04</span>Cabin Status<small>Overview, passenger signs</small></a>
     <a href="#c5"><span>05</span>Audio<small>Boarding music, PRAM announcements, chimes</small></a>
     <a href="#c6"><span>06</span>Cabin Lighting<small>BRT / DIM 1 / DIM 2, reading lights</small></a>
     <a href="#c7"><span>07</span>Doors / Slides<small>Arming, cross-check, slide deployment</small></a>
@@ -145,18 +145,25 @@
     <tr><td><span class="key r">RED</span></td><td>Alarm: immediate action (smoke, slide deployed, evacuation). Red items flash.</td></tr>
   </table>
 
-  <h2>TRAINER boxes</h2>
-  <p>Controls inside a <b>dashed cyan box labelled TRAINER</b> are not part of the real FAP. They let the instructor simulate what happens away from the panel, such as a passenger pressing a call button, smoke appearing in a lavatory, the crew moving a door arming lever, or the flight crew changing a cockpit selector. Everything outside these boxes behaves like the aircraft panel.</p>
-  <div class="note"><b>TIP</b>Use the TRAINER controls to create a situation, then let the student respond using only the real FAP keys.</div>
-  <h2>Not part of the real A320 FAP</h2>
-  <p>Everything on the panel exists on the real A320 CIDS FAP, <b>except</b> these simulator items:</p>
+  <h2>Only the real A320 FAP on the screen</h2>
+  <p>The FAP screen, its title bar, its page tabs and the hard keys below it show <b>only what the real A320 CIDS FAP has</b>. Everything the instructor needs is <b>outside the FAP</b>, on the panel frame:</p>
   <ul>
-    <li>Every <b>dashed TRAINER box</b> (on Cabin Status, Audio, Doors, Temperature, Water/Waste, Smoke, Seat Settings, System Info, FAP Set-up and the access-code keypad).</li>
-    <li>The <b>help notes</b> for the student: Light Levels and Hard Key Status (Lighting), Lav Smoke Crew Actions (Smoke), the Note (Temperature).</li>
-    <li><b>RESET SIMULATOR</b> (System Info), <b>FAP CONFIG</b> (top right of the screen) and <b>⚙ SETTINGS</b> (top frame).</li>
+    <li><span class="key">INSTRUCTOR</span> (top frame, left): opens the <b>INSTRUCTOR panel</b>.</li>
+    <li><span class="key">⚙ SETTINGS</span> (top frame, right): license, device ID, app version and updates (Chapter 2).</li>
   </ul>
-  <figure><img src="img/hidden_cabinStatus.jpg" alt=""><figcaption>TRAINER CONTROLS set to HIDE: only the real A320 FAP is on screen.</figcaption></figure>
-  <div class="note"><b>FOR AN ASSESSMENT</b>⚙ SETTINGS &gt; TRAINER CONTROLS &gt; <b>HIDE</b> removes all of these items (except ⚙ SETTINGS itself). Set it back to <b>SHOW</b> for practice.</div>
+  <h2>The INSTRUCTOR panel</h2>
+  <p>It simulates what happens <b>away from the FAP</b>: the cockpit, the passengers, the doors, the aircraft and maintenance. <b>Nothing in it is part of the A320 FAP.</b> It is drawn in violet, a colour the CIDS never uses, and covers the right side of the panel until you close it (✕ or INSTRUCTOR again).</p>
+  <figure><img src="img/instructor_cockpit.jpg" alt=""><figcaption>INSTRUCTOR panel, COCKPIT tab.</figcaption></figure>
+  <table>
+    <tr><th>Tab</th><th>Simulates</th></tr>
+    <tr><td><span class="key">COCKPIT</span></td><td>Flight phase, the signs panel (SEAT BELTS, NO SMOKING, EMER EXIT LT), COCKPIT PA, the zone temperature selectors, the EVAC selector and COCKPIT EVAC CMD.</td></tr>
+    <tr><td><span class="key">CABIN</span></td><td>Lavatory call buttons, a passenger seat call, smoke in a lavatory.</td></tr>
+    <tr><td><span class="key">DOORS</span></td><td>The arming lever and handle at each door, ARM / DISARM SLIDES X-CHECK, RESET DRILL.</td></tr>
+    <tr><td><span class="key">AIRCRAFT</span></td><td>Normal power lost, low cabin pressure, CIDS director faults, water use and ground servicing.</td></tr>
+    <tr><td><span class="key">MAINT.</span></td><td>The card case for the PRAM / CAM / OBRM card change.</td></tr>
+    <tr><td><span class="key">SIMULATOR</span></td><td>The cabin chimes to listen to, °C / °F, MUTE, the access codes and RESET SIMULATOR.</td></tr>
+  </table>
+  <div class="note"><b>TIP</b>Create the situation in the INSTRUCTOR panel, close it, and let the student respond on the FAP only.</div>
 </section>
 
 <!-- ============================== 2 -->
@@ -196,9 +203,8 @@
   </ul>
 
   <h2>Settings and moving your license</h2>
-  <figure class="small"><img src="img/settings_dialog.jpg" alt=""><figcaption>SETTINGS (key on the top frame of the panel, right side): license status, device ID, app version, TRAINER CONTROLS and CHECK FOR UPDATES.</figcaption></figure>
+  <figure class="small"><img src="img/settings_dialog.jpg" alt=""><figcaption>SETTINGS (key on the top frame of the panel, right side): license status, device ID, app version and CHECK FOR UPDATES.</figcaption></figure>
   <p>The <b>⚙ SETTINGS</b> key on the top frame of the panel shows that the license is active on this device, the activation date, the <b>device ID</b> and the app version. The license code itself is not shown.</p>
-  <p><b>TRAINER CONTROLS</b>: <b>SHOW</b> (practice) or <b>HIDE</b> (only the real A320 FAP on screen: no TRAINER boxes, help notes, RESET SIMULATOR or FAP CONFIG). The choice is kept when the app restarts. See Chapter 1.</p>
   <div class="note warn"><b>NEW TABLET OR PC?</b>Ask your instructor or administrator to <b>release</b> your code from the admin panel (tell them the device ID if they ask), then enter the same code on the new device. If the old device ever comes back online, it locks itself automatically.</div>
 
   <h2>Updating the app</h2>
@@ -234,7 +240,7 @@
     <tr><td>FAP 1</td><td>The panel identifier.</td></tr>
     <tr><td>Message line</td><td>Cautions and information, for example <i>Please check door/slide status prior departure</i>, <i>PAX CALL 9E / LAV D</i> or <i>SMOKE LAV D</i>. Alarms appear in red.</td></tr>
     <tr><td>SELECT … PAGE</td><td>Info row: flashes while a new event waits, and names the page to open, for example <i>SELECT AUDIO PAGE</i>.</td></tr>
-    <tr><td>Temperature</td><td>Average cabin temperature (°C or °F, see FAP CONFIG).</td></tr>
+    <tr><td>Temperature</td><td>Average cabin temperature (°C or °F, see INSTRUCTOR &gt; SIMULATOR).</td></tr>
     <tr><td>UTC clock</td><td>Current time in UTC.</td></tr>
   </table>
 
@@ -244,8 +250,8 @@
     <tr><td><span class="key">SCREEN OFF</span></td><td>Blanks the display; touch the screen anywhere to wake it. While a new event is waiting, SCREEN OFF first steps through the event pages one at a time, like the real CIDS.</td></tr>
     <tr><td><span class="key">CABIN READY</span></td><td>Tells the flight crew the cabin is secured. The cockpit ECAM shows it on the take-off checklist once the engines run, and on the landing checklist with the gear down. Green while active; press again to cancel.</td></tr>
     <tr><td>Page title</td><td>Name of the open page. Short notices temporarily replace the title; during an evacuation it shows <b>EVAC – PRESS EVAC RESET TO SILENCE</b> and flashes red.</td></tr>
-    <tr><td><span class="key">FAP CONFIG</span></td><td>Simulator settings (not part of the aircraft FAP): temperature unit <b>CELSIUS / FAHRENHEIT</b> and <b>MUTE</b> all audio.</td></tr>
-    <tr><td><span class="key">⚙ SETTINGS</span></td><td>On the top frame of the panel (right side): simulator settings, not part of the aircraft FAP (license status, device ID, app version, TRAINER CONTROLS SHOW / HIDE, CHECK FOR UPDATES). See Chapter 2.</td></tr>
+    <tr><td><span class="key">⚙ SETTINGS</span></td><td>On the top frame of the panel (right side): simulator settings, not part of the aircraft FAP (license status, device ID, app version, CHECK FOR UPDATES). See Chapter 2.</td></tr>
+    <tr><td><span class="key">INSTRUCTOR</span></td><td>On the top frame of the panel (left side): the INSTRUCTOR panel, not part of the aircraft FAP. See Chapter 1.</td></tr>
   </table>
 
   <h2>Page tabs</h2>
@@ -255,7 +261,7 @@
     <li><b>Row 2, CAM and maintenance pages:</b> CABIN PROG, LAYOUT SELECT, LEVEL ADJUST, SW LOAD, FAP SET-UP (Chapter 13).</li>
   </ul>
   <p>A tab whose system needs attention changes color even when you are on another page: <b>SMOKE DETECT</b> flashes red on smoke (amber while still monitoring), <b>DOORS/SLIDES</b> turns red when a slide is deployed, <b>WATER/WASTE</b> amber when the waste tank is full, <b>SEAT SETTING</b> amber on a passenger call, <b>AUDIO</b> amber on a passenger or lavatory call (CALL RESET is there), and <b>SYSTEM INFO</b> amber or red on CIDS faults.</p>
-  <figure><img src="img/scenario_config_fahrenheit.jpg" alt=""><figcaption>FAP CONFIG panel with the temperature unit set to Fahrenheit.</figcaption></figure>
+  <figure><img src="img/scenario_config_fahrenheit.jpg" alt=""><figcaption>Temperatures in °F (INSTRUCTOR &gt; SIMULATOR) and a dimmed display (FAP SET-UP).</figcaption></figure>
 </section>
 
 <!-- ============================== 4 -->
@@ -263,7 +269,7 @@
   <div class="ch-num">CHAPTER 04</div>
   <h1 class="ch">Cabin Status</h1>
   <div class="bar"></div>
-  <p class="lead">One overview tile for every cabin system. Tap a tile to open that system's page. The TRAINER box below it simulates the cockpit, the aircraft and the passengers.</p>
+  <p class="lead">One overview tile for every cabin system. Tap a tile to open that system's page. The cockpit, the aircraft and the passengers are simulated in the INSTRUCTOR panel.</p>
   <figure><img src="img/scenario_signs_lav_call.jpg" alt=""><figcaption>CABIN STATUS in flight: seat belt signs on, a call from lavatory D waiting (CAUT and SELECT AUDIO PAGE).</figcaption></figure>
   <table>
     <tr><th>Tile</th><th>Summary shown</th></tr>
@@ -287,7 +293,7 @@
     <li><b>EXIT</b> signs: with the emergency lights, at low cabin pressure, or in ARM when NO SMOKING is ON or AUTO with the gear down.</li>
   </ul>
 
-  <h3>TRAINER – cockpit / aircraft / passengers</h3>
+  <h3>INSTRUCTOR panel – COCKPIT, CABIN and AIRCRAFT tabs</h3>
   <table>
     <tr><th>Control</th><th>Simulates</th></tr>
     <tr><td><span class="key">FLIGHT PHASE</span></td><td>What the CIDS receives from the aircraft: GROUND, ENGINES RUNNING, FLIGHT (gear up), APPROACH (gear down). LAYOUT SELECTION works on ground only; NO SMOKING in AUTO follows the gear.</td></tr>
@@ -354,7 +360,7 @@
     <tr><th>Control</th><th>Function</th></tr>
     <tr><td><span class="key a">CALL RESET</span></td><td>Cancels every passenger and lavatory call. Amber while calls are waiting; the seats and lavatories calling are listed below it.</td></tr>
     <tr><td><span class="key">CHIME INHIBIT</span></td><td>Silences the call chimes (the sign chime still sounds).</td></tr>
-    <tr><td>TRAINER chimes</td><td><b>HIGH</b> passenger call · <b>HIGH-LOW</b> crew call (interphone) · <b>LOW</b> seat belt / no smoking signs · <b>EMER CALL</b> emergency call from the cockpit (three times).</td></tr>
+    <tr><td>INSTRUCTOR &gt; SIMULATOR chimes</td><td><b>HIGH</b> passenger call · <b>HIGH-LOW</b> crew call (interphone) · <b>LOW</b> seat belt / no smoking signs · <b>EMER CALL</b> emergency call from the cockpit (three times).</td></tr>
   </table>
 </section>
 
@@ -392,7 +398,7 @@
     <tr><td><span class="key">R/L RESET</span></td><td>Switches every reading light off.</td></tr>
     <tr><td><span class="key">ATTND</span></td><td>Attendant work lights.</td></tr>
   </table>
-  <p>The <b>HARD KEY STATUS</b> panel shows the state of the lighting hard keys: MAIN, LAV MAINT (lavatory lights full bright) and EMER (emergency lighting).</p>
+  <p>The light above each lighting hard key shows its state: MAIN, LAV MAINT (lavatory lights full bright) and EMER (emergency lighting).</p>
 
   <h2>Automatic lighting</h2>
   <ul>
@@ -407,7 +413,7 @@
   <div class="ch-num">CHAPTER 07</div>
   <h1 class="ch">Doors / Slides</h1>
   <div class="bar"></div>
-  <p class="lead">Door and escape-slide status for all eight exits. The FAP only <i>displays</i> the status; the doors themselves are operated at the door, which the TRAINER controls simulate.</p>
+  <p class="lead">Door and escape-slide status for all eight exits. The FAP only <i>displays</i> the status; the doors themselves are operated at the door, which the INSTRUCTOR panel (DOORS tab) simulates.</p>
   <figure><img src="img/page_doors.jpg" alt=""><figcaption>DOORS / SLIDES: all doors closed, all slides armed.</figcaption></figure>
 
   <h2>Exits</h2>
@@ -420,7 +426,7 @@
   </table>
   <p class="legend"><span><i class="sw" style="background:#16a34a"></i>Closed + armed</span><span><i class="sw" style="background:#e5e7eb;border:.3mm solid #999"></i>Closed + disarmed</span><span><i class="sw" style="background:#d97706"></i>Open</span><span><i class="sw" style="background:#dc2626"></i>Slide deployed</span></p>
 
-  <h2>TRAINER controls</h2>
+  <h2>INSTRUCTOR panel – DOORS tab</h2>
   <table>
     <tr><th>Control</th><th>Simulates</th></tr>
     <tr><td><span class="key">AT DOOR: ARM / DISARM</span></td><td>A crew member moving the slide arming lever at that door.</td></tr>
@@ -441,11 +447,11 @@
   <p class="lead">The flight crew selects each zone temperature in the cockpit; the cabin crew can fine-tune it from the FAP.</p>
   <figure><img src="img/page_temperature.jpg" alt=""><figcaption>CABIN TEMPERATURE page.</figcaption></figure>
   <ul>
-    <li><b>Cockpit selection</b>: 18 °C to 30 °C per zone (FWD and AFT). The TRAINER <i>cockpit zone temperature selectors</i> (− / +) simulate the flight crew changing it.</li>
+    <li><b>Cockpit selection</b>: 18 °C to 30 °C per zone (FWD and AFT). The <i>zone temperature selectors</i> in INSTRUCTOR &gt; COCKPIT (− / +) simulate the flight crew changing it.</li>
     <li><b>FAP fine adjustment</b>: <span class="key">−</span> / <span class="key">+</span> moves a zone up to <b>±2.5 °C</b> around the cockpit selection. The indicator shows the offset.</li>
     <li><b>ACTUAL</b>: the measured zone temperature. It moves gradually toward the target as the air-conditioning packs respond.</li>
     <li><span class="key">RESET TO COCKPIT SELECTED TEMP</span> removes all FAP adjustments.</li>
-    <li>Switch between °C and °F with <b>FAP CONFIG</b>.</li>
+    <li>Switch between °C and °F in <b>INSTRUCTOR &gt; SIMULATOR</b>.</li>
   </ul>
 </section>
 
@@ -466,7 +472,7 @@
   </table>
   <div class="note warn"><b>WASTE TANK FULL</b>A full waste tank makes every vacuum toilet inoperative (INOP). The WATER/WASTE tab turns amber.</div>
   <figure><img src="img/scenario_waste_full.jpg" alt=""><figcaption>Waste tank full: all lavatories INOP.</figcaption></figure>
-  <h3>TRAINER – ground service / flight</h3>
+  <h3>INSTRUCTOR panel – AIRCRAFT tab</h3>
   <p><span class="key">USE WATER −10%</span> <span class="key">REFILL WATER</span> <span class="key">ADD WASTE +10%</span> <span class="key">DRAIN WASTE</span> simulate water use in flight and ground servicing. Draining the waste tank brings the lavatories back.</p>
 </section>
 
@@ -483,9 +489,9 @@
     <li>The FAP <b>keeps showing the smoke</b> for as long as the detector still senses it.</li>
     <li>Once no more smoke is detected, the CIDS <b>clears everything automatically</b>.</li>
   </ul>
-  <h3>TRAINER</h3>
+  <h3>INSTRUCTOR panel – CABIN tab</h3>
   <p><span class="key">SMOKE</span> makes smoke appear in that lavatory; <span class="key">EXTINGUISH</span> simulates the fire being put out (smoke cleared).</p>
-  <h3>LAV SMOKE – CREW ACTIONS</h3>
+  <h3>Crew actions (cabin crew procedure)</h3>
   <ol class="steps">
     <li>Press SMOKE RESET to silence the aural alert.</li>
     <li>Go to the lavatory. Feel the door with the back of your hand before opening.</li>
@@ -513,8 +519,8 @@
     <tr><td>CABIN SETTINGS</td><td>CALL INHIBIT (ignores all passenger call buttons), CHIME INHIBIT, and PES ON/OFF (passenger entertainment power).</td></tr>
   </table>
   <p>Seats with an inhibited reading light stay off when R/L SET is pressed on the Cabin Lighting page.</p>
-  <h3>TRAINER – passenger calls</h3>
-  <p><span class="key">PASSENGER PRESSES CALL</span> simulates a call from a random seat: a high chime sounds, the message line shows <i>PAX CALL</i> with the seat, and the SEAT SETTING tab turns amber. <span class="key a">CALL RESET</span> cancels all calls.</p>
+  <h3>INSTRUCTOR panel – CABIN tab</h3>
+  <p><span class="key">PASSENGER PRESSES CALL</span> simulates a call from a random seat: a high chime sounds, the message line shows <i>PAX CALL</i> with the seat, and the SEAT SETTING tab turns amber. <span class="key a">CALL RESET</span> on the AUDIO page cancels all calls.</p>
 </section>
 
 <!-- ============================== 12 -->
@@ -522,22 +528,22 @@
   <div class="ch-num">CHAPTER 12</div>
   <h1 class="ch">System Info</h1>
   <div class="bar"></div>
-  <p class="lead">CIDS health and messages, plus trainer fault injection and cockpit events.</p>
+  <p class="lead">CIDS health and messages.</p>
   <figure><img src="img/page_systemInfo.jpg" alt=""><figcaption>SYSTEM INFO page.</figcaption></figure>
   <ul>
     <li><b>CIDS SYSTEM STATUS</b>: the two CIDS directors (DIR 1 / DIR 2) and which one is active, PAX SYS, the EVAC selector position (CAPT or CAPT &amp; PURS) and the FAP software version.</li>
     <li><b>MESSAGES</b>: current CIDS messages and faults.</li>
   </ul>
-  <h3>TRAINER – fault injection</h3>
+  <h3>INSTRUCTOR panel – AIRCRAFT tab: CIDS faults</h3>
   <p><span class="key">DIR 1 FAULT</span> / <span class="key">DIR 2 FAULT</span> fail a director; the other takes over (amber). With <b>both</b> failed the cockpit ECAM shows <b>CIDS 1+2 FAULT</b>: PA announcements, interphone and passenger signs are lost and the SYSTEM INFO tab turns red.</p>
   <figure><img src="img/scenario_cids_fault.jpg" alt=""><figcaption>Both directors failed: CIDS 1+2 FAULT.</figcaption></figure>
-  <h3>TRAINER – cockpit / automatic events</h3>
+  <h3>INSTRUCTOR panel – cockpit and automatic events</h3>
   <table>
     <tr><th>Control</th><th>Simulates</th></tr>
     <tr><td><span class="key">SELECTOR CAPT / CAPT &amp; PURS</span></td><td>The cockpit evacuation selector. In <b>CAPT</b>, an EVAC CMD from the cabin only sounds the cockpit horn for 3 seconds; in <b>CAPT &amp; PURS</b> it triggers the cabin evacuation alert.</td></tr>
     <tr><td><span class="key r">COCKPIT EVAC CMD</span></td><td>The flight crew sets EVAC COMMAND ON: <i>EVAC COMMANDED FROM THE COCKPIT</i>.</td></tr>
     <tr><td><span class="key">LOW CABIN PRESSURE</span></td><td>Low cabin pressure (press again for normal pressure). The CIDS switches the cabin lights to BRT, the seat belt and no smoking signs come on, and the PA volume goes up. The oxygen masks are not a FAP function: they drop by themselves or are released from the cockpit.</td></tr>
-    <tr><td><span class="key">RESET SIMULATOR</span></td><td>Restores factory defaults (after a confirmation).</td></tr>
+    <tr><td><span class="key">RESET SIMULATOR</span></td><td>INSTRUCTOR &gt; SIMULATOR: restores factory defaults (after a confirmation).</td></tr>
   </table>
   <figure><img src="img/scenario_low_pressure.jpg" alt=""><figcaption>Low cabin pressure and normal power lost: the MESSAGES list.</figcaption></figure>
 </section>
@@ -555,7 +561,7 @@
     <tr><td>SW LOAD</td><td class="mono">813</td></tr>
     <tr><td>FAP SET-UP</td><td>No code</td></tr>
   </table>
-  <p>The codes are also shown in the TRAINER box of the keypad. <b>FAP RESET</b> locks the protected pages again.</p>
+  <p>The codes are also shown in INSTRUCTOR &gt; SIMULATOR. <b>FAP RESET</b> locks the protected pages again.</p>
 
   <h2>Cabin Programming</h2>
   <figure><img src="img/page_cabinProg_open.jpg" alt=""><figcaption>CABIN PROGRAMMING.</figcaption></figure>
@@ -597,7 +603,7 @@
   </table>
   <ol class="steps">
     <li>Press <span class="key">REMOVE</span> next to the card. The slot becomes EMPTY (on a PRAM, the announcements and music stop).</li>
-    <li>TRAINER – CARD CASE: choose the new card and press <span class="key">INSERT</span>. The status shows PRESS OK.</li>
+    <li>INSTRUCTOR &gt; MAINT. (card case): choose the new card and press <span class="key">INSERT</span>. The status shows PRESS OK.</li>
     <li>Press <span class="key a">OK</span> on the FAP to finish the change.</li>
   </ol>
   <figure><img src="img/scenario_pram_removed.jpg" alt=""><figcaption>PRAM removed: the slot waits for a new card and OK.</figcaption></figure>
@@ -607,7 +613,7 @@
     <tr><td>CAM</td><td><b>ORIGINAL CAM</b> (1, 2 and 3 classes) · CAM B (high density: 1 class 31 rows, 2 classes 29 rows, 2 classes 28 rows).</td></tr>
     <tr><td>OBRM</td><td>037A (older software) · <b>037B</b> (newer software, in the slot at start).</td></tr>
   </table>
-  <div class="note warn"><b>MAINTENANCE TASK</b>On the aircraft, maintenance or the airline changes the cards. Cabin crew do not change them in flight. RESET SIMULATOR puts the original cards back.</div>
+  <div class="note warn"><b>MAINTENANCE TASK</b>On the aircraft, maintenance or the airline changes the cards. Cabin crew do not change them in flight. RESET SIMULATOR (INSTRUCTOR &gt; SIMULATOR) puts the original cards back.</div>
 </section>
 
 <!-- ============================== 14 -->
@@ -639,7 +645,7 @@
   <div class="ch-num">CHAPTER 15</div>
   <h1 class="ch">Training Drills</h1>
   <div class="bar"></div>
-  <p class="lead">Suggested classroom exercises. The instructor creates the situation with the TRAINER controls; the student responds with the FAP keys only.</p>
+  <p class="lead">Suggested classroom exercises. The instructor creates the situation in the INSTRUCTOR panel; the student responds with the FAP keys only.</p>
 
   <h2>Drill 1 – Boarding</h2>
   <ol class="steps">
@@ -665,7 +671,7 @@
 
   <h2>Drill 4 – Lavatory smoke</h2>
   <ol class="steps">
-    <li>Instructor: SMOKE DETECTION TRAINER <span class="key">SMOKE</span> on a lavatory.</li>
+    <li>Instructor: INSTRUCTOR &gt; CABIN <span class="key">SMOKE</span> on a lavatory.</li>
     <li>Student: the page opens automatically; press <span class="key r">SMOKE RESET</span>.</li>
     <li>Follow the six crew actions (Chapter 10) and inform the cockpit.</li>
     <li>Instructor: <span class="key">EXTINGUISH</span>; the CIDS clears the alert automatically.</li>
@@ -703,7 +709,7 @@
 
   <h2>Drill 9 – Signs, lavatory call and cockpit PA</h2>
   <ol class="steps">
-    <li>Instructor (CABIN STATUS TRAINER): FLIGHT PHASE <span class="key">FLIGHT</span>, SEAT BELTS <span class="key">ON</span>. Student: hears the low chime and reads the PASSENGER SIGNS tile.</li>
+    <li>Instructor (INSTRUCTOR &gt; COCKPIT): FLIGHT PHASE <span class="key">FLIGHT</span>, SEAT BELTS <span class="key">ON</span>. Student: hears the low chime and reads the PASSENGER SIGNS tile.</li>
     <li>Instructor: <span class="key">LAV D</span> call. Student: CAUT flashes and <i>SELECT AUDIO PAGE</i> appears; press CAUT, read the call, press <span class="key a">CALL RESET</span>.</li>
     <li>Student: start an announcement. Instructor: <span class="key">COCKPIT PA</span>. Student: explains why the PRAM stopped (cockpit PA priority).</li>
   </ol>
@@ -749,17 +755,17 @@
   <h3>How do I get a new version?</h3>
   <p>The app offers it when it starts (internet needed), or use ⚙ SETTINGS &gt; CHECK FOR UPDATES, then UPDATE NOW. The license stays active.</p>
   <h3>There are no announcements or boarding music.</h3>
-  <p>Check FAP SET-UP: the PRAM card may have been removed. Insert one and press OK, or use RESET SIMULATOR.</p>
+  <p>Check FAP SET-UP: the PRAM card may have been removed. Insert one and press OK, or use RESET SIMULATOR (INSTRUCTOR &gt; SIMULATOR).</p>
   <h3>LAYOUT SELECT says it is not available.</h3>
-  <p>Layout selection works on ground only, with a CAM in the slot. Set FLIGHT PHASE to GROUND on CABIN STATUS (TRAINER), or insert a CAM on FAP SET-UP.</p>
+  <p>Layout selection works on ground only, with a CAM in the slot. Set FLIGHT PHASE to GROUND in INSTRUCTOR &gt; COCKPIT, or insert a CAM on FAP SET-UP.</p>
   <h3>A page asks for an access code.</h3>
   <p>CABIN PROG, LAYOUT SELECT and LEVEL ADJUST use <span class="mono">318</span>; SW LOAD uses <span class="mono">813</span>.</p>
   <h3>The screen is black.</h3>
   <p>SCREEN OFF is active: touch the screen to wake it. During SCREEN 30 SEC LOCK, wait for the countdown.</p>
   <h3>There is no sound.</h3>
-  <p>Check the tablet volume, MUTE in FAP CONFIG, CHIME INHIBIT, the loudspeaker volume in FAP SET-UP, and the levels in LEVEL ADJUST.</p>
+  <p>Check the tablet volume, MUTE in INSTRUCTOR &gt; SIMULATOR, CHIME INHIBIT, the loudspeaker volume in FAP SET-UP, and the levels in LEVEL ADJUST.</p>
   <h3>How do I start a drill again from the beginning?</h3>
-  <p>Use RESET DRILL on the Doors page, or RESET SIMULATOR on SYSTEM INFO to restore all factory defaults.</p>
+  <p>Use RESET DRILL in INSTRUCTOR &gt; DOORS, or RESET SIMULATOR in INSTRUCTOR &gt; SIMULATOR to restore all factory defaults.</p>
 </section>
 
 <!-- ============================== 17 -->
@@ -774,7 +780,7 @@
     <li><b>ACCURACY &amp; LIABILITY:</b> While modeled for realistic interaction, operational variances may exist. This software must NOT be used for real-world aircraft operation, checklist validation, or actual emergency procedures. Overdrive Interactive assumes no liability for misuse.</li>
   </ol>
   <div class="note warn"><b>ALWAYS</b>Follow your airline's cabin crew operations manual and your instructor's procedures.</div>
-  <p style="margin-top:14mm;text-align:center;color:var(--mute);font-size:9pt">© Overdrive Interactive · A320 FAP Simulator v4.0 · User Manual</p>
+  <p style="margin-top:14mm;text-align:center;color:var(--mute);font-size:9pt">© Overdrive Interactive · A320 FAP Simulator v4.1 · User Manual</p>
 </section>
 </main>
 </body>
