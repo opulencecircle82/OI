@@ -63,8 +63,8 @@ export const mcdu = {
    * guide folder, copied to landing/public). */
   guidePath: `${BASE_PATH}/A320_MCDU_Trainer_Instructor_Guide.pdf`,
   reportPath: `${BASE_PATH}/A320_MCDU_Trainer_Sources_and_Conformance.pdf`,
-  /** YouTube tutorial (v2.0: complete flight, cold & dark to shutdown). */
-  tutorialId: "L5dC84HcGtA",
+  /** YouTube tutorial (v2.1: complete flight with a go-around). */
+  tutorialId: "n6q5uzvrrME",
   get tutorialUrl() {
     return `https://www.youtube.com/watch?v=${this.tutorialId}`;
   },
