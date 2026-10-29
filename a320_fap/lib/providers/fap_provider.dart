@@ -37,6 +37,7 @@ class FapProvider extends ChangeNotifier {
     : audio = audio ?? FapAudio(),
       _random = random ?? Random() {
     this.audio.onAnnouncementDone = _onAnnouncementDone;
+    this.audio.onCockpitPaDone = _onCockpitPaDone;
     this.audio.setPaGain(_paGain);
     this.audio.setMusicLevel(_musicLevel);
     _applyAudioOutput();
@@ -1089,9 +1090,10 @@ class FapProvider extends ChangeNotifier {
   bool _cockpitPa = false;
   bool get cockpitPa => _cockpitPa;
 
-  /// Trainer: the flight crew makes a PA from the cockpit handset. It has
-  /// priority over the PRAM: a playing announcement stops and the boarding
-  /// music is lowered until the cockpit PA ends.
+  /// Trainer: the flight crew makes a PA from the cockpit handset (the
+  /// captain's voice plays). It has priority over the PRAM: a playing
+  /// announcement stops and the boarding music is lowered until the cockpit
+  /// PA ends, by itself when the captain finishes or with the key again.
   void toggleCockpitPa() {
     if (!_cockpitPa && cidsDown) {
       _showNotice('CIDS 1+2 FAULT - PA NOT AVAILABLE', color: FapColors.red);
@@ -1107,7 +1109,17 @@ class FapProvider extends ChangeNotifier {
         audio.stopAnnouncement();
         _showNotice('COCKPIT PA - PRAM ANNOUNCEMENT STOPPED (PRIORITY)');
       }
+      audio.startCockpitPa();
+    } else {
+      audio.stopCockpitPa();
     }
+    notifyListeners();
+  }
+
+  void _onCockpitPaDone() {
+    if (_disposed || !_cockpitPa) return;
+    _cockpitPa = false;
+    audio.setOtherPaActive(false);
     notifyListeners();
   }
 
@@ -1710,6 +1722,7 @@ class FapProvider extends ChangeNotifier {
       _playAll = false;
       _cockpitPa = false;
       audio.setOtherPaActive(false);
+      audio.stopCockpitPa();
       audio.stopMusic();
       audio.stopAnnouncement();
       // Without a CIDS signal the cabin lights go to full brightness
@@ -1875,6 +1888,7 @@ class FapProvider extends ChangeNotifier {
     audio.setPaBoost(false);
     _cockpitPa = false;
     audio.setOtherPaActive(false);
+    audio.stopCockpitPa();
     _cidsLightTimer?.cancel();
     _cidsLightsFull = false;
     _slotCard

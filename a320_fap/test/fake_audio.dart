@@ -13,6 +13,26 @@ class FakeAudio implements FapAudio {
   VoidCallback? onAnnouncementDone;
 
   @override
+  VoidCallback? onCockpitPaDone;
+
+  bool cockpitPa = false;
+
+  @override
+  Future<void> startCockpitPa() async {
+    cockpitPa = true;
+    calls.add('cockpitPa');
+  }
+
+  @override
+  Future<void> stopCockpitPa() async => cockpitPa = false;
+
+  /// Test helper: the captain finishes speaking.
+  void finishCockpitPa() {
+    cockpitPa = false;
+    onCockpitPaDone?.call();
+  }
+
+  @override
   Future<void> chime(ChimeType type) async => calls.add('chime:${type.name}');
 
   @override
@@ -86,6 +106,7 @@ class FakeAudio implements FapAudio {
 
   @override
   Future<void> stopAll() async {
+    await stopCockpitPa();
     await stopAnnouncement();
     await stopMusic();
     await stopAlarm();

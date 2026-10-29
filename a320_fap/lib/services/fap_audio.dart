@@ -34,7 +34,10 @@ class FapAudio {
   final _musicPlayer = AudioPlayer(playerId: 'fap_music');
   final _voicePlayer = AudioPlayer(playerId: 'fap_pram');
   final _clickPlayer = AudioPlayer(playerId: 'fap_click');
+  final _cockpitPlayer = AudioPlayer(playerId: 'fap_cockpit_pa');
   StreamSubscription<void>? _voiceDone;
+  StreamSubscription<void>? _cockpitDone;
+  bool _cockpitSpeaking = false;
 
   final _cache = <String, Uint8List>{};
 
@@ -47,6 +50,9 @@ class FapAudio {
 
   /// Called when a PRAM announcement finishes or is stopped.
   VoidCallback? onAnnouncementDone;
+
+  /// Called when the captain's cockpit PA has played to the end.
+  VoidCallback? onCockpitPaDone;
 
   Future<void> _init() async {
     if (!kIsWeb) {
@@ -66,6 +72,7 @@ class FapAudio {
           _musicPlayer,
           _voicePlayer,
           _clickPlayer,
+          _cockpitPlayer,
         ]) {
           await p.setAudioContext(ctx);
         }
@@ -78,6 +85,11 @@ class FapAudio {
     _voiceDone = _voicePlayer.onPlayerComplete.listen(
       (_) => _announcementFinished(),
     );
+    _cockpitDone = _cockpitPlayer.onPlayerComplete.listen((_) {
+      if (!_cockpitSpeaking) return;
+      _cockpitSpeaking = false;
+      onCockpitPaDone?.call();
+    });
   }
 
   // ---------------------------------------------------------------- volume
@@ -92,6 +104,8 @@ class FapAudio {
 
   double get _voiceVol =>
       (_paGain * _master * _announceTrim * _paBoost).clamp(0.0, 1.0);
+  // The cockpit PA is not trimmed by the FAP announce level.
+  double get _cockpitVol => (_paGain * _master * _paBoost).clamp(0.0, 1.0);
   double get _chimeVol =>
       (_paGain * _master * _chimeTrim * _paBoost).clamp(0.0, 1.0);
   double get _musicVol =>
@@ -138,6 +152,7 @@ class FapAudio {
 
   void _applyVolumes() {
     _voicePlayer.setVolume(_voiceVol);
+    _cockpitPlayer.setVolume(_cockpitVol);
     _chimePlayer.setVolume(_chimeVol);
     _alarmPlayer.setVolume(_master);
     _applyMusicVolume();
@@ -314,7 +329,30 @@ class FapAudio {
     onAnnouncementDone?.call();
   }
 
+  /// The captain speaks from the cockpit handset (assets/pa/captain_pa.mp3).
+  /// No chime: a cockpit PA goes on air straight away.
+  Future<void> startCockpitPa() async {
+    _cockpitSpeaking = true;
+    try {
+      await _cockpitPlayer.stop();
+      await _cockpitPlayer.play(
+        AssetSource('pa/captain_pa.mp3'),
+        volume: _cockpitVol,
+      );
+    } catch (e) {
+      debugPrint('FapAudio: cannot play the cockpit PA: $e');
+      _cockpitSpeaking = false;
+    }
+  }
+
+  /// Ends the cockpit PA early (no [onCockpitPaDone]).
+  Future<void> stopCockpitPa() async {
+    _cockpitSpeaking = false;
+    await _cockpitPlayer.stop();
+  }
+
   Future<void> stopAll() async {
+    await stopCockpitPa();
     await stopAnnouncement();
     await stopMusic();
     await stopAlarm();
@@ -322,6 +360,8 @@ class FapAudio {
 
   void dispose() {
     _voiceDone?.cancel();
+    _cockpitDone?.cancel();
+    _cockpitPlayer.dispose();
     _voicePlayer.dispose();
     _clickPlayer.dispose();
     _chimePlayer.dispose();
