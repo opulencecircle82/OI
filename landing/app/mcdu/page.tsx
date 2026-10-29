@@ -41,6 +41,11 @@ const features = [
     icon: "M3 17h18M6 17l4-10 4 10M8 13h4M17 7l3 3-3 3",
   },
   {
+    title: "Approach & go-around",
+    body: "The approach phase starts at (DECEL), or by hand with ACTIVATE APPR PHASE and CONFIRM. TOGA flies the missed approach with the approach strung again; then a second approach, or ENABLE ALTN to divert. PERF APPR, PERF GO AROUND and the IRS check on POSITION MONITOR.",
+    icon: "M3 20h18M5 16l6-6 3 3 6-7M15 6h5v5",
+  },
+  {
     title: "MCDU like the aircraft",
     body: "14-line display with the Airbus colour code, line select keys, scratchpad and CLR logic, and real messages such as NOT ALLOWED and FORMAT ERROR.",
     icon: "M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm2 4h10M7 11h10M7 15h6",
@@ -62,11 +67,11 @@ const pages = [
   ["F-PLN", "Insert and clear waypoints, discontinuities, speed and altitude constraints, (T/C) and (T/D)."],
   ["LAT REV / VERT REV", "NEXT WPT and NEW DEST with a yellow TMPY plan: *ERASE or INSERT*."],
   ["DIR TO", "Direct to any point from the present position, then INSERT."],
-  ["PERF", "TAKE OFF V1 / VR / V2 with the disagree check, FLAPS/THS, FLEX, then CLB, CRZ, DES and APPR."],
+  ["PERF", "TAKE OFF V1 / VR / V2 with the disagree check, FLAPS/THS, FLEX; CLB, CRZ (DES CABIN RATE), DES, APPR and GO AROUND; ACTIVATE APPR PHASE."],
   ["PROG", "Cruise level, optimum and maximum level, bearing and distance to any point."],
   ["RAD NAV", "VOR, ILS and ADF by identifier or frequency, with course."],
-  ["FUEL PRED / DATA", "Fuel at destination and alternate, extra fuel, position monitor, aircraft status."],
-  ["DEPARTURE / ARRIVAL", "Runway, SID and transition; approach, STAR and VIA; yellow TMPY, INSERT, missed approach after the destination."],
+  ["FUEL PRED / DATA", "Fuel at destination and alternate, extra fuel, POSITION MONITOR with the IRS distance from the FMGC position, aircraft status."],
+  ["DEPARTURE / ARRIVAL", "Runway, SID and transition; approach, STAR and VIA; yellow TMPY, INSERT; the missed approach, flown after TOGA; ENABLE ALTN."],
   ["IRS INIT / WIND / SEC", "ALIGN ON REF and CONFIRM ALIGN, CLIMB / CRUISE / DESCENT WIND with WIND REQUEST, INIT REQUEST, SEC F-PLN."],
   ["HOLD / OFFSET / AIRWAYS", "Holding pattern with IMM EXIT, lateral offset, airway VIA / TO, FIX INFO, LL XING, PLACE/BRG/DIST waypoints."],
   ["MCDU MENU / CFDS", "Maintenance menu: leg reports and AVIONICS STATUS from the trainer faults, SYSTEM REPORT / TEST, CIDS 1 and 2 reports, LRU IDENT, GROUND SCANNING, SYSTEM CONFIG, OP TESTS and system tests."],
@@ -79,6 +84,7 @@ const shots = [
   ["mcdu-plan.png", "PLAN mode with the WPT option"],
   ["mcdu-power.png", "Power-up: batteries, EXT PWR, APU starting, ADIRS aligning (HDG / MAP NOT AVAIL on the ND)"],
   ["mcdu-procedures.png", "ARRIVAL TO RPVM: ILS22 and the training STARs"],
+  ["mcdu-goaround.png", "Go-around: the missed approach to VM22M, then the approach again"],
   ["mcdu-faults.png", "Trainer faults: FM1 failed, GPS lost, weather radar system 1 failed"],
   ["mcdu-cfds.png", "CFDS: CIDS 1 SYSTEM TESTS from SYSTEM REPORT / TEST, COM"],
   ["mcdu-cfds-report.png", "CFDS LAST LEG REPORT: the faults of the flight with UTC and ATA"],
@@ -181,15 +187,18 @@ export default async function McduPage() {
             <p className="mt-2 text-sm leading-relaxed text-silver">
               Press FLY to fly your flight plan from Manila (RPLL) to Cebu
               (RPVM) at ×1, ×4 or ×16 speed. Waypoints sequence on the F-PLN
-              page, a discontinuity stops managed navigation, and RESET brings
-              the aircraft back to the gate. Dashed boxes mark controls that
-              exist only in the trainer.
+              page, a discontinuity stops managed navigation, TOGA starts a
+              go-around in the approach phase, and RESET brings the aircraft
+              back to the gate. Dashed boxes mark controls that exist only in
+              the trainer.
             </p>
             <p className="mt-2 text-sm leading-relaxed text-silver">
               <b className="text-white">FAULTS</b> lets the instructor fail a
               system: FM1 or FM2 (single FMGC, PLEASE WAIT after the reset),
               IND, MCDU FAIL, GPS (GPS PRIMARY LOST, NAV ACCUR DOWNGRAD on the
-              approach), weather radar system 1 or 2, VOR 1 and ILS.
+              approach), weather radar system 1 or 2, VOR 1, ILS, and IRS
+              DRIFT (IRS more than 5 NM from the FMGC position: fast
+              alignment).
             </p>
           </div>
         </section>
@@ -199,7 +208,7 @@ export default async function McduPage() {
           <SectionTitle
             kicker="TUTORIAL"
             title="A complete flight, cold and dark to shutdown"
-            body="A nine-minute complete flight, Manila to Cebu: cold and dark, batteries, ground power, ADIRS and APU, INIT A and IRS INIT, departure and arrival, INIT B and PERF, engine start, take-off, weather radar, approach and landing, the CFDS report and the shutdown."
+            body="A complete flight, Manila to Cebu: cold and dark, batteries, ground power, ADIRS and APU, INIT A, IRS INIT and the IRS check, departure and arrival, INIT B and PERF, engine start, take-off, weather radar, descent preparation, the approach phase, a go-around and a second approach, landing, the CFDS report and the shutdown."
           />
           <div className="mt-8 overflow-hidden rounded-2xl border border-line bg-black shadow-[0_20px_60px_rgb(0_0_0/0.6)]">
             <iframe
@@ -225,7 +234,7 @@ export default async function McduPage() {
               icon={instructorIcon}
               iconClass="text-fap-amber"
               title="Instructor Guide (PDF)"
-              body="40 pages for the instructor: classroom set-up, knobs and switches, license codes, quick reference, eleven lesson plans with answer keys (including cold and dark to shutdown, departure and arrival procedures, system faults and CFDS / CIDS tests), and an assessment checklist."
+              body="45 pages for the instructor: classroom set-up, knobs and switches, license codes, quick reference, twelve lesson plans with answer keys (including cold and dark to shutdown, departure and arrival procedures, system faults, CFDS / CIDS tests, and the approach, go-around and diversion), and an assessment checklist."
               href={mcdu.guidePath}
             />
           </div>
