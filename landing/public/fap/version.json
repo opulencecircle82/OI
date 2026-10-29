@@ -1,19 +1,15 @@
 {
-  "version": "4.0",
+  "version": "4.0.1",
   "notes": [
-    "Passenger signs (seat belt, no smoking, exit) with the low chime",
-    "Lavatory calls, CAUT key and info row for new events",
-    "Flight phase: layout selection on ground only",
-    "Cockpit PA priority, low cabin pressure and emergency lights in ARM",
-    "PRAM / CAM / OBRM card change on FAP SET-UP, five PRAM voices",
-    "Check for updates in SETTINGS"
+    "COCKPIT PA: the captain's voice is now heard",
+    "The cockpit PA ends by itself when the captain finishes"
   ],
   "android": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.0/A320_FAP_v4.0.apk",
-    "name": "A320_FAP_v4.0.apk"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.1/A320_FAP_v4.0.1.apk",
+    "name": "A320_FAP_v4.0.1.apk"
   },
   "windows": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.0/A320_FAP_Setup_v4.0.exe",
-    "name": "A320_FAP_Setup_v4.0.exe"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.0.1/A320_FAP_Setup_v4.0.1.exe",
+    "name": "A320_FAP_Setup_v4.0.1.exe"
   }
 }

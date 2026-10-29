@@ -2,7 +2,7 @@
 class AppConfig {
   AppConfig._();
 
-  static const version = '4.0';
+  static const version = '4.0.1';
 
   /// Optional school name shown in the app (`--dart-define=BRAND=...`).
   /// The released app is school-free: "A320 FAP Simulator".

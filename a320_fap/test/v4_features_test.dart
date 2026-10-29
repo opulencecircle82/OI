@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:aisat_fap/models/cartridge.dart';
 import 'package:aisat_fap/models/fap_state.dart';
@@ -193,6 +194,25 @@ void main() {
       expect(audio.otherPa, isFalse);
       await fap.playSelectedPram();
       expect(audio.calls, contains('announce:welcome'));
+    });
+
+    test('the captain speaks, and the PA ends when the captain finishes', () {
+      fap.toggleCockpitPa();
+      expect(audio.calls, contains('cockpitPa'));
+      expect(audio.cockpitPa, isTrue);
+      audio.finishCockpitPa();
+      expect(fap.cockpitPa, isFalse);
+      expect(audio.otherPa, isFalse);
+
+      // The key again ends it early.
+      fap.toggleCockpitPa();
+      fap.toggleCockpitPa();
+      expect(audio.cockpitPa, isFalse);
+      expect(fap.cockpitPa, isFalse);
+    });
+
+    test('the bundled captain voice exists', () {
+      expect(File('assets/pa/captain_pa.mp3').lengthSync(), greaterThan(10000));
     });
   });
 
