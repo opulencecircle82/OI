@@ -70,5 +70,11 @@ export const mcdu = {
   },
 };
 
+/** A320 Cabin Trainer (cabin crew: emergency equipment and IFE familiarisation).
+ * Pilot-deployment build: no public download, tutorial or license codes yet. */
+export const cabin = {
+  version: "1.0",
+};
+
 /** Prefix a public asset with the GitHub Pages base path. */
 export const asset = (path: string) => `${BASE_PATH}${path}`;
