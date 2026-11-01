@@ -1,5 +1,5 @@
 import { Logo, ScreenFrame, SiteFooter, SiteHeader } from "./components";
-import { asset, fap, mcdu } from "./site";
+import { asset, cabin, fap, mcdu } from "./site";
 
 const apps = [
   {
@@ -12,6 +12,7 @@ const apps = [
     alt: "FAP cabin lighting page",
     width: 1600,
     height: 1000,
+    cta: "OPEN · DOWNLOAD →",
   },
   {
     href: "/mcdu/",
@@ -23,6 +24,19 @@ const apps = [
     alt: "MCDU and Navigation Display with weather radar",
     width: 1280,
     height: 800,
+    cta: "OPEN · DOWNLOAD →",
+  },
+  {
+    href: "/cabin/",
+    kicker: "CABIN CREW · EQUIPMENT · IFE",
+    name: "A320 Cabin Trainer",
+    body: "Learn the A320 emergency equipment on an interactive cabin map, test yourself with a drag-and-drop quiz, and explore the cabin entertainment system with an instructor PA override.",
+    platforms: `v${cabin.version} · Android tablet · Windows PC`,
+    shot: "cabin-map.png",
+    alt: "A320 cabin map with emergency equipment markers",
+    width: 1280,
+    height: 689,
+    cta: "OPEN →",
   },
 ];
 
@@ -63,7 +77,7 @@ export default function Home() {
               <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
                 <span className="text-xs text-silver/70">{a.platforms}</span>
                 <span className="rounded-xl bg-cyan px-5 py-3 text-sm font-extrabold tracking-wider text-black group-hover:brightness-110">
-                  OPEN · DOWNLOAD →
+                  {a.cta}
                 </span>
               </div>
             </a>
