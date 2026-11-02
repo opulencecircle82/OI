@@ -252,7 +252,7 @@ export default async function FapPage() {
             <SectionTitle
               kicker="THE PANEL"
               title="Every page of the classic CIDS FAP"
-              body="Follows the real A320: grey keys are available, green is selected, amber is caution and red is alarm. The FAP screen shows only the real A320 FAP. Everything the instructor simulates (cockpit, passengers, doors, aircraft, maintenance) is in a separate SIM CONTROL panel outside the FAP."
+              body="Follows the real A320: grey keys are available, green is selected, amber is caution and red is alarm. The FAP screen shows only the real A320 FAP. Everything the instructor simulates (cockpit, passengers, doors, aircraft, maintenance) is in a separate INSTRUCTOR panel outside the FAP."
             />
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {pages.map(([name, desc]) => (
