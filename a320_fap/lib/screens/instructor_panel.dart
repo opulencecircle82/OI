@@ -41,14 +41,14 @@ class InstructorPanel extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.tune, color: FapColors.instructor),
+                const Icon(Icons.school, color: FapColors.instructor),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'SIM CONTROL PANEL',
+                        'INSTRUCTOR PANEL',
                         style: TextStyle(
                           color: FapColors.instructor,
                           fontSize: 17,

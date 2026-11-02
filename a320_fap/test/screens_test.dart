@@ -98,7 +98,7 @@ void main() {
     await teardown(tester);
   });
 
-  testWidgets('FAP pages show only the real FAP; SIM CONTROL panel', (
+  testWidgets('FAP pages show only the real FAP; INSTRUCTOR panel', (
     tester,
   ) async {
     await boot(tester, const Size(1600, 1000));
@@ -112,9 +112,9 @@ void main() {
       expect(find.text('RESET SIMULATOR'), findsNothing);
     }
     fap.goTo(FapPage.cabinStatus);
-    await tester.tap(find.byTooltip('Sim control'));
+    await tester.tap(find.byTooltip('Instructor'));
     await tester.pump();
-    expect(find.text('SIM CONTROL PANEL'), findsOneWidget);
+    expect(find.text('INSTRUCTOR PANEL'), findsOneWidget);
     for (final t in InstructorTab.values) {
       fap.setInstructorTab(t);
       await shot(tester, 'instructor_${t.name}');
@@ -127,7 +127,7 @@ void main() {
     expect(fap.cockpitPa, isTrue);
     await tester.tap(find.byIcon(Icons.close).first);
     await tester.pump();
-    expect(find.text('SIM CONTROL PANEL'), findsNothing);
+    expect(find.text('INSTRUCTOR PANEL'), findsNothing);
     await teardown(tester);
   });
 
