@@ -202,8 +202,8 @@ class _Device extends StatelessWidget {
                     top: 2,
                     bottom: 2,
                     child: _FrameKey(
-                      icon: Icons.school,
-                      label: 'INSTRUCTOR',
+                      icon: Icons.tune,
+                      label: 'SIM CONTROL',
                       color: FapColors.instructor,
                       active: context.select<FapProvider, bool>(
                         (f) => f.instructorOpen,
