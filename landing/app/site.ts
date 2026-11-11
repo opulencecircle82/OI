@@ -70,10 +70,23 @@ export const mcdu = {
   },
 };
 
-/** A320 Cabin Trainer (cabin crew: emergency equipment and IFE familiarisation).
- * Pilot-deployment build: no public download, tutorial or license codes yet. */
+/** Cabin Entertainment (seatback IFE: films, music, moving map). No license
+ * codes, no tutorial video: download + PDF user manual only. Its in-app
+ * updater reads public/cabin/version.json - update it on every release. */
 export const cabin = {
-  version: "1.0",
+  version: "1.1",
+  releaseTag: "cabin-v1.1",
+  apkName: "Cabin_Entertainment_v1.1.apk",
+  get apkUrl() {
+    return releaseFile(this.releaseTag, this.apkName);
+  },
+  /** Windows installer (Inno Setup), attached to the same release. */
+  windowsName: "Cabin_Entertainment_Setup_v1.1.exe",
+  get windowsUrl() {
+    return releaseFile(this.releaseTag, this.windowsName);
+  },
+  /** User manual PDF (built in the cabin project's docs/manual, copied here). */
+  manualPath: `${BASE_PATH}/Cabin_Entertainment_User_Manual.pdf`,
 };
 
 /** Prefix a public asset with the GitHub Pages base path. */

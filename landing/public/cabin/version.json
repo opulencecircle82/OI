@@ -1,0 +1,16 @@
+{
+  "version": "1.1",
+  "notes": [
+    "Cabin Entertainment: a welcome screen in eight languages",
+    "25 films and series, 25 songs, moving map of the flight",
+    "SETTINGS with automatic updates"
+  ],
+  "android": {
+    "url": "https://github.com/opulencecircle82/OI/releases/download/cabin-v1.1/Cabin_Entertainment_v1.1.apk",
+    "name": "Cabin_Entertainment_v1.1.apk"
+  },
+  "windows": {
+    "url": "https://github.com/opulencecircle82/OI/releases/download/cabin-v1.1/Cabin_Entertainment_Setup_v1.1.exe",
+    "name": "Cabin_Entertainment_Setup_v1.1.exe"
+  }
+}

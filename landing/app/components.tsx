@@ -59,7 +59,7 @@ export function SiteHeader({
         <nav className="ml-auto flex items-center gap-1">
           {app("fap", "/fap/", "A320 FAP")}
           {app("mcdu", "/mcdu/", "A320 MCDU")}
-          {app("cabin", "/cabin/", "A320 CABIN")}
+          {app("cabin", "/cabin/", "CABIN ENTERTAINMENT")}
         </nav>
       </div>
       {sections && (
