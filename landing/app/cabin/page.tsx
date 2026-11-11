@@ -54,8 +54,8 @@ const features = [
     icon: "M12 3v3m6.4-.4-2.1 2.1M21 12h-3M5.6 5.6l2.1 2.1M3 12h3m6 9a6 6 0 0 0 0-12 6 6 0 0 0 0 12z",
   },
   {
-    title: "Offline, with automatic updates",
-    body: "Everything is inside the app: no account and no internet needed. When the device is online, the app checks for a new version at start (and from SETTINGS) and installs it in place.",
+    title: "License code, offline use, automatic updates",
+    body: "Activate once with a license code (CABIN-xxxxxxxx, one device at a time); after that everything works offline. When the device is online, the app checks for a new version at start (and from SETTINGS) and installs it in place.",
     icon: "M12 3v12m0 0-5-5m5 5 5-5M5 21h14",
   },
 ];
@@ -70,13 +70,14 @@ const shots: [string, string][] = [
 const steps = [
   "Scan the QR code with the tablet or phone (or tap DOWNLOAD APK).",
   'Open the downloaded file. If Android asks, allow "Install unknown apps" for your browser.',
-  "Tap Install, then open Cabin Entertainment and pick a language.",
+  "Tap Install, open Cabin Entertainment and enter your license code (CABIN-xxxxxxxx; internet needed once).",
+  "Pick a language and enjoy the flight.",
 ];
 
 const windowsSteps = [
   "Download the Setup file and run it.",
   'If Windows SmartScreen appears, choose "More info" then "Run anyway" (the installer is not code-signed).',
-  "Open Cabin Entertainment from the Start menu or the desktop.",
+  "Open Cabin Entertainment from the Start menu or the desktop and enter your license code.",
 ];
 
 const notice: [string, string][] = [
@@ -91,6 +92,10 @@ const notice: [string, string][] = [
   [
     "SIMULATED FLIGHT DATA",
     "The moving map, flight times and readouts are simulated for demonstration. Never use them for flight planning or navigation.",
+  ],
+  [
+    "LICENSE",
+    "Cabin Entertainment needs a license code (CABIN-xxxxxxxx). Activation needs an internet connection once; each code works on one device at a time.",
   ],
   [
     "OPENLY LICENSED CONTENT",

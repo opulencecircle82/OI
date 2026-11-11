@@ -70,18 +70,19 @@ export const mcdu = {
   },
 };
 
-/** Cabin Entertainment (seatback IFE: films, music, moving map). No license
- * codes, no tutorial video: download + PDF user manual only. Its in-app
+/** Cabin Entertainment (seatback IFE: films, music, moving map). License
+ * codes CABIN-xxxxxxxx (shared table, app='cabin'); no tutorial video:
+ * download + PDF user manual only. Its in-app
  * updater reads public/cabin/version.json - update it on every release. */
 export const cabin = {
-  version: "1.1",
-  releaseTag: "cabin-v1.1",
-  apkName: "Cabin_Entertainment_v1.1.apk",
+  version: "1.2",
+  releaseTag: "cabin-v1.2",
+  apkName: "Cabin_Entertainment_v1.2.apk",
   get apkUrl() {
     return releaseFile(this.releaseTag, this.apkName);
   },
   /** Windows installer (Inno Setup), attached to the same release. */
-  windowsName: "Cabin_Entertainment_Setup_v1.1.exe",
+  windowsName: "Cabin_Entertainment_Setup_v1.2.exe",
   get windowsUrl() {
     return releaseFile(this.releaseTag, this.windowsName);
   },

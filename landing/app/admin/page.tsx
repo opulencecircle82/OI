@@ -36,6 +36,9 @@ const TOKEN_KEY = "a320_admin_token";
 const APPS = [
   { key: "fap", label: "A320 FAP", prefix: "A320-" },
   { key: "mcdu", label: "A320 MCDU Trainer", prefix: "MCDU-" },
+  // Needs PRIVATE_supabase_cabin.sql on the database first (else the
+  // server treats "cabin" as "fap").
+  { key: "cabin", label: "Cabin Entertainment", prefix: "CABIN-" },
 ] as const;
 type AppKey = (typeof APPS)[number]["key"];
 
@@ -180,7 +183,7 @@ function Login({ onLogin }: { onLogin: (t: string) => void }) {
       className="mx-auto mt-16 max-w-sm rounded-2xl border border-line bg-panel/80 p-7"
     >
       <h1 className="text-2xl font-extrabold">Admin login</h1>
-      <p className="mt-1 text-sm text-silver">A320 FAP &amp; A320 MCDU Trainer · license codes</p>
+      <p className="mt-1 text-sm text-silver">A320 FAP, A320 MCDU Trainer &amp; Cabin Entertainment · license codes</p>
       <label className="mt-6 block text-xs font-bold tracking-wider text-silver">
         USERNAME
         <input
@@ -371,11 +374,18 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
       <ul className="list-disc space-y-1 pl-5 text-sm text-silver">
         <li>There are always exactly 10 unused codes. When one is used, a new one is created right away.</li>
         <li>A code works on one device at a time. A used code cannot be given to someone else.</li>
-        <li>
-          Moving to a new tablet: the student opens ⚙ SETTINGS &gt; Deactivate &amp; Transfer,
-          then enters the same code on the new tablet. If the old tablet is broken, press
-          Release on the code below.
-        </li>
+        {app === "cabin" ? (
+          <li>
+            Moving to a new device: press Release on the code below, then enter the same
+            code on the new device. The old device locks again the next time it is online.
+          </li>
+        ) : (
+          <li>
+            Moving to a new tablet: the student opens ⚙ SETTINGS &gt; Deactivate &amp; Transfer,
+            then enters the same code on the new tablet. If the old tablet is broken, press
+            Release on the code below.
+          </li>
+        )}
         <li>
           Codes are case-sensitive (capital letters, small letters and numbers), so give them
           exactly as shown. Activation needs an internet connection.
@@ -398,7 +408,9 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
         <h2 className="text-lg font-extrabold">
           Unused codes <span className="text-fap-green">({codes ? unused.length : "…"})</span>
         </h2>
-        <p className="mt-1 text-sm text-silver">Ready to give to students.</p>
+        <p className="mt-1 text-sm text-silver">
+          {app === "cabin" ? "Ready to give out." : "Ready to give to students."}
+        </p>
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[480px] text-left text-sm">
             <thead className="text-xs tracking-wider text-silver">
@@ -519,9 +531,10 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
           Transferred codes <span className="text-cyan">({codes ? transferred.length : "…"})</span>
         </h2>
         <p className="mt-1 text-sm text-silver">
-          Codes moved to another device (Deactivate &amp; Transfer in the app, or Release here).
+          Codes moved to another device (
+          {app === "cabin" ? "Release here" : "Deactivate & Transfer in the app, or Release here"}).
           A code <b className="text-cyan">waiting for new device</b> belongs to its owner: it is not
-          one of the 10 unused codes, so do not give it to another student.
+          one of the 10 unused codes, so do not give it to someone else.
         </p>
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[800px] text-left text-sm">
