@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import { supabase } from "../site";
+import { APPS, type AppKey, RpcError, errorText, fmt, rpc } from "./lib";
+import { Orders } from "./orders";
 
 type Code = {
   id: string;
@@ -31,55 +32,6 @@ function platformBadge(p: string | null | undefined) {
 }
 
 const TOKEN_KEY = "a320_admin_token";
-
-/** Apps sharing the license table (column `app`). */
-const APPS = [
-  { key: "fap", label: "A320 FAP", prefix: "A320-" },
-  { key: "mcdu", label: "A320 MCDU Trainer", prefix: "MCDU-" },
-  // Needs PRIVATE_supabase_cabin.sql on the database first (else the
-  // server treats "cabin" as "fap").
-  { key: "cabin", label: "Cabin Entertainment", prefix: "CABIN-" },
-  // Needs PRIVATE_supabase_safety.sql (run 2026-11-12).
-  { key: "safety", label: "A320 Cabin Safety", prefix: "SAFETY-" },
-] as const;
-type AppKey = (typeof APPS)[number]["key"];
-
-class RpcError extends Error {}
-
-/** Calls a Supabase RPC function with the publishable key. */
-async function rpc<T>(fn: string, args: Record<string, unknown>): Promise<T> {
-  let res: Response;
-  try {
-    res = await fetch(`${supabase.url}/rest/v1/rpc/${fn}`, {
-      method: "POST",
-      headers: { apikey: supabase.key, "Content-Type": "application/json" },
-      body: JSON.stringify(args),
-    });
-  } catch {
-    throw new RpcError("NETWORK");
-  }
-  const text = await res.text();
-  if (!res.ok) {
-    if (res.status === 404) throw new RpcError("NOT_SET_UP");
-    throw new RpcError(text.includes("NOT_AUTHORIZED") ? "NOT_AUTHORIZED" : "SERVER");
-  }
-  return (text ? JSON.parse(text) : null) as T;
-}
-
-const errorText: Record<string, string> = {
-  INVALID: "Wrong username or password.",
-  TOO_MANY_ATTEMPTS: "Too many attempts. Please wait 15 minutes.",
-  NETWORK: "No connection to the server.",
-  NOT_SET_UP: "The database is not set up yet. Run the setup SQL in Supabase.",
-  SERVER: "Server error. Please try again.",
-  WRONG_PASSWORD: "Current password is wrong.",
-  TOO_SHORT: "Username needs 3+ characters and password 8+ characters.",
-  NOT_USED: "That code is no longer active on a device (already released). Reload the page.",
-};
-
-function fmt(d: string | null) {
-  return d ? new Date(d).toLocaleString() : "—";
-}
 
 const tokenListeners = new Set<() => void>();
 let memoryToken: string | null = null; // used when storage is blocked
@@ -146,7 +98,7 @@ export default function AdminPage() {
       </header>
       <main className="mx-auto max-w-6xl px-4 pb-16 sm:px-8">
         {!ready ? null : token ? (
-          <Dashboard token={token} onExpired={() => saveToken(null)} />
+          <AdminHome token={token} onExpired={() => saveToken(null)} />
         ) : (
           <Login onLogin={saveToken} />
         )}
@@ -185,7 +137,7 @@ function Login({ onLogin }: { onLogin: (t: string) => void }) {
       className="mx-auto mt-16 max-w-sm rounded-2xl border border-line bg-panel/80 p-7"
     >
       <h1 className="text-2xl font-extrabold">Admin login</h1>
-      <p className="mt-1 text-sm text-silver">A320 FAP, A320 MCDU Trainer &amp; Cabin Entertainment · license codes</p>
+      <p className="mt-1 text-sm text-silver">A320 FAP, A320 MCDU Trainer, Cabin Entertainment &amp; A320 Cabin Safety · license codes and orders</p>
       <label className="mt-6 block text-xs font-bold tracking-wider text-silver">
         USERNAME
         <input
@@ -215,6 +167,38 @@ function Login({ onLogin }: { onLogin: (t: string) => void }) {
         {busy ? "Signing in…" : "SIGN IN"}
       </button>
     </form>
+  );
+}
+
+/** Two views: the license codes of each app, and orders with invoices. */
+function AdminHome({ token, onExpired }: { token: string; onExpired: () => void }) {
+  const [view, setView] = useState<"codes" | "orders">("codes");
+  return (
+    <div className="mt-2">
+      <div className="inline-flex rounded-xl border border-line bg-panel/60 p-1">
+        {(
+          [
+            ["codes", "LICENSE CODES"],
+            ["orders", "ORDERS & INVOICES"],
+          ] as const
+        ).map(([key, label]) => (
+          <button
+            key={key}
+            onClick={() => setView(key)}
+            className={`rounded-lg px-4 py-2 text-xs font-extrabold tracking-[0.15em] ${
+              view === key ? "bg-white text-black" : "text-silver hover:text-white"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      {view === "codes" ? (
+        <Dashboard token={token} onExpired={onExpired} />
+      ) : (
+        <Orders token={token} onExpired={onExpired} />
+      )}
+    </div>
   );
 }
 
