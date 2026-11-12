@@ -90,5 +90,27 @@ export const cabin = {
   manualPath: `${BASE_PATH}/Cabin_Entertainment_User_Manual.pdf`,
 };
 
+/** A320 Cabin Safety (emergency equipment locations, quiz and exam).
+ * License codes SAFETY-xxxxxxxx (shared table, app='safety'); no tutorial
+ * video: download + three PDFs. Its in-app updater reads
+ * public/safety/version.json - update it on every release. */
+export const safety = {
+  version: "1.0",
+  releaseTag: "safety-v1.0",
+  apkName: "A320_Cabin_Safety_v1.0.apk",
+  get apkUrl() {
+    return releaseFile(this.releaseTag, this.apkName);
+  },
+  /** Windows installer (Inno Setup), attached to the same release. */
+  windowsName: "A320_Cabin_Safety_Setup_v1.0.exe",
+  get windowsUrl() {
+    return releaseFile(this.releaseTag, this.windowsName);
+  },
+  /** PDFs built in the A320 Cabin Safety project's docs folder. */
+  manualPath: `${BASE_PATH}/A320_Cabin_Safety_User_Manual.pdf`,
+  guidePath: `${BASE_PATH}/A320_Cabin_Safety_Instructor_Guide.pdf`,
+  reportPath: `${BASE_PATH}/A320_Cabin_Safety_Sources_and_Conformance.pdf`,
+};
+
 /** Prefix a public asset with the GitHub Pages base path. */
 export const asset = (path: string) => `${BASE_PATH}${path}`;

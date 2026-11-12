@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.pageUrl),
   title: "Overdrive Interactive · A320 training apps",
   description:
-    "Overdrive Interactive: A320 training apps for aviation students. A320 FAP Simulator for cabin crew, A320 MCDU Trainer for pilots and Cabin Entertainment, a seatback entertainment system.",
+    "Overdrive Interactive: A320 training apps for aviation students. A320 FAP Simulator for cabin crew, A320 MCDU Trainer for pilots, Cabin Entertainment, a seatback entertainment system, and A320 Cabin Safety for emergency equipment.",
   openGraph: {
     title: "Overdrive Interactive · A320 training apps",
     description:

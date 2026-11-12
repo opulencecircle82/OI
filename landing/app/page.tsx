@@ -1,5 +1,5 @@
 import { Logo, ScreenFrame, SiteFooter, SiteHeader } from "./components";
-import { asset, cabin, fap, mcdu } from "./site";
+import { asset, cabin, fap, mcdu, safety } from "./site";
 
 const apps = [
   {
@@ -34,6 +34,18 @@ const apps = [
     platforms: `v${cabin.version} · Android tablet or phone · Windows PC`,
     shot: "cabin-home.png",
     alt: "Cabin Entertainment home screen with films",
+    width: 1264,
+    height: 681,
+    cta: "OPEN · DOWNLOAD →",
+  },
+  {
+    href: "/safety/",
+    kicker: "CABIN CREW · EMERGENCY EQUIPMENT",
+    name: "A320 Cabin Safety",
+    body: "Where the emergency equipment is stowed in an A320 cabin, on a top view built from the Airbus figures, with a practice quiz and a drag-and-drop exam.",
+    platforms: `v${safety.version} · Android tablet or phone · Windows PC`,
+    shot: "safety-chart.png",
+    alt: "A320 Cabin Safety equipment chart",
     width: 1264,
     height: 681,
     cta: "OPEN · DOWNLOAD →",

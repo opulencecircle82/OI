@@ -33,11 +33,11 @@ export function SiteHeader({
   active,
   sections,
 }: {
-  active?: "fap" | "mcdu" | "cabin";
+  active?: "fap" | "mcdu" | "cabin" | "safety";
   /** In-page links shown on wide screens. */
   sections?: [string, string][];
 }) {
-  const app = (key: "fap" | "mcdu" | "cabin", href: string, label: string) => (
+  const app = (key: "fap" | "mcdu" | "cabin" | "safety", href: string, label: string) => (
     <a
       href={asset(href)}
       className={`rounded-lg px-3 py-1.5 text-sm font-bold ${
@@ -60,6 +60,7 @@ export function SiteHeader({
           {app("fap", "/fap/", "A320 FAP")}
           {app("mcdu", "/mcdu/", "A320 MCDU")}
           {app("cabin", "/cabin/", "CABIN ENTERTAINMENT")}
+          {app("safety", "/safety/", "CABIN SAFETY")}
         </nav>
       </div>
       {sections && (

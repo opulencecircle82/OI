@@ -39,6 +39,8 @@ const APPS = [
   // Needs PRIVATE_supabase_cabin.sql on the database first (else the
   // server treats "cabin" as "fap").
   { key: "cabin", label: "Cabin Entertainment", prefix: "CABIN-" },
+  // Needs PRIVATE_supabase_safety.sql (run 2026-11-12).
+  { key: "safety", label: "A320 Cabin Safety", prefix: "SAFETY-" },
 ] as const;
 type AppKey = (typeof APPS)[number]["key"];
 
@@ -374,7 +376,7 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
       <ul className="list-disc space-y-1 pl-5 text-sm text-silver">
         <li>There are always exactly 10 unused codes. When one is used, a new one is created right away.</li>
         <li>A code works on one device at a time. A used code cannot be given to someone else.</li>
-        {app === "cabin" ? (
+        {app === "cabin" || app === "safety" ? (
           <li>
             Moving to a new device: press Release on the code below, then enter the same
             code on the new device. The old device locks again the next time it is online.
@@ -409,7 +411,9 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
           Unused codes <span className="text-fap-green">({codes ? unused.length : "…"})</span>
         </h2>
         <p className="mt-1 text-sm text-silver">
-          {app === "cabin" ? "Ready to give out." : "Ready to give to students."}
+          {app === "cabin" || app === "safety"
+            ? "Ready to give out."
+            : "Ready to give to students."}
         </p>
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[480px] text-left text-sm">
@@ -532,7 +536,9 @@ function Dashboard({ token, onExpired }: { token: string; onExpired: () => void 
         </h2>
         <p className="mt-1 text-sm text-silver">
           Codes moved to another device (
-          {app === "cabin" ? "Release here" : "Deactivate & Transfer in the app, or Release here"}).
+          {app === "cabin" || app === "safety"
+            ? "Release here"
+            : "Deactivate & Transfer in the app, or Release here"}).
           A code <b className="text-cyan">waiting for new device</b> belongs to its owner: it is not
           one of the 10 unused codes, so do not give it to someone else.
         </p>
