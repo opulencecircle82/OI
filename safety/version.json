@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "notes": [
+    "First release of A320 Cabin Safety"
+  ],
+  "android": {
+    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.0/A320_Cabin_Safety_v1.0.apk",
+    "name": "A320_Cabin_Safety_v1.0.apk"
+  },
+  "windows": {
+    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.0/A320_Cabin_Safety_Setup_v1.0.exe",
+    "name": "A320_Cabin_Safety_Setup_v1.0.exe"
+  }
+}
