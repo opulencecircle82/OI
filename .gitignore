@@ -6,11 +6,14 @@ PRIVATE_*
 Releases_backup/
 Windows_Setup/
 
-# Never upload notes, plans or databases
+# Never upload notes, plans, planning material or databases
 *.md
 *.sql
 *.db
 *.sqlite
+Module/
+.env
+.env.*
 
 
 Test_APK/
