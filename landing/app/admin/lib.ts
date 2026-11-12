@@ -46,6 +46,7 @@ const KNOWN_ERRORS = [
   "BAD_APP",
   "BAD_LINE",
   "BAD_DISCOUNT",
+  "NO_RECORD",
 ];
 
 export const errorText: Record<string, string> = {
@@ -62,6 +63,7 @@ export const errorText: Record<string, string> = {
   BAD_APP: "Unknown app in the order.",
   BAD_LINE: "Each quantity must be 0 to 500 and each price 0 to 1,000,000.",
   BAD_DISCOUNT: "The discount cannot be more than the subtotal.",
+  NO_RECORD: "That client record was not found. Reload the page.",
 };
 
 export function fmt(d: string | null) {
