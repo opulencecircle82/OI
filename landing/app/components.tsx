@@ -56,7 +56,7 @@ export function SiteHeader({
             OVERDRIVE INTERACTIVE
           </span>
         </a>
-        <nav className="ml-auto flex items-center gap-1">
+        <nav className="ml-auto flex flex-wrap items-center justify-end gap-1 max-sm:w-full max-sm:justify-center">
           {app("fap", "/fap/", "A320 FAP")}
           {app("mcdu", "/mcdu/", "A320 MCDU")}
           {app("cabin", "/cabin/", "CABIN ENTERTAINMENT")}
