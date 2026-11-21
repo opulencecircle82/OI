@@ -1,0 +1,15 @@
+{
+  "version": "1.2",
+  "notes": [
+    "License code activation (CABIN-xxxxxxxx), one device at a time",
+    "Settings shows the license status of this device"
+  ],
+  "android": {
+    "url": "https://github.com/opulencecircle82/OI/releases/download/cabin-v1.2/Cabin_Entertainment_v1.2.apk",
+    "name": "Cabin_Entertainment_v1.2.apk"
+  },
+  "windows": {
+    "url": "https://github.com/opulencecircle82/OI/releases/download/cabin-v1.2/Cabin_Entertainment_Setup_v1.2.exe",
+    "name": "Cabin_Entertainment_Setup_v1.2.exe"
+  }
+}
