@@ -1,14 +1,14 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "notes": [
-    "First release of A320 Cabin Safety"
+    "Settings > Contact: app support and business e-mail addresses"
   ],
   "android": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.0/A320_Cabin_Safety_v1.0.apk",
-    "name": "A320_Cabin_Safety_v1.0.apk"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.1/A320_Cabin_Safety_v1.1.apk",
+    "name": "A320_Cabin_Safety_v1.1.apk"
   },
   "windows": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.0/A320_Cabin_Safety_Setup_v1.0.exe",
-    "name": "A320_Cabin_Safety_Setup_v1.0.exe"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.1/A320_Cabin_Safety_Setup_v1.1.exe",
+    "name": "A320_Cabin_Safety_Setup_v1.1.exe"
   }
 }
