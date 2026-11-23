@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /support/
+Disallow: /info/
+
+Host: https://oiaero.com
+Sitemap: https://oiaero.com/sitemap.xml
