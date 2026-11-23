@@ -1,14 +1,15 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "notes": [
-    "Settings > Contact: app support and business e-mail addresses"
+    "Free 14-day trial on new installs (no code needed)",
+    "After the trial: a license code, with the contact e-mails and website on the start screen"
   ],
   "android": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.1/A320_Cabin_Safety_v1.1.apk",
-    "name": "A320_Cabin_Safety_v1.1.apk"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.2/A320_Cabin_Safety_v1.2.apk",
+    "name": "A320_Cabin_Safety_v1.2.apk"
   },
   "windows": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.1/A320_Cabin_Safety_Setup_v1.1.exe",
-    "name": "A320_Cabin_Safety_Setup_v1.1.exe"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/safety-v1.2/A320_Cabin_Safety_Setup_v1.2.exe",
+    "name": "A320_Cabin_Safety_Setup_v1.2.exe"
   }
 }
