@@ -1,15 +1,15 @@
 {
-  "version": "1.4",
+  "version": "1.5",
   "notes": [
-    "Free 14-day trial on new installs (no code needed)",
-    "After the trial: a license code, with the contact e-mails and website on the start screen"
+    "After reinstalling on a licensed device, the license comes back by itself (no trial)",
+    "Free 14-day trial on new installs (no code needed)"
   ],
   "android": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/cabin-v1.4/Cabin_Entertainment_v1.4.apk",
-    "name": "Cabin_Entertainment_v1.4.apk"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/cabin-v1.5/Cabin_Entertainment_v1.5.apk",
+    "name": "Cabin_Entertainment_v1.5.apk"
   },
   "windows": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/cabin-v1.4/Cabin_Entertainment_Setup_v1.4.exe",
-    "name": "Cabin_Entertainment_Setup_v1.4.exe"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/cabin-v1.5/Cabin_Entertainment_Setup_v1.5.exe",
+    "name": "Cabin_Entertainment_Setup_v1.5.exe"
   }
 }
