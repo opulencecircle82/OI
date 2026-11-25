@@ -2,7 +2,7 @@
 ${G(e)}`,J=i.map(e=>`- ${e.product}: ${B(e.key)}`).join("\n"),Z={support:{name:"OI Aviation Support",email:"support@oiaero.com"},info:{name:"OI Aviation",email:"info@oiaero.com"}},X=e=>`1. Connect the device to the internet (needed only for activation).
 2. Open the app. It asks for a LICENSE CODE.
 3. Type the code exactly as given. It is case-sensitive (for example ${e}).
-4. Tap ACTIVATE. After that the app works offline.`,ee=new Date("2026-12-16T00:00:00+08:00"),et=`- A320 FAP Simulator: practise the A320 Flight Attendant Panel - doors and slides, cabin lights, PA announcements and chimes, smoke alerts and the evacuation command. An instructor panel lets the trainer set up scenarios.
+4. Tap ACTIVATE. After that the app works offline.`,ee=new Date("2026-12-16T00:00:00+08:00"),et=`- A320 FAP Simulator: practise the A320 Flight Attendant Panel - doors and slides, cabin lights, PA announcements and chimes, smoke alerts and the evacuation command. A SIM CONTROL panel lets the trainer set up scenarios.
   Video tutorial: https://www.youtube.com/watch?v=0W5akZnpBKQ
   App page and user manual: ${z}/fap/`,ea=`- A320 Cabin Safety: emergency equipment locations in a typical A320 cabin, with a quiz and a 10-item exam that shows the score and every answer: ${z}/safety/`,en=`- Cabin Entertainment: a seatback entertainment system for cabin mock-ups: ${z}/cabin/`,el=`- A320 MCDU Trainer: MCDU, navigation display and weather radar practice - power-up, flight plan, DIR TO, arrival and go-around, and trainer faults (FM, GPS, radar).
   Video tutorial: https://www.youtube.com/watch?v=n6q5uzvrrME
