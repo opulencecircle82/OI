@@ -1,15 +1,16 @@
 {
-  "version": "4.3",
+  "version": "4.4",
   "notes": [
+    "The INSTRUCTOR key is now SIM CONTROL (same panel, new name and icon)",
     "After reinstalling on a licensed device, the license comes back by itself (no trial)",
     "Free 14-day trial on new installs (no code needed)"
   ],
   "android": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.3.0/A320_FAP_v4.3.apk",
-    "name": "A320_FAP_v4.3.apk"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.4.0/A320_FAP_v4.4.apk",
+    "name": "A320_FAP_v4.4.apk"
   },
   "windows": {
-    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.3.0/A320_FAP_Setup_v4.3.exe",
-    "name": "A320_FAP_Setup_v4.3.exe"
+    "url": "https://github.com/opulencecircle82/OI/releases/download/v4.4.0/A320_FAP_Setup_v4.4.exe",
+    "name": "A320_FAP_Setup_v4.4.exe"
   }
 }
