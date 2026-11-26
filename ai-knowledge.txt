@@ -1,0 +1,465 @@
+=== PAGE: Home (https://oiaero.com) ===
+OI Aviation · Aviation training software and simulators
+Aviation training software
+and simulators
+Realistic A320 trainers for aviation schools and students: practise on A320 panels and cabins on a tablet or PC, at school or at home. Every app starts with a free 14-day trial : no code needed.
+CABIN CREW · CIDS · FAP FREE 14-DAY TRIAL A320 FAP Simulator A full replica of the A320 Flight Attendant Panel: cabin lighting, doors and slides, PRAM announcements, water/waste, lavatory smoke and evacuation signalling. v4.4 · Android tablet · Windows PC OPEN · DOWNLOAD → (https://oiaero.com/fap/) PILOTS · MCDU · ND · WXR FREE 14-DAY TRIAL A320 MCDU Trainer Program the A320 MCDU, follow the flight on the Navigation Display and learn to read the weather radar, then fly the route. v2.3 · Android tablet or phone · Windows PC OPEN · DOWNLOAD → (https://oiaero.com/mcdu/) SEATBACK · FILMS · MUSIC · MOVING MAP FREE 14-DAY TRIAL Cabin Entertainment A seatback entertainment system on a tablet or PC: a welcome screen in eight languages, films and series, a 25-song music library and a live moving map, all offline. v1.5 · Android tablet or phone · Windows PC OPEN · DOWNLOAD → (https://oiaero.com/cabin/) CABIN CREW · EMERGENCY EQUIPMENT FREE 14-DAY TRIAL A320 Cabin Safety Where the emergency equipment is stowed in an A320 cabin, on a top view built from the Airbus figures, with a practice quiz and a drag-and-drop exam. v1.3 · Android tablet or phone · Windows PC OPEN · DOWNLOAD → (https://oiaero.com/safety/)
+CONTACT US
+Orders, quotations or help with an app?
+Please tell us your school or name, the app, and your device (Android or Windows).
+BUSINESS & ORDERS Quotations and prices, license codes for your school or company, invoices and partnerships. ✉ EMAIL US info@oiaero.com APP SUPPORT Installing the apps, activating a license code, moving a license to a new device, and any problem with an app. ✉ EMAIL SUPPORT support@oiaero.com
+Need prices for your school? Tell us the apps and the number of devices, and we email you a quotation. REQUEST A QUOTATION (https://oiaero.com/quote/) © OI Aviation by Overdrive Interactive · Training aids for aviation students, not for operational use.
+"A320" and related aircraft trademarks belong to Airbus. OI Aviation is independent and not affiliated with or endorsed by Airbus.
+Chat with us
+
+=== PAGE: A320 FAP Simulator (https://oiaero.com/fap/) ===
+A320 FAP Simulator · OI Aviation
+AIRBUS A320 · CIDS · FAP
+A320 FAP Simulator
+Train on a full replica of the Airbus A320 Flight Attendant Panel: cabin lighting, doors and slides, PRAM announcements, water/waste, lavatory smoke and evacuation signalling.
+DOWNLOAD APK (https://github.com/opulencecircle82/OI/releases/download/v4.4.0/A320_FAP_v4.4.apk) DOWNLOAD FOR WINDOWS (https://github.com/opulencecircle82/OI/releases/download/v4.4.0/A320_FAP_Setup_v4.4.exe) WATCH TUTORIAL User Manual (PDF) — every function explained (https://oiaero.com/A320_FAP_User_Manual.pdf)
+v 4.4 · Android 7.0+ tablet · Windows 10 / 11 PC (64-bit)
+Offline Ready
+Activate once online, then everything runs on the tablet, even with no internet in the classroom.
+Authentic A320 CIDS Logic
+BRT / DIM 1 / DIM 2 lighting, slide arming, EVAC CMD and RESET, SMOKE RESET and real Airbus chimes.
+Flight Attendant Training Drills
+Arm / disarm and cross-check, passenger signs, lavatory calls, smoke, evacuation, low cabin pressure, PRAM and CIDS fault scenarios.
+TUTORIAL
+See every function in action
+A full walk-through of the panel, page by page: lighting, audio and PRAM, doors and slides, water/waste, smoke and evacuation.
+Watch on YouTube → (https://www.youtube.com/watch?v=0W5akZnpBKQ)
+Note: PRAM (pre-recorded announcements and boarding music) is an airline option. Not every A320 has it. Without PRAM, the cabin crew make all announcements with the handset, and there is no boarding music from the FAP.
+User Manual (PDF)
+52 pages: every page, key and hard key explained with screenshots, plus step-by-step training drills and troubleshooting. DOWNLOAD PDF (https://oiaero.com/A320_FAP_User_Manual.pdf)
+Instructor Guide (PDF)
+34 pages for the instructor: classroom set-up, license codes, ten lesson plans with expected results, and an assessment checklist. DOWNLOAD PDF (https://oiaero.com/A320_FAP_Instructor_Guide.pdf)
+Feature Sources & A320 Conformance (PDF)
+Where every feature comes from and how it compares with the real A320 CIDS Flight Attendant Panel, with the sources used. DOWNLOAD PDF (https://oiaero.com/A320_FAP_Sources_and_Conformance.pdf)
+THE PANEL
+Every page of the classic CIDS FAP
+Follows the real A320: grey keys are available, green is selected, amber is caution and red is alarm. The FAP screen shows only the real A320 FAP. Everything the instructor simulates (cockpit, passengers, doors, aircraft, maintenance) is in a separate SIM CONTROL panel outside the FAP.
+STATUS
+Every system at a glance, including the passenger signs.
+CAUT
+Flashes for a new event and asks for its page; steady once seen.
+AUDIO
+4 boarding music channels, PRAM with MEMO / PLAY ALL, calls, chimes.
+LIGHTS
+BRT 100% · DIM 1 50% · DIM 2 10% per cabin zone.
+DOORS / SLIDES
+8 exits. Open an armed door and the slide deploys.
+TEMP
+FWD / AFT zones: ±2.5 °C fine adjustment of the cockpit setting.
+WATER / WASTE
+200 L potable water, 170 L waste, lavatory status.
+SMOKE
+LAV A / D / E detectors, SMOKE RESET, auto-clear when smoke is gone.
+SEAT SETTING
+Inhibit call buttons or reading lights per seat, passenger calls.
+SYSTEM INFO
+CIDS directors and messages, CAPT / CAPT & PURS selector.
+CABIN PROG
+Move cabin zones between classes and save to the CAM.
+LAYOUT SELECT
+Load the layouts of the CAM in the slot (ground only).
+LEVEL ADJUST
+Announcement and chime levels per zone, -6 to +6 dB.
+SW LOAD
+Load the CIDS software from the OBRM in the slot.
+FAP SET-UP
+Brightness, volume, key click; remove and insert PRAM / CAM / OBRM cards.
+HARD KEYS
+EVAC CMD
+EVAC RESET
+EMER
+PED POWER
+LIGHTS MAIN
+LAV MAINT
+SCREEN LOCK
+SMOKE RESET
+FAP RESET
+PAX SYS
+Slide deployed after opening an armed door
+Lavatory smoke alert with crew actions
+PRAM announcements and cabin chimes
+Evacuation command active
+Free 14-day trial, then a license code
+Free 14-day trial: the first time the app opens with an internet connection, a free 14-day trial starts on that device. Every function works, no code needed. After 14 days the app asks for a license code.
+To activate, enter your license code (for example A320-k7Rm9Qx2 ), exactly as given: capital and small letters matter. Activation needs an internet connection once. Each code works on one device only; after activation the simulator runs offline. Ask your instructor for a code.
+New tablet or PC? Ask your instructor or administrator to move the license, then enter the same code on the new device.
+Updates: the app checks for a new version when it starts, and ⚙ SETTINGS has Check for updates . Tap Update now: it downloads and opens the installer. Your license stays active.
+No code yet? Try the free demo with code A320-DEMO (no internet needed). The demo includes one lighting function (MAIN ON/OFF) and one audio function (boarding music); the other functions ask for a license code.
+Android APK · v 4.4
+DOWNLOAD
+Scan to install on your tablet
+1 Scan the QR code with the tablet camera, or tap Download APK.
+2 Allow "Install unknown apps" for your browser when Android asks.
+3 Open the app (internet needed once): your free 14-day trial starts. Enter a license code anytime to keep it after the trial. Hold the tablet in landscape.
+DOWNLOAD APK (https://github.com/opulencecircle82/OI/releases/download/v4.4.0/A320_FAP_v4.4.apk)
+WINDOWS
+Install on a Windows PC
+1 Download the Setup and open it.
+2 If Windows shows "Windows protected your PC", click More info, then Run anyway.
+3 Follow the Setup (Next, accept the notice, Install). A desktop shortcut is created.
+4 Open A320 FAP Simulator (internet needed once): your free 14-day trial starts. Enter a license code anytime to keep it after the trial.
+DOWNLOAD FOR WINDOWS (https://github.com/opulencecircle82/OI/releases/download/v4.4.0/A320_FAP_Setup_v4.4.exe) Setup · v 4.4 · Windows 10 / 11, 64-bit
+IMPORTANT NOTICE & DISCLAIMER
+This software ( A320 FAP Simulator ) is developed by Overdrive Interactive for academic, familiarization, and educational training purposes only.
+1 . NOT AN OFFICIALLY CERTIFIED FTD : This application is a classroom supplement and is NOT certified by Airbus, FAA, EASA, CAAP, or any civil aviation authority for official type-rating or flight training credits.
+2 . NO AFFILIATION : "A320" and related aircraft trademarks belong to Airbus. Overdrive Interactive is an independent entity with no official endorsement or affiliation with Airbus.
+3 . ACCURACY & LIABILITY : While modeled for realistic interaction, operational variances may exist. This software must NOT be used for real-world aircraft operation, checklist validation, or actual emergency procedures. Overdrive Interactive assumes no liability for misuse. © OI Aviation by Overdrive Interactive · Training aids for aviation students, not for operational use.
+A320 FAP Simulator is a training aid, not for operational use. Always follow your airline cabin crew manual.
+Chat with us
+
+=== PAGE: A320 MCDU Trainer (https://oiaero.com/mcdu/) ===
+A320 MCDU Trainer · OI Aviation
+AIRBUS A320 · MCDU · ND · WXR
+A320 MCDU Trainer
+Program the A320 MCDU, watch the flight on the Navigation Display and learn to read the weather radar. Then fly the route and see the waypoints sequence.
+DOWNLOAD APK (https://github.com/opulencecircle82/OI/releases/download/mcdu-v2.3/A320_MCDU_Trainer_v2.3.apk) DOWNLOAD FOR WINDOWS (https://github.com/opulencecircle82/OI/releases/download/mcdu-v2.3/A320_MCDU_Trainer_Setup_v2.3.exe) WATCH TUTORIAL
+v 2.3 · Android 7.0+ tablet or phone · Windows 10 / 11 PC (64-bit)
+Cold & dark to shutdown
+Overhead panel with BAT 1 / 2, EXT PWR, APU MASTER SW, START and BLEED, the three ADIRS selectors with ON BATT and ALIGN lights, and the engine MODE and MASTER switches. Align the IRS on IRS INIT, start the engines, fly, then shut down.
+Departure & arrival
+DEPARTURE and ARRIVAL pages with real runways and fictional training SIDs, STARs, ILS and RNAV approaches; airways, holds, offsets, FIX INFO, step climbs, wind pages and the SEC F-PLN.
+Approach & go-around
+The approach phase starts at (DECEL), or by hand with ACTIVATE APPR PHASE and CONFIRM. TOGA flies the missed approach with the approach strung again; then a second approach, or ENABLE ALTN to divert. PERF APPR, PERF GO AROUND and the IRS check on POSITION MONITOR.
+MCDU like the aircraft
+14-line display with the Airbus colour code, line select keys, scratchpad and CLR logic, and real messages such as NOT ALLOWED and FORMAT ERROR.
+Navigation Display
+Mode and range selectors as on the EFIS panel: ROSE ILS / VOR / NAV, ARC and PLAN, 10 to 320 NM, CSTR / WPT / VOR.D / NDB / ARPT, and the temporary flight plan in yellow.
+Weather radar
+MultiScan panel laid out as in the cockpit: GAIN and TILT knobs, the MODE selector (WX, WX+T, TURB, MAP) and the SYS, MULTISCAN, GCS and PWS switches. A high tilt overshoots the storm; a low tilt paints the ground.
+TRAINER
+Press FLY to fly your flight plan from Manila (RPLL) to Cebu (RPVM) at ×1, ×4 or ×16 speed. Waypoints sequence on the F-PLN page, a discontinuity stops managed navigation, TOGA starts a go-around in the approach phase, and RESET brings the aircraft back to the gate. Dashed boxes mark controls that exist only in the trainer.
+FAULTS lets the instructor fail a system: FM1 or FM2 (single FMGC, PLEASE WAIT after the reset), IND, MCDU FAIL, GPS (GPS PRIMARY LOST, NAV ACCUR DOWNGRAD on the approach), weather radar system 1 or 2, VOR 1, ILS, and IRS DRIFT (IRS more than 5 NM from the FMGC position: fast alignment).
+TUTORIAL
+A complete flight, cold and dark to shutdown
+A complete flight, Manila to Cebu: cold and dark, batteries, ground power, ADIRS and APU, INIT A, IRS INIT and the IRS check, departure and arrival, INIT B and PERF, engine start, take-off, weather radar, descent preparation, the approach phase, a go-around and a second approach, landing, the CFDS report and the shutdown.
+Watch on YouTube → (https://www.youtube.com/watch?v=n6q5uzvrrME)
+Instructor Guide (PDF)
+45 pages for the instructor: classroom set-up, knobs and switches, license codes, quick reference, twelve lesson plans with answer keys (including cold and dark to shutdown, departure and arrival procedures, system faults, CFDS / CIDS tests, and the approach, go-around and diversion), and an assessment checklist. DOWNLOAD PDF (https://oiaero.com/A320_MCDU_Trainer_Instructor_Guide.pdf)
+Feature Sources & A320 Conformance (PDF)
+Where every feature comes from and how it compares with the real A320 MCDU, ND and weather radar, with the sources used. DOWNLOAD PDF (https://oiaero.com/A320_MCDU_Trainer_Sources_and_Conformance.pdf)
+MCDU PAGES
+The pages a student uses first
+White is for titles and prompts, blue for data you can change, green for active data, amber boxes for required entries, magenta for constraints and yellow for a temporary flight plan.
+INIT A / B
+FROM/TO, company route, ALTN, flight number, cost index, CRZ FL, weights and fuel.
+F-PLN
+Insert and clear waypoints, discontinuities, speed and altitude constraints, (T/C) and (T/D).
+LAT REV / VERT REV
+NEXT WPT and NEW DEST with a yellow TMPY plan: *ERASE or INSERT*.
+DIR TO
+Direct to any point from the present position, then INSERT.
+PERF
+TAKE OFF V1 / VR / V2 with the disagree check, FLAPS/THS, FLEX; CLB, CRZ (DES CABIN RATE), DES, APPR and GO AROUND; ACTIVATE APPR PHASE.
+PROG
+Cruise level, optimum and maximum level, bearing and distance to any point.
+RAD NAV
+VOR, ILS and ADF by identifier or frequency, with course.
+FUEL PRED / DATA
+Fuel at destination and alternate, extra fuel, POSITION MONITOR with the IRS distance from the FMGC position, aircraft status.
+DEPARTURE / ARRIVAL
+Runway, SID and transition; approach, STAR and VIA; yellow TMPY, INSERT; the missed approach, flown after TOGA; ENABLE ALTN.
+IRS INIT / WIND / SEC
+ALIGN ON REF and CONFIRM ALIGN, CLIMB / CRUISE / DESCENT WIND with WIND REQUEST, INIT REQUEST, SEC F-PLN.
+HOLD / OFFSET / AIRWAYS
+Holding pattern with IMM EXIT, lateral offset, airway VIA / TO, FIX INFO, LL XING, PLACE/BRG/DIST waypoints.
+MCDU MENU / CFDS
+Maintenance menu: leg reports and AVIONICS STATUS from the trainer faults, SYSTEM REPORT / TEST, CIDS 1 and 2 reports, LRU IDENT, GROUND SCANNING, SYSTEM CONFIG, OP TESTS and system tests.
+LAT REV: the new waypoint shows as a yellow temporary flight plan
+Manual tilt too low: ground returns over the islands
+DIR TO from the present position
+PLAN mode with the WPT option
+Power-up: batteries, EXT PWR, APU starting, ADIRS aligning (HDG / MAP NOT AVAIL on the ND)
+ARRIVAL TO RPVM: ILS22 and the training STARs
+Go-around: the missed approach to VM22M, then the approach again
+Trainer faults: FM1 failed, GPS lost, weather radar system 1 failed
+CFDS: CIDS 1 SYSTEM TESTS from SYSTEM REPORT / TEST, COM
+CFDS LAST LEG REPORT: the faults of the flight with UTC and ATA
+On a phone the keyboard sits beside the display
+Free 14-day trial, then a license code
+Free 14-day trial: the first time the app opens with an internet connection, a free 14-day trial starts on that device. Every function works, no code needed. After 14 days the app asks for a license code.
+To activate, enter your license code (for example MCDU-k7Rm9Qx2 ), exactly as given: capital and small letters matter. Activation needs an internet connection once. Each code works on one device only. A320 FAP codes do not work in this app. Ask your instructor for a code.
+New device? On the old one tap ⚙ Settings, then Deactivate & Transfer License , then enter the same code on the new one.
+No code yet? Try the free demo with code MCDU-DEMO (no internet needed): the INIT and F-PLN pages and the Navigation Display.
+Android APK · v 2.3
+DOWNLOAD
+Scan to install on your device
+1 Scan the QR code with the tablet or phone camera, or tap Download APK.
+2 Allow "Install unknown apps" for your browser when Android asks.
+3 Open the app (internet needed once): your free 14-day trial starts. Enter a license code anytime to keep it after the trial. Hold the device in landscape.
+DOWNLOAD APK (https://github.com/opulencecircle82/OI/releases/download/mcdu-v2.3/A320_MCDU_Trainer_v2.3.apk)
+WINDOWS
+Install on a Windows PC
+1 Download the Setup and open it.
+2 If Windows shows "Windows protected your PC", click More info, then Run anyway.
+3 Follow the Setup (Next, accept the notice, Install). A desktop shortcut is created.
+4 Open A320 MCDU Trainer (internet needed once): your free 14-day trial starts. Enter a license code anytime to keep it after the trial. On a PC you can type on the MCDU with the computer keyboard.
+DOWNLOAD FOR WINDOWS (https://github.com/opulencecircle82/OI/releases/download/mcdu-v2.3/A320_MCDU_Trainer_Setup_v2.3.exe) Setup · v 2.3 · Windows 10 / 11, 64-bit
+IMPORTANT NOTICE & DISCLAIMER
+This software ( A320 MCDU Trainer ) is developed by Overdrive Interactive for academic, familiarization, and educational training purposes only.
+1 . NOT AN OFFICIALLY CERTIFIED FTD : This application is a classroom supplement and is NOT certified by Airbus, FAA, EASA, CAAP, or any civil aviation authority for official type-rating or flight training credits.
+2 . NO AFFILIATION : "A320" and related aircraft trademarks belong to Airbus. Overdrive Interactive is an independent entity with no official endorsement or affiliation with Airbus.
+3 . TRAINING DATA ONLY : All waypoints, navaids, frequencies, weather and performance figures are simplified or fictional training data. Airport positions are approximate. Never use them for flight planning or navigation.
+4 . ACCURACY & LIABILITY : While modeled for realistic interaction, operational variances may exist. This software must NOT be used for real-world aircraft operation or flight preparation. Overdrive Interactive assumes no liability for misuse. © OI Aviation by Overdrive Interactive · Training aids for aviation students, not for operational use.
+A320 MCDU Trainer uses fictional training data. Never use it for flight planning or navigation.
+Chat with us
+
+=== PAGE: A320 Cabin Safety (https://oiaero.com/safety/) ===
+A320 Cabin Safety · OI Aviation
+CABIN CREW · EMERGENCY EQUIPMENT
+A320 Cabin Safety
+Learn where every piece of emergency equipment is stowed in the A320 cabin, then test yourself with a quiz and a drag-and-drop exam.
+DOWNLOAD APK (https://github.com/opulencecircle82/OI/releases/download/safety-v1.3/A320_Cabin_Safety_v1.3.apk) DOWNLOAD FOR WINDOWS (https://github.com/opulencecircle82/OI/releases/download/safety-v1.3/A320_Cabin_Safety_Setup_v1.3.exe)
+v 1.3 · Android 7.0+ tablet or phone · Windows 10 / 11 PC (64-bit)
+FEATURES
+Learn it, practise it, prove it
+A real A320 cabin
+A top view drawn from the Airbus A320 Aircraft Characteristics: doors 1L/1R and 2L/2R, four overwing exits, 180 seats, two galleys, three lavatories and the five attendant seats in their Airbus positions.
+45 items of emergency equipment
+Fire, medical, flotation, evacuation and signalling equipment, from the halon extinguishers and smoke hoods to the slides, megaphones, flashlights and ELT. Tap a location to see everything stowed there.
+Filter and highlight
+Show one category at a time, or tap an item to make every place that holds it light up on the chart. Zoom in with two fingers or the zoom keys.
+QUIZ for practice
+Eight random items, one at a time: drag each one to where it is stowed and see right or wrong straight away. Points for the first and second try.
+EXAM with a score at the end
+Ten shuffled items, placed in any order on any of the 17 locations, with no hints. After SUBMIT: the score, the percentage and every answer with the correct place.
+Free 14-day trial, license code, offline use, updates
+A new install starts a free 14-day trial (internet needed once), with every function. After that, activate once with a license code (SAFETY-xxxxxxxx, one device at a time); then everything works offline. When online, the app checks for a new version at start and installs it in place.
+DOCUMENTS
+Manual, instructor guide and sources
+User Manual (PDF)
+Installing on Android and Windows, the license code, the LOCATIONS chart, the QUIZ, the EXAM and its result, SETTINGS and updates, and troubleshooting. DOWNLOAD PDF (https://oiaero.com/A320_Cabin_Safety_User_Manual.pdf)
+Instructor Guide (PDF)
+Classroom set-up and license codes, how to read the chart, a 45-minute lesson plan, discussion points by category, QUIZ and EXAM scoring, the full answer key and a printable assessment checklist. DOWNLOAD PDF (https://oiaero.com/A320_Cabin_Safety_Instructor_Guide.pdf)
+Equipment Sources & A320 Conformance (PDF)
+Where every item on the chart comes from: the Airbus A320 Aircraft Characteristics, the FAA and EASA rules, and what is typical airline practice. DOWNLOAD PDF (https://oiaero.com/A320_Cabin_Safety_Sources_and_Conformance.pdf)
+SCREENS
+A closer look
+Tap a location: everything stowed at the Door 1L crew station
+QUIZ: drag the item to the right location
+EXAM: ten items, any order, no hints
+EXAM RESULT: score, percentage and every answer
+Android APK · v 1.3
+DOWNLOAD
+Scan to install on your device
+1 Scan the QR code with the tablet or phone (or tap DOWNLOAD APK).
+2 Open the downloaded file. If Android asks, allow "Install unknown apps" for your browser.
+3 Tap Install and open A320 Cabin Safety (internet needed once): your free 14-day trial starts. Enter your license code (SAFETY-xxxxxxxx) anytime to keep it after the trial.
+4 Open LOCATIONS to learn, then QUIZ and EXAM to test yourself.
+DOWNLOAD APK (https://github.com/opulencecircle82/OI/releases/download/safety-v1.3/A320_Cabin_Safety_v1.3.apk)
+WINDOWS
+Install on a Windows PC
+1 Download the Setup file and run it.
+2 If Windows SmartScreen appears, choose "More info" then "Run anyway" (the installer is not code-signed).
+3 Open A320 Cabin Safety from the Start menu or the desktop (internet needed once): your free 14-day trial starts. Enter your license code anytime to keep it after the trial.
+DOWNLOAD FOR WINDOWS (https://github.com/opulencecircle82/OI/releases/download/safety-v1.3/A320_Cabin_Safety_Setup_v1.3.exe) Setup · v 1.3 · Windows 10 / 11, 64-bit
+IMPORTANT NOTICE & DISCLAIMER
+This software ( A320 Cabin Safety ) is developed by Overdrive Interactive for academic, familiarization, and educational training purposes only.
+1 . NOT AN APPROVED TRAINING DEVICE : A320 Cabin Safety is not approved by Airbus, FAA, EASA, CAAP or any civil aviation authority and is not part of any aircraft or airline system.
+2 . NO AFFILIATION : "A320" and related aircraft trademarks belong to Airbus. Overdrive Interactive is an independent entity with no official endorsement or affiliation with Airbus or any airline.
+3 . TYPICAL LAYOUT ONLY : The chart shows a typical A320 single-class cabin of 180 seats. The kind, number and stowage of emergency equipment differ between airlines and aircraft; the airline's approved manuals and on-board equipment chart always take precedence.
+4 . LICENSE : A new install includes a free 14-day trial (internet needed once). After the trial, A320 Cabin Safety needs a license code (SAFETY-xxxxxxxx). Activation needs an internet connection once; each code works on one device at a time. © OI Aviation by Overdrive Interactive · Training aids for aviation students, not for operational use.
+A320 Cabin Safety shows a typical layout; always follow the airline's own equipment chart and procedures.
+Chat with us
+
+=== PAGE: Cabin Entertainment (https://oiaero.com/cabin/) ===
+Cabin Entertainment · OI Aviation
+SEATBACK · FILMS · MUSIC · MOVING MAP
+Cabin Entertainment
+The seatback entertainment system, on a tablet or a PC. Choose a language, then watch films and series, listen to music and follow the flight on the moving map.
+DOWNLOAD APK (https://github.com/opulencecircle82/OI/releases/download/cabin-v1.5/Cabin_Entertainment_v1.5.apk) DOWNLOAD FOR WINDOWS (https://github.com/opulencecircle82/OI/releases/download/cabin-v1.5/Cabin_Entertainment_Setup_v1.5.exe)
+v 1.5 · Android 7.0+ tablet or phone · Windows 10 / 11 PC (64-bit)
+FEATURES
+Everything a passenger finds on the seatback
+Welcome in eight languages
+Like a real seatback after boarding: a welcome screen with round greetings (Hello, Mabuhay!, ¡Hola!, Bonjour, Ciao!, こんにちは, 안녕하세요, 你好). The home screen then greets the passenger in that language.
+Films and series
+A streaming-style home with Movies, Series, Documentary and Classics shelves: open movies such as Spring, Sprite Fright and Tears of Steel, the Caminandes series, NASA documentaries and classics. Films start the moment you tap them.
+25-song music library
+Jazz, chill, lo-fi, acoustic, vocal, pop, electronic, cinematic, classical and vintage songs. Genre filters, play / pause / next / previous, volume, and the next song starts by itself.
+Moving map
+Flight Info shows the flight from Paris to Barcelona on a map of France, Spain and the Mediterranean, with departure and arrival times, distance flown and to go, altitude, ground speed and outside temperature.
+Seat service and system diagram
+Call the attendant or switch the reading light, and open a schematic of how a cabin entertainment system is wired, from the control panel and head-end to every seat.
+Free 14-day trial, license code, offline use, updates
+A new install starts a free 14-day trial (internet needed once), with every function. After that, activate once with a license code (CABIN-xxxxxxxx, one device at a time); then everything works offline. When the device is online, the app checks for a new version at start (and from SETTINGS) and installs it in place.
+USER MANUAL
+How to use Cabin Entertainment
+User Manual (PDF)
+Installing on Android and Windows, the welcome screen and languages, home, movies and TV, the film player, the music library, Flight Info, Service, the system diagram, SETTINGS and updates, and the credits and licences of every film and song. DOWNLOAD PDF (https://oiaero.com/Cabin_Entertainment_User_Manual.pdf)
+SCREENS
+A closer look
+Welcome screen: choose a language to get started
+Music library with genre filters and the now-playing card
+Flight Info: moving map, progress strip and readouts
+TV: series, documentaries and classics
+Android APK · v 1.5
+DOWNLOAD
+Scan to install on your device
+1 Scan the QR code with the tablet or phone (or tap DOWNLOAD APK).
+2 Open the downloaded file. If Android asks, allow "Install unknown apps" for your browser.
+3 Tap Install and open Cabin Entertainment (internet needed once): your free 14-day trial starts. Enter your license code (CABIN-xxxxxxxx) anytime to keep it after the trial.
+4 Pick a language and enjoy the flight.
+DOWNLOAD APK (https://github.com/opulencecircle82/OI/releases/download/cabin-v1.5/Cabin_Entertainment_v1.5.apk)
+WINDOWS
+Install on a Windows PC
+1 Download the Setup file and run it.
+2 If Windows SmartScreen appears, choose "More info" then "Run anyway" (the installer is not code-signed).
+3 Open Cabin Entertainment from the Start menu or the desktop (internet needed once): your free 14-day trial starts. Enter your license code anytime to keep it after the trial.
+DOWNLOAD FOR WINDOWS (https://github.com/opulencecircle82/OI/releases/download/cabin-v1.5/Cabin_Entertainment_Setup_v1.5.exe) Setup · v 1.5 · Windows 10 / 11, 64-bit
+IMPORTANT NOTICE & DISCLAIMER
+This software ( Cabin Entertainment ) is developed by Overdrive Interactive for academic, familiarization, and educational training purposes only.
+1 . NOT AN AIRLINE OR AIRCRAFT SYSTEM : Cabin Entertainment is not certified by Airbus, FAA, EASA, CAAP or any civil aviation authority and is not part of any aircraft or airline entertainment system.
+2 . NO AFFILIATION : "A320" and related aircraft trademarks belong to Airbus. Overdrive Interactive is an independent entity with no official endorsement or affiliation with Airbus or any airline.
+3 . SIMULATED FLIGHT DATA : The moving map, flight times and readouts are simulated for demonstration. Never use them for flight planning or navigation.
+4 . LICENSE : A new install includes a free 14-day trial (internet needed once). After the trial, Cabin Entertainment needs a license code (CABIN-xxxxxxxx). Activation needs an internet connection once; each code works on one device at a time.
+5 . OPENLY LICENSED CONTENT : All films and music are Creative Commons (CC BY / CC0) or public-domain works. Each title shows its credit on screen, and the full list of sources and licences is in the user manual. © OI Aviation by Overdrive Interactive · Training aids for aviation students, not for operational use.
+Cabin Entertainment is not an airline or aircraft system. Flight data is simulated.
+Chat with us
+
+=== PAGE: About OI Aviation (https://oiaero.com/about/) ===
+About OI Aviation · For schools
+ABOUT US
+Affordable A320 practice software for aviation schools
+OI Aviation makes realistic A320 practice apps that a school buys once and uses for good: on a tablet or PC, in the classroom or at home, with no yearly fees.
+Why we started
+OI Aviation began with an A320 Flight Attendant Panel simulator for an aviation college in the Philippines. Students got very little time on real trainers. Most training software is sold as a yearly subscription, often per student. Many schools can't afford that.
+So we built our own practice tools. They follow the real A320. They're easy to set up in a lab. And they're priced for schools. Today there are four apps for pilots and cabin crew: A320 MCDU Trainer, A320 FAP Simulator, A320 Cabin Safety and Cabin Entertainment.
+LB
+Leandro Ballesteros
+Founder / System Architect
+Former owner of Shekis in Kidapawan City, where he built his own point-of-sale system, and later POS Maker. He designs the systems behind the apps: licensing, updates and the services that keep them running.
+Portfolio ↗ (https://oiaero.com/leandro/)
+JP
+Jefrain Paigalan
+Developer / Co-Founder
+Leads security and development, with a background in networking and infrastructure. He keeps the apps, servers and accounts secure and works directly with schools.
+Portfolio ↗ (https://oiaero.com/jefrain/) LinkedIn ↗ (https://www.linkedin.com/in/jefrain-paigalan-88a523220/)
+Based in Kidapawan City, Philippines.
+What we promise
+One payment, lifetime use
+A license per device with no yearly or per-student fees. Any number of students can practise on it.
+Built to follow the real A320
+Each app is checked against A320 references; the sources and conformance reports are published.
+Works offline in the classroom
+Activate once with internet, then the apps run with no connection. Android and Windows.
+Talk to the people who build it
+Questions and requests go straight to the founders, not to a call centre.
+FOR SCHOOLS
+How buying works
+1
+Try it free
+Install any app: every new install has a free 14-day trial with every function.
+2
+Ask for a quotation
+Tell us the apps and the number of devices. Volume discounts apply automatically.
+3
+Invoice and payment
+We send an invoice with the payment details and schedule.
+4
+License codes
+You receive one license code per device, ready to enter in each app.
+5
+Support
+Updates are free, and we move a license when a computer or tablet is replaced.
+Why schools save with us
+TYPICAL TRAINING APPS OI AVIATION
+How you pay Every year Once
+Who you pay for Often per student Per device
+Students per device One account each Unlimited
+After a few years Cost keeps growing Already paid
+Internet in class Often required Not needed after activation
+Volume discounts for 10 or more devices, and an extra discount when a school takes all four apps.
+Ready for a quotation?
+Tell us your school, the apps and the number of devices. We reply with a quotation, usually within one working day.
+REQUEST A QUOTATION (https://oiaero.com/quote/) or write to info@oiaero.com
+Questions about an app you already use: support@oiaero.com . Licenses follow our License Agreement (https://oiaero.com/terms/) . © OI Aviation by Overdrive Interactive · Training aids for aviation students, not for operational use.
+Chat with us
+
+=== PAGE: Request a quotation (https://oiaero.com/quote/) ===
+Request a quotation · OI Aviation
+FOR SCHOOLS AND COMPANIES
+Request a quotation
+Tell us who you are, the apps and how many computers or tablets will use them. Our team prepares your quotation, with the volume discounts that apply, and emails it to you.
+CURRENCY
+₱ PESO US$ DOLLAR
+APPS AND NUMBER OF DEVICES (COMPUTERS OR TABLETS) *
+A320 MCDU Trainer Pilots A320 FAP Simulator Cabin crew A320 Cabin Safety Cabin crew Cabin Entertainment Cabin crew MESSAGE (optional: schedule, questions, anything we should know)
+SEND REQUEST Our team emails you the quotation, usually within one working day.
+Prefer email? Write to info@oiaero.com . Licenses follow our License Agreement (https://oiaero.com/terms/) . © OI Aviation by Overdrive Interactive · Training aids for aviation students, not for operational use.
+Chat with us
+
+=== PAGE: License Agreement and Terms (https://oiaero.com/terms/) ===
+License Agreement & Terms of Use · OI Aviation
+License Agreement & Terms of Use
+For A320 MCDU Trainer, A320 FAP Simulator, A320 Cabin Safety and Cabin Entertainment (the "apps"), on every platform. Last updated 23 November 2026 .
+In short
+A license code is a lifetime license for one device : one payment, no yearly or per-student fees, any number of students on that device.
+Every new install has a free 14-day trial.
+When a computer or tablet is replaced, we move the license to the new one.
+The apps and their content belong to OI Aviation. Do not copy, share codes, crack or resell them.
+The apps are for practice and study, not for operational use.
+CONTENTS
+1 . Agreement
+2 . The license
+3 . Free trial
+4 . What you may not do
+5 . Ownership and confidential information
+6 . Practice use only
+7 . Updates and support
+8 . Moving a license to another device
+9 . Payment
+10 . Information we keep
+11 . No warranty
+12 . Limitation of liability
+13 . Ending the license
+14 . Law
+15 . Changes and contact
+1 . Agreement
+This agreement is between OI Aviation (Overdrive Interactive, Philippines; "we", "us") and the school, company or person who installs or uses the apps ("you"). By installing, activating or using an app you accept these terms. If you use the apps for a school or company, you confirm that you may accept them on its behalf.
+A quotation or invoice from us may add terms for a particular order (for example the number of devices or the payment schedule). Where it does, the quotation or invoice applies to that order.
+2 . The license
+Each license code lets you use one app on one device at a time (a computer, tablet or phone). The license is lifetime : it has no end date and no yearly or per-student fee. Any number of students or instructors may use the app on that device.
+The license is non-exclusive and is not a sale of the software: you receive the right to use the app, not ownership of it. Activation needs an internet connection once; after that the app works offline.
+We keep the activation service running. If we ever had to stop it, we would first give notice and make every reasonable effort to release an update or another way for activated copies to keep working.
+3 . Free trial
+A new install starts a free 14-day trial with every function, once per device and app (internet needed to start it). After 14 days the app asks for a license code. A trial is for evaluation; it does not give a license.
+4 . What you may not do
+copy, share, publish or sell license codes, or use one code on more devices than it covers;
+bypass, disable or change the license check or the trial, or help others to do so;
+reverse engineer, decompile or disassemble the apps, except where the law allows it despite this restriction;
+copy, change, rent, resell or redistribute the apps, their pictures, sounds, videos, data or manuals, or build a competing product from them;
+remove or change copyright, trademark or ownership notices.
+Schools may of course show the apps in class and use the manuals to teach with them.
+5 . Ownership and confidential information
+The apps, their source code, design, logic, data, pictures, sounds, texts and manuals are the property of OI Aviation and are protected by copyright (Intellectual Property Code of the Philippines, Republic Act No. 8293, and international treaties). The source code and the way the apps work inside are our trade secrets and confidential information ; you may not try to obtain or disclose them.
+Airbus, A320 and other names of aircraft, equipment and companies belong to their owners and are used only to describe what the apps simulate. OI Aviation is independent and is not affiliated with, endorsed by or approved by Airbus or any airline.
+6 . Practice use only
+The apps are aids for practice and study. They are not approved training devices under any aviation authority, and they do not replace an approved course, simulator or trainer, the airline's manuals and procedures, or instruction by a qualified instructor. Navigation data, routes and layouts are for practice only and must never be used for real flights or operations .
+7 . Updates and support
+Updates of a licensed app are free. Updates may add, change or remove functions. We answer questions about the apps at support@oiaero.com .
+8 . Moving a license to another device
+When a device is replaced, broken or reset, ask us at support@oiaero.com and we move the license code to the new device. Some apps can also release the code themselves (in their settings). A license moves, it does not multiply: the old device stops using it.
+9 . Payment
+Prices, discounts and the payment schedule are those in our quotation or invoice. License codes are delivered after payment or as the invoice states. Because every app can be tried free for 14 days first, payments are not refundable once the codes are delivered, unless the law requires otherwise or we agree in writing. Codes that do not work as described are replaced or refunded.
+10 . Information we keep
+To run licenses and trials, our server keeps:
+the license code, the app, the platform (Android or Windows) and the dates of activation, trial and moves;
+a device identifier: a one-way scrambled (hashed) form of the device's hardware ID, so the license still fits after a reinstall;
+for orders and emails: the names, addresses and messages you send us.
+The apps do not collect students' names, scores or other personal data, and we do not sell or share information with advertisers. You can ask us what we keep about you, or to delete it, at info@oiaero.com .
+11 . No warranty
+We work hard to make the apps accurate and reliable, but they are provided "as is" . To the extent the law allows, we do not promise that they are free of errors, that they match a particular aircraft, airline or regulation, or that they suit a particular purpose.
+12 . Limitation of liability
+To the extent the law allows, we are not liable for indirect or consequential loss (such as lost profit, lost data or interrupted classes), and our total liability for an order is limited to the amount paid for it. Nothing here limits liability that cannot be limited by law.
+13 . Ending the license
+If you seriously break these terms (for example by sharing codes or cracking the license check), we may end the licenses involved after telling you, and you must stop using those copies. You may stop using an app at any time.
+14 . Law
+These terms are governed by the laws of the Republic of the Philippines. We will first try to settle any disagreement in good faith by email.
+15 . Changes and contact
+We may update these terms; the date at the top shows the latest version. Changes never take away a license you already paid for. Business and orders: info@oiaero.com · App support: support@oiaero.com . © OI Aviation by Overdrive Interactive · Training aids for aviation students, not for operational use.
+Chat with us
