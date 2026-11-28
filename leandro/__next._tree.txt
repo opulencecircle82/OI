@@ -10,4 +10,4 @@
 :HL["/screens/doors.png","image"]
 :HL["/screens/safety-chart.png","image"]
 :HL["/screens/cabin-home.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"leandro","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"YMQxMnENYaYX-KTQMQTCv"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"leandro","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"9DmiR1dC3WI82iHmxbp1J"}
